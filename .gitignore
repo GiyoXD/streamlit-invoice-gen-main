@@ -1,0 +1,62 @@
+# ============================================================================
+# Git Ignore File
+# ============================================================================
+# This file tells Git which files and folders to permanently ignore.
+# It prevents them from being accidentally committed to the repository.
+
+# --- Ignore Portable Tool Directories ---
+# These folders contain the downloaded Python and Git executables and are
+# specific to each user's machine. They should not be part of the repository.
+portable-git/
+python-embed/
+
+# --- Ignore Python Cache ---
+# These folders are created automatically by Python and are not needed.
+__pycache__/
+*.pyc
+
+# --- Ignore Temporary Files ---
+# Optional: Add other files or patterns you want to ignore, like temp files.
+# For example, to ignore all .log files:
+# *.log
+
+
+# --- Ignore Data Directories ---
+# These contain user data, generated files, and temporary data
+# that should not be tracked in version control
+data/
+result/
+temp_uploads/
+
+# --- Python Test Files ---
+# Ignore any Python files containing 'test' in the filename
+*test*.py
+
+# --- Excel Files ---
+# Ignore all .xlsx files
+*.xlsx
+# But keep the important templates in invoice_gen/TEMPLATE/
+!invoice_gen/TEMPLATE/*.xlsx
+
+# --- JSON Files ---
+# Ignore all .json files
+*.json
+# But keep configuration files
+!*_config.json
+!**/config/*.json
+!**/TEMPLATE/*.json
+
+# --- Environment Files ---
+# Ignore virtual environment and environment variable files
+venv/
+.env
+
+
+# --- Sensitive Information ---
+# These files may contain sensitive information and should not be tracked.
+data/
+pages/nuke_password.txt
+
+recycle/
+
+
