@@ -1,0 +1,544 @@
+{
+  "title": "📖 Invoice Management System - User Guide",
+  "language_selector": "🌐 Language / ភាសា / 语言",
+  "tabs": {
+    "getting_started": "🏠 Getting Started",
+    "dashboard": "📊 Dashboard",
+    "adding_invoices": "➕ Adding Invoices",
+    "managing_data": "✏️ Managing Data",
+    "header_mapping": "🔧 Header Mapping",
+    "troubleshooting": "❓ Troubleshooting"
+  },
+  "getting_started": {
+    "welcome_title": "🏠 Welcome to the Invoice Management System",
+    "what_is_system": "### What is this system?",
+    "system_desc": "This is an **automated invoice processing system** designed specifically for leather industry businesses. It helps you convert Excel files into professional invoices and manage your invoice database.",
+    "what_can_do": "### What can it do for you?",
+    "features": [
+      "📄 **Convert Excel files** into professional invoices automatically",
+      "📊 **Track your business** with dashboard analytics",
+      "💾 **Store all invoices** in an organized database",
+      "📈 **Generate reports** and view business trends",
+      "✏️ **Edit and manage** invoice data easily"
+    ],
+    "who_for": "🎯 Who is this for?",
+    "who_list": [
+      "**Business owners** managing leather exports",
+      "**Accounting staff** processing invoices",
+      "**Sales teams** tracking orders",
+      "**Anyone** who needs to convert Excel data to invoices"
+    ],
+    "benefits": "⚡ Key Benefits",
+    "benefits_list": [
+      "**Save time** - No manual invoice creation",
+      "**Reduce errors** - Automated calculations",
+      "**Stay organized** - All data in one place",
+      "**Track performance** - Built-in analytics"
+    ],
+    "quick_start": "🚀 Quick Start - 3 Simple Steps",
+    "step1_title": "### Step 1: Prepare Your Excel File",
+    "step1_desc": "- Use your existing Excel format\n- Make sure it has columns like:\n  - PO Number\n  - Item Code\n  - Quantity\n  - Price\n  - Amount",
+    "step2_title": "### Step 2: Upload & Process",
+    "step2_desc": "- Go to `0_Generate Invoice.py` page\n- Choose the appropriate tab:\n  - \"High Quality Leather\" for premium products\n  - \"2nd Layer Leather\" for secondary products\n- Upload your Excel file\n- System automatically processes and validates",
+    "step3_title": "### Step 3: Review & Download",
+    "step3_desc": "- Review validation results\n- Add any optional overrides\n- Select invoice versions to generate\n- Download your completed invoices",
+    "system_pages_overview": "🗂️ System Pages Overview",
+    "main_pages_title": "#### 📄 Main Pages:",
+    "main_pages_list": [
+      "**`0_Generate Invoice.py`** - Main invoice generation (both leather types)",
+      "**`1_Verify_Data_To_Insert.py`** - Manual data entry and amendments",
+      "**`997_Invoice Explorer.py`** - View and manage existing invoices"
+    ],
+    "admin_pages_title": "#### 🛠️ Admin Pages:",
+    "admin_pages_list": [
+      "**`998_Database_Manager.py`** - Backup and database management",
+      "**`999_Guide.py`** - This user guide (current page)"
+    ],
+    "start_here_tip": "💡 **Start Here:** Most users should begin with `0_Generate Invoice.py` for processing Excel files."
+  },
+  "dashboard": {
+    "title": "📊 Understanding the Dashboard",
+    "desc": "The **Dashboard** is your main control center. Here's what you'll see:",
+    "key_metrics": "📈 Key Metrics",
+    "metrics_list": [
+      "**Total Invoiced Amount** - Your total revenue",
+      "**Total Square Feet** - Total product quantity",
+      "**Unique Invoices** - Number of invoices processed"
+    ],
+    "date_filtering": "📅 Date Filtering",
+    "date_filter_list": [
+      "Use the date picker to filter data",
+      "View specific time periods",
+      "Compare different months/quarters"
+    ],
+    "charts_graphs": "📊 Charts & Graphs",
+    "charts_list": [
+      "**Monthly Revenue** - See your income trends",
+      "**Top Products** - Best-selling items",
+      "**Performance Tracking** - Business growth"
+    ],
+    "what_to_look": "🔍 What to Look For",
+    "look_for_list": [
+      "**Growing trends** - Increasing revenue",
+      "**Top performers** - Best products",
+      "**Seasonal patterns** - Busy periods"
+    ]
+  },
+  "adding_invoices": {
+    "title": "➕ Adding New Invoices",
+    "desc": "The unified invoice generation system handles both High-Quality and 2nd Layer leather processing in one convenient interface.",
+    "location": "**Location:** Go to `0_Generate Invoice.py` page",
+    "tabs_description": "This page contains **two tabs** for different leather types:",
+    "high_quality_tab": "#### 📋 Tab 1: For High-Quality Leather",
+    "second_layer_tab": "#### 📋 Tab 2: For 2nd Layer Leather",
+    "process_label": "**Process:**",
+    "high_quality_steps": [
+      "Upload your Excel file (.xlsx format)",
+      "System automatically processes and validates data", 
+      "Review validation results and missing fields",
+      "Add optional overrides (Invoice No, Ref, Date, Containers)",
+      "Select invoice versions (Normal, FOB, Combine)",
+      "Generate and download final invoices as ZIP"
+    ],
+    "second_layer_steps": [
+      "Upload your Excel file (.xlsx format)",
+      "Enter invoice details (Reference, Date, Unit Price)",
+      "System processes file and creates JSON data",
+      "Review invoice summary with metrics",
+      "Download generated documents and data as ZIP"
+    ],
+    "high_quality_best_for": "✅ **Best for:** Complex invoices with multiple product lines",
+    "second_layer_best_for": "✅ **Best for:** Simpler invoices with aggregated data",
+    "automatic_processing": "#### ⚡ Automatic Processing",
+    "flexible_overrides": "#### 🎛️ Flexible Overrides", 
+    "complete_output": "#### 📦 Complete Output",
+    "automatic_features": [
+      "- Real-time validation",
+      "- Cambodia timezone support",
+      "- Duplicate detection", 
+      "- Smart invoice reference suggestions"
+    ],
+    "flexible_features": [
+      "- Custom invoice numbers",
+      "- Date modifications",
+      "- Container/truck information",
+      "- Multiple output formats"
+    ],
+    "complete_features": [
+      "- Multiple invoice versions",
+      "- JSON data files", 
+      "- ZIP packaging",
+      "- Ready for distribution"
+    ],
+    "verification_desc": "After processing, the system provides comprehensive validation:",
+    "verification_features": [
+      "**Automatic Field Validation:** System checks for all required data fields",
+      "**Missing Data Alerts:** Clear warnings for any missing information", 
+      "**Database Duplicate Check:** Prevents duplicate invoice numbers/references",
+      "**Real-time Preview:** See exactly what will be generated before final processing",
+      "**Cambodia Timezone:** All timestamps use Asia/Phnom_Penh timezone"
+    ],
+    "pro_tip": "💡 **Pro Tip:** The unified interface eliminates the need to switch between different pages - everything is handled in one place!",
+    "method1_title": "Method 1: Using the Web Forms",
+    "high_quality_steps": "#### For High Quality Leather:",
+    "high_quality_list": [
+      "Go to `0_Generate Invoice.py` page",
+      "Click the \"For High-Quality Leather\" tab",
+      "Upload your Excel file (.xlsx format)",
+      "System automatically processes and validates data",
+      "Add optional overrides (Invoice No, Ref, Date, Containers)",
+      "Select invoice versions and generate final invoices"
+    ],
+    "second_layer_steps": "#### For 2nd Layer Leather:",
+    "second_layer_list": [
+      "Go to `0_Generate Invoice.py` page",
+      "Click the \"For 2nd Layer Leather\" tab",
+      "Upload your Excel file (.xlsx format)",
+      "Enter invoice details (Reference, Date, Unit Price)",
+      "Review invoice summary with metrics",
+      "Download generated documents and data as ZIP"
+    ],
+    "method2_title": "Method 2: Direct File Processing",
+    "method2_list": [
+      "Place your Excel file in the system folder",
+      "Run the automation command",
+      "Check \"**Verify**\" page",
+      "Review and approve the data"
+    ],
+    "verification_title": "📋 Data Verification Process",
+    "verification_desc": "After processing, you'll need to **verify your data**:",
+    "verification_steps": [
+      "Go to \"**Verify**\" page",
+      "You'll see a preview of your data",
+      "Check that all information is correct:",
+      "- PO numbers",
+      "- Item codes",
+      "- Quantities",
+      "- Prices",
+      "- Amounts",
+      "If everything looks good, click \"**✅ Accept**\"",
+      "If there are errors, click \"**❌ Reject**\" and fix your Excel file"
+    ],
+    "tip_message": "💡 **Tip**: Always double-check your data before accepting. Once accepted, the data goes into your permanent database."
+  },
+  "managing_data": {
+    "title": "✏️ Managing Your Invoice Data",
+    "system_overview": "The system provides comprehensive tools for viewing, editing, and managing your invoice database. Here's how to use each component:",
+    "viewing_database": "🔍 Viewing & Exploring Invoices",
+    "viewing_desc": "The `997_Invoice Explorer.py` page lets you:",
+    "main_features": "#### 📊 Main Features:",
+    "viewing_features": [
+      "View all invoices in a searchable table",
+      "Filter by date ranges, invoice numbers, or references",
+      "Export data to Excel or CSV formats",
+      "See invoice summaries and totals",
+      "Check invoice status (active/voided)",
+      "View container information for each invoice",
+      "**Direct Editing:** ✏️ Edit This Invoice button",
+      "**Void Functionality:** 🚫 Void Invoice button with confirmation"
+    ],
+    "export_features": [
+      "**Excel Export:** Download filtered data as .xlsx",
+      "**CSV Export:** Export for external analysis",
+      "**Summarized Reports:** Aggregate data by invoice",
+      "**Detailed Reports:** Complete line-item data",
+      "**Date Range Exports:** Export specific time periods"
+    ],
+    "action_buttons": "#### 🎛️ Invoice Action Buttons",
+    "action_buttons_desc": "Each invoice in the summary table has three action buttons:",
+    "view_button": "**📄 View Line Items**",
+    "view_features": [
+      "- Shows detailed breakdown",
+      "- All product lines displayed",
+      "- Read-only view",
+      "- Click again to hide"
+    ],
+    "edit_button": "**✏️ Edit This Invoice**",
+    "edit_button_features": [
+      "- Opens interactive editor",
+      "- Modify any field values",
+      "- Add/remove product lines",
+      "- Save changes to database"
+    ],
+    "void_button": "**🚫 Void Invoice**",
+    "void_button_features": [
+      "- Marks invoice as cancelled",
+      "- Requires confirmation",
+      "- Excludes from totals",
+      "- Can be reactivated later"
+    ],
+    "direct_editing": "✏️ Direct Invoice Editing",
+    "direct_editing_location": "**Location:** `997_Invoice Explorer.py` (Invoice Summary Tab)",
+    "direct_editing_desc": "**The system provides powerful direct editing capabilities right in the Invoice Explorer!**",
+    "how_to_edit": "#### 🎯 How to Edit Invoices:",
+    "edit_steps_detailed": [
+      "Go to `997_Invoice Explorer.py`",
+      "Navigate to the 'Invoice Summary' tab",
+      "Find the invoice you want to edit",
+      "Click the **'✏️ Edit This Invoice'** button",
+      "Use the interactive data editor to modify:",
+      "  - Invoice numbers, references, dates, PO numbers",
+      "  - Item codes, descriptions, quantities",
+      "  - Prices, amounts, weights, dimensions",
+      "  - Production order numbers",
+      "Edit container/truck information",
+      "Click **'💾 Save Changes'** to update database"
+    ],
+    "edit_features": "#### ⚡ Edit Features:",
+    "edit_features_list": [
+      "**Interactive Data Editor:** Spreadsheet-like interface",
+      "**Add/Remove Rows:** Dynamic row management",
+      "**Field Validation:** System prevents invalid changes and duplicate references",
+      "**Container Management:** Edit shipping container info",
+      "**Flexible References:** Invoice references can be changed (with duplicate checking)",
+      "**Real-time Preview:** See changes before saving",
+      "**Automatic Updates:** Summary tables updated instantly",
+      "**Error Handling:** Clear error messages if issues occur"
+    ],
+    "json_upload": "📁 Adding & Amending via JSON Upload",
+    "json_upload_location": "**Location:** `1_Verify_Data_To_Insert.py`",
+    "adding_new_data": "#### 🆕 Adding New Data:",
+    "adding_when_to_use": "**When to use:** You have JSON data from invoice generation that needs to be added to the database.",
+    "adding_steps": [
+      "Upload your JSON file (from invoice generation)",
+      "System automatically detects data structure",
+      "Review the data preview table",
+      "Check for any validation warnings",
+      "Click 'Insert Data' to add to database",
+      "System creates summary records automatically"
+    ],
+    "amending_data": "#### 🔄 Amending Existing Data:",
+    "amending_when_to_use": "**When to use:** You need to update or correct existing invoice information.",
+    "amending_steps": [
+      "Upload JSON with corrected data",
+      "System detects existing invoice by reference/number",
+      "Shows 'AMENDMENT' mode with before/after comparison",
+      "Review changes in the preview",
+      "Confirm amendment to update database",
+      "Original data is archived automatically"
+    ],
+    "amendment_warning": "⚠️ **Important:** Amendments update existing records. The system automatically archives the original data for safety.",
+    "reprocessing": "🔄 Alternative: Re-processing with Overrides",
+    "reprocessing_location": "**Location:** `0_Generate Invoice.py`",
+    "reprocessing_when_to_use": "**When to use:** You want to regenerate invoices with different information (numbers, dates, containers).",
+    "reprocessing_steps": [
+      "Upload the original Excel file again",
+      "Use the override fields to make changes:",
+      "  - Invoice Number",
+      "  - Invoice Reference",
+      "  - Invoice Date",
+      "  - Container/Truck information",
+      "Generate new invoice versions",
+      "Download updated files"
+    ],
+    "reprocessing_tip": "💡 **Pro Tip:** This method generates new files but doesn't automatically update the database. Use the Verify page to add the new data.",
+    "status_management": "🗑️ Managing Invoice Status",
+    "voiding_invoices_detailed": "#### Voiding Invoices:",
+    "voiding_desc": "**Location:** `997_Invoice Explorer.py` (Invoice Summary Tab)",
+    "voiding_steps": [
+      "Go to `997_Invoice Explorer.py`",
+      "Find the invoice in the Invoice Summary tab",
+      "Click the **'🚫 Void Invoice'** button",
+      "System shows confirmation warning",
+      "Click **'✅ Yes, Confirm Void'** to proceed",
+      "Invoice status changes to 'voided' and is excluded from totals"
+    ],
+    "voiding_note": "**Note**: Voiding is reversible - you can reactivate voided invoices if needed.",
+    "status_tracking": "#### ♻️ Status Management:",
+    "status_info": [
+      "**Active Status:** Normal, valid invoices (included in totals)",
+      "**Voided Status:** Cancelled invoices (excluded from totals)",
+      "**Reactivation:** Voided invoices can be reactivated",
+      "**Visual Indicators:** Voided invoices are clearly marked",
+      "**Disabled Actions:** Cannot edit or void already-voided invoices",
+      "**Audit Trail:** All status changes are tracked",
+      "**Automatic Updates:** Grand totals update immediately",
+      "**Data Preservation:** No data is ever permanently deleted"
+    ],
+    "database_management": "💾 Database Management & Backup",
+    "database_location": "**Location:** `998_Database_Manager.py`",
+    "backup_features": "#### 🔒 Backup Features:",
+    "backup_features_list": [
+      "**Create Backups:** Generate timestamped database copies",
+      "**Restore from Backup:** Revert to previous database state",
+      "**Backup Management:** View and delete old backups",
+      "**Cambodia Timezone:** Backup timestamps use local time"
+    ],
+    "admin_warning": "⚠️ **Admin Only:** Backup operations require administrator access.",
+    "safety_features": "#### 🛡️ Safety Features:",
+    "safety_features_list": [
+      "**Confirmation Required:** Multiple confirmations for destructive operations",
+      "**Automatic Timestamps:** All backups are dated",
+      "**Amendment Archives:** Original data is preserved during updates",
+      "**Database Integrity:** System maintains data consistency"
+    ],
+    "best_practice": "💡 **Best Practice:** Create regular backups before making major changes to your invoice database!",
+    "export_options_title": "#### 📤 Export Options:",
+    "cambodia_timezone_info": "🕐 **Cambodia Timezone:** All timestamps display in Asia/Phnom_Penh timezone regardless of server location!",
+    "two_scenarios": "This page handles two main scenarios:",
+    "void_functionality_desc": "**The system has built-in void functionality:**",
+    "void_use_cases": "💡 **Use Cases:** Void invoices for cancellations, corrections, or duplicate entries. Reactivate if voided by mistake."
+  },
+  "header_mapping": {
+    "title": "🔧 Excel Header Mapping Guide",
+    "desc": "⚠️ **CRITICAL**: Without proper header mapping, NO DATA will flow through to create invoices! Use this guide to ensure your Excel headers match exactly what the system expects.",
+    "what_is_mapping": "### What is Header Mapping?",
+    "mapping_desc": "The system needs to identify which columns in your Excel file contain specific data (like PO numbers, quantities, etc.). Sometimes your column names might be different from what the system expects.",
+    "required_headers": "📋 Required Headers & Their Mappings",
+    "required_headers_desc": "Your Excel file must contain these data types. Here are the **actual mappings from the system** - use the EASIEST option first:",
+    "header_mappings": [
+      "**PO Number** → EASIEST: 'po' | Also accepts: 'PO', 'PO NO.', '订单号'",
+      "**Item Code** → EASIEST: 'item' | Also accepts: '物料代码', 'ITEM NO.', 'Item No'",
+      "**Pieces/Quantity** → EASIEST: 'pcs' | Also accepts: 'PCS', '总张数', '张数'",
+      "**Unit Price** → EASIEST: 'unit' | Also accepts: 'USD', '单价', 'price'",
+      "**Total Amount** → EASIEST: 'amount' | Also accepts: '金额', 'USD', 'total'",
+      "**Square Feet** → EASIEST: 'sqft' | Also accepts: 'SF', '尺数', '出货数量(sf)'",
+      "**Net Weight** → EASIEST: 'net' | Also accepts: 'NW', '净重', 'net weight'",
+      "**Gross Weight** → EASIEST: 'gross' | Also accepts: 'GW', '毛重', 'Gross'",
+      "**Description** → EASIEST: 'description' | Also accepts: '产品名称', '品名规格', 'desc'",
+      "**CBM/Remarks** → EASIEST: 'cbm' | Also accepts: '材积', 'CBM', '备注'",
+      "**Production Order** → EASIEST: 'production_order_no' | Also accepts: 'TTX编号', '生产单号'"
+    ],
+    "common_issues_mapping": "⚠️ Common Header Issues",
+    "mapping_issues": [
+      "**Different Language**: Headers in local language (Khmer, Chinese, etc.)",
+      "**Abbreviations**: Using non-standard abbreviations",
+      "**Extra Spaces**: Headers with leading/trailing spaces",
+      "**Special Characters**: Headers with symbols or punctuation",
+      "**Merged Cells**: Headers spanning multiple cells"
+    ],
+    "solutions_title": "✅ Solutions When Headers Don't Match",
+    "solution_option1": "#### Option 1: Edit Your Excel File (Recommended)",
+    "solution1_steps": [
+      "Open your Excel file",
+      "Rename column headers to the EASIEST options above",
+      "Examples: '订单号' → 'po', '物料代码' → 'item', '总张数' → 'pcs'",
+      "Use simple lowercase English words when possible",
+      "Save the file and try processing again"
+    ],
+    "solution_option2": "#### Option 2: Report to Administrator",
+    "solution2_steps": [
+      "Take a screenshot of your Excel headers",
+      "Note which columns contain which data",
+      "Contact your system administrator with:",
+      "- Screenshot of your Excel file headers",
+      "- Description of what data each column contains",
+      "- Request to add your header names to the system mapping"
+    ],
+    "example_mapping": "📝 Example Header Mapping",
+    "example_desc": "Here's an example of how to map common variations:",
+    "example_table": [
+      "**Your Header** → **EASIEST Change** → **What It Maps To**",
+      "'订单号' → 'po' → PO Number (CRITICAL for invoices)",
+      "'物料代码' → 'item' → Item Code (CRITICAL for invoices)",
+      "'总张数' → 'pcs' → Pieces/Quantity (CRITICAL for invoices)",
+      "'单价' → 'unit' → Unit Price (CRITICAL for invoices)",
+      "'金额' → 'amount' → Total Amount (CRITICAL for invoices)",
+      "'出货数量(sf)' → 'sqft' → Square Feet (CRITICAL for invoices)",
+      "'净重' → 'net' → Net Weight",
+      "'毛重' → 'gross' → Gross Weight",
+      "'TTX编号' → 'production_order_no' → Production Order",
+      "'材积' → 'cbm' → CBM/Remarks"
+    ],
+    "best_practices_headers": "💡 Best Practices for Excel Headers",
+    "header_best_practices": [
+      "**Use English names** when possible for better compatibility",
+      "**Keep headers simple** - avoid special characters",
+      "**Be consistent** - use the same header names across all files",
+      "**No empty columns** between data columns",
+      "**First row only** - put headers in the first row of your Excel file"
+    ],
+    "admin_contact": "📞 Need Help with Mapping?",
+    "admin_help": [
+      "If you frequently use Excel files with non-standard headers:",
+      "Contact your administrator to add your header variations to the system",
+      "Provide examples of your typical Excel file formats",
+      "The admin can configure the system to recognize your specific header names"
+    ]
+  },
+  "troubleshooting": {
+    "title": "❓ Troubleshooting & FAQ",
+    "common_issues": "🚨 Common Issues",
+    "issue0_title": "🔧 MOST COMMON: Headers not recognized",
+    "issue0_desc": "**90% of problems are caused by incorrect column headers!**",
+    "issue0_solution": "**SOLUTION:** Check the Header Mapping tab in this guide for the exact headers needed.",
+    "hq_headers_label": "**Required headers for High-Quality Leather:**",
+    "hq_headers_list": ["inv_no", "inv_date", "inv_ref", "po", "item", "pcs", "sqft", "pallet_count", "unit", "amount", "net", "gross", "cbm", "production_order_no"],
+    "second_layer_note": "**For 2nd Layer Leather:** Headers are more flexible but must include PO, item descriptions, quantities, and weights.",
+    "solution_tip": "💡 This solves 90% of processing problems!",
+    "issue0_headers": [
+      "'po' for PO numbers",
+      "'item' for item codes",
+      "'pcs' for quantities",
+      "'unit' for unit prices",
+      "'amount' for total amounts",
+      "'sqft' for square feet"
+    ],
+    "issue1_title": "❌ My Excel file won't process",
+    "issue1_causes": "**Possible causes:**",
+    "issue1_cause_list": [
+      "Excel file format is not supported (use .xlsx)",
+      "❗ **MOST COMMON**: Wrong column headers - system can't find your data!",
+      "Missing required columns (PO, Item, Amount, etc.)",
+      "Data in wrong format (text in number columns)"
+    ],
+    "issue1_solutions": "**Solutions:**",
+    "issue1_solution_list": [
+      "Save your file as .xlsx format",
+      "🔧 **CHECK HEADER MAPPING TAB FIRST** - Fix your column headers!",
+      "Use simple headers like: 'po', 'item', 'pcs', 'unit', 'amount', 'sqft'",
+      "Make sure numbers are formatted as numbers, not text"
+    ],
+    "issue2_title": "⏳ Processing is taking too long",
+    "issue2_causes": "**This can happen when:**",
+    "issue2_cause_list": [
+      "Excel file is very large",
+      "File has many empty rows",
+      "Complex formulas in the Excel file"
+    ],
+    "issue2_solutions": "**Solutions:**",
+    "issue2_solution_list": [
+      "Remove empty rows from your Excel file",
+      "Copy data to a new, clean Excel file",
+      "Contact support if problem persists"
+    ],
+    "issue3_title": "🔍 I can't find my invoice",
+    "issue3_causes": "**Check these things:**",
+    "issue3_cause_list": [
+      "Is the invoice actually in the database? (Check \"Database\")",
+      "Are you searching with the correct reference number?",
+      "Has the invoice been voided?",
+      "Check your date filters"
+    ],
+    "issue4_title": "💾 My data disappeared",
+    "issue4_desc": "**Don't panic! Your data might be:**",
+    "issue4_cause_list": [
+      "Filtered out (check your date/search filters)",
+      "In a different status (check voided invoices)",
+      "In a backup file"
+    ],
+    "issue4_recovery": "**Recovery steps:**",
+    "issue4_recovery_list": [
+      "Clear all filters in \"Database\"",
+      "Check \"Backup Database\" for recent backups",
+      "Contact your system administrator"
+    ],
+    "issue5_title": "🚫 No data processed / Empty results",
+    "issue5_desc": "**Excel file uploads but no invoices are created:**",
+    "issue5_cause_list": [
+      "❗ **#1 REASON**: Column headers don't match system expectations",
+      "System can't find PO, Item, Amount, or other critical columns",
+      "Headers in wrong language or format",
+      "Typos in column names"
+    ],
+    "issue5_solutions": "**SOLUTION:**",
+    "issue5_solution_list": [
+      "🔧 **GO TO HEADER MAPPING TAB** - This fixes 90% of issues!",
+      "Use the EASIEST headers: 'po', 'item', 'pcs', 'unit', 'amount', 'sqft'",
+      "Check your Excel headers match the examples exactly",
+      "If still failing, try the alternative headers listed in Header Mapping tab"
+    ],
+    "getting_help": "📞 Getting Help",
+    "before_help": "#### Before Asking for Help:",
+    "before_help_list": [
+      "🔧 **CHECK HEADER MAPPING TAB FIRST** - Solves most problems!",
+      "Verify your Excel headers match the system requirements",
+      "Try restarting the application",
+      "Check if your Excel file works with other data",
+      "Note any error messages you see"
+    ],
+    "when_contacting": "#### When Contacting Support:",
+    "when_contacting_list": [
+      "Describe what you were trying to do",
+      "Share any error messages",
+      "Mention which file you were processing",
+      "Include screenshots if helpful"
+    ],
+    "pro_tips": "💡 Pro Tips for Success",
+    "excel_tips": "#### Excel File Tips:",
+    "excel_tips_list": [
+      "Keep files clean and organized",
+      "Use consistent column names",
+      "Remove empty rows",
+      "Save as .xlsx format"
+    ],
+    "data_tips": "#### Data Management:",
+    "data_tips_list": [
+      "Create backups regularly",
+      "Review data before accepting",
+      "Use clear, consistent naming",
+      "Keep original Excel files"
+    ],
+    "system_tips": "#### System Usage:",
+    "system_tips_list": [
+      "Process files during off-peak hours",
+      "Don't close browser during processing",
+      "Check dashboard regularly",
+      "Export important reports"
+    ]
+  },
+  "footer": {
+    "help_contact": "📧 Need more help? Contact your system administrator",
+    "last_updated": "🔄 Last updated: JULY 2025"
+  }
+}

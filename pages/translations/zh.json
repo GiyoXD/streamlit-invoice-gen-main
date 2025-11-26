@@ -1,0 +1,537 @@
+{
+  "title": "📖 发票管理系统 - 用户指南",
+  "language_selector": "🌐 Language / ភាសា / 语言",
+  "tabs": {
+    "getting_started": "🏠 入门指南",
+    "dashboard": "📊 仪表板",
+    "adding_invoices": "➕ 添加发票",
+    "managing_data": "✏️ 数据管理",
+    "header_mapping": "🔧 Header Mapping",
+    "troubleshooting": "❓ 故障排除"
+  },
+  "getting_started": {
+    "welcome_title": "🏠 欢迎使用发票管理系统",
+    "what_is_system": "### 这个系统是什么？",
+    "system_desc": "这是一个专为皮革行业企业设计的**自动化发票处理系统**。它帮助您将Excel文件转换为专业发票并管理您的发票数据库。",
+    "what_can_do": "### 它能为您做什么？",
+    "features": [
+      "📄 **自动将Excel文件**转换为专业发票",
+      "📊 **通过仪表板分析**跟踪您的业务",
+      "💾 **将所有发票**存储在有组织的数据库中",
+      "📈 **生成报告**并查看业务趋势",
+      "✏️ **轻松编辑和管理**发票数据"
+    ],
+    "who_for": "🎯 适用对象",
+    "who_list": [
+      "**管理皮革出口的企业主**",
+      "**处理发票的会计人员**",
+      "**跟踪订单的销售团队**",
+      "**任何需要将Excel数据转换为发票的人**"
+    ],
+    "benefits": "⚡ 主要优势",
+    "benefits_list": [
+      "**节省时间** - 无需手动创建发票",
+      "**减少错误** - 自动计算",
+      "**保持有序** - 所有数据集中在一处",
+      "**跟踪性能** - 内置分析功能"
+    ],
+    "quick_start": "🚀 快速入门 - 3个简单步骤",
+    "step1_title": "### 步骤1：准备您的Excel文件",
+    "step1_desc": "- 使用您现有的Excel格式\n- 确保它包含以下列：\n  - PO编号\n  - 项目代码\n  - 数量\n  - 价格\n  - 金额",
+    "step2_title": "### 步骤2：上传和处理",
+    "step2_desc": "- 转到 `0_Generate Invoice.py` 页面\n- 选择相应的标签页：\n  - \"High Quality Leather\"用于优质产品\n  - \"2nd Layer Leather\"用于次级产品\n- 上传您的Excel文件\n- 系统自动处理和验证",
+    "step3_title": "### 步骤3：审核和批准",
+    "step3_desc": "- 审核验证结果\n- 添加任何可选覆盖\n- 选择要生成的发票版本\n- 下载您完成的发票",
+    "system_pages_overview": "🗂️ 系统页面概览",
+    "main_pages_title": "#### 📄 主要页面：",
+    "main_pages_list": [
+      "**`0_Generate Invoice.py`** - 主要发票生成（两种皮革类型）",
+      "**`1_Verify_Data_To_Insert.py`** - 手动数据输入和修改",
+      "**`997_Invoice Explorer.py`** - 查看和管理现有发票"
+    ],
+    "admin_pages_title": "#### 🛠️ 管理页面：",
+    "admin_pages_list": [
+      "**`998_Database_Manager.py`** - 备份和数据库管理",
+      "**`999_Guide.py`** - 本用户指南（当前页面）"
+    ],
+    "start_here_tip": "💡 **从这里开始：** 大多数用户应该从 `0_Generate Invoice.py` 开始处理Excel文件。"
+  },
+  "dashboard": {
+    "title": "📊 了解仪表板",
+    "desc": "**仪表板**是您的主要控制中心。您将看到以下内容：",
+    "key_metrics": "📈 关键指标",
+    "metrics_list": [
+      "**总开票金额** - 您的总收入",
+      "**总平方英尺** - 产品总数量",
+      "**唯一发票** - 已处理的发票数量"
+    ],
+    "date_filtering": "📅 日期筛选",
+    "date_filter_list": [
+      "使用日期选择器筛选数据",
+      "查看特定时间段",
+      "比较不同月份/季度"
+    ],
+    "charts_graphs": "📊 图表和图形",
+    "charts_list": [
+      "**月收入** - 查看您的收入趋势",
+      "**热门产品** - 最畅销商品",
+      "**性能跟踪** - 业务增长"
+    ],
+    "what_to_look": "🔍 需要关注的内容",
+    "look_for_list": [
+      "**增长趋势** - 收入增加",
+      "**顶级表现者** - 最佳产品",
+      "**季节性模式** - 繁忙时期"
+    ]
+  },
+  "adding_invoices": {
+    "title": "➕ 添加新发票",
+    "desc": "统一的发票生成系统在一个便捷的界面中处理高质量和二层皮革处理。",
+    "location": "**位置：** 转到 `0_Generate Invoice.py` 页面",
+    "tabs_description": "此页面包含针对不同皮革类型的**两个标签页**：",
+    "high_quality_tab": "#### 📋 标签页1：高质量皮革",
+    "second_layer_tab": "#### 📋 标签页2：二层皮革",
+    "process_label": "**流程：**",
+    "high_quality_steps": [
+      "上传您的Excel文件（.xlsx格式）",
+      "系统自动处理和验证数据", 
+      "查看验证结果和缺失字段",
+      "添加可选覆盖（发票编号、参考、日期、集装箱）",
+      "选择发票版本（普通、FOB、组合）",
+      "生成并下载最终发票ZIP文件"
+    ],
+    "second_layer_steps": [
+      "上传您的Excel文件（.xlsx格式）",
+      "输入发票详细信息（参考、日期、单价）",
+      "系统处理文件并创建JSON数据",
+      "查看带有指标的发票摘要",
+      "下载生成的文档和数据ZIP文件"
+    ],
+    "high_quality_best_for": "✅ **最适合：** 具有多个产品线的复杂发票",
+    "second_layer_best_for": "✅ **最适合：** 具有汇总数据的简单发票",
+    "automatic_processing": "#### ⚡ 自动处理",
+    "flexible_overrides": "#### 🎛️ 灵活覆盖", 
+    "complete_output": "#### 📦 完整输出",
+    "automatic_features": [
+      "- 实时验证",
+      "- 柬埔寨时区支持",
+      "- 重复检测", 
+      "- 智能发票参考建议"
+    ],
+    "flexible_features": [
+      "- 自定义发票编号",
+      "- 日期修改",
+      "- 集装箱/卡车信息",
+      "- 多种输出格式"
+    ],
+    "complete_features": [
+      "- 多个发票版本",
+      "- JSON数据文件", 
+      "- ZIP打包",
+      "- 准备分发"
+    ],
+    "verification_desc": "处理后，系统提供全面验证：",
+    "verification_features": [
+      "**自动字段验证：** 系统检查所有必需的数据字段",
+      "**缺失数据警报：** 对任何缺失信息的清晰警告", 
+      "**数据库重复检查：** 防止重复的发票编号/参考",
+      "**实时预览：** 在最终处理前查看将生成的内容",
+      "**柬埔寨时区：** 所有时间戳使用Asia/Phnom_Penh时区"
+    ],
+    "pro_tip": "💡 **专业提示：** 统一界面消除了在不同页面之间切换的需要 - 一切都在一个地方处理！",
+    "method1_title": "方法1：使用网页表单",
+    "high_quality_steps": "#### 高质量皮革：",
+    "high_quality_list": [
+      "点击侧边栏中的\"**High Quality Leather**\"",
+      "上传您的Excel文件",
+      "填写任何附加信息",
+      "点击\"**处理文件**\"",
+      "等待处理完成"
+    ],
+    "second_layer_steps": "#### 二层皮革：",
+    "second_layer_list": [
+      "点击侧边栏中的\"**2nd Layer Leather**\"",
+      "上传您的Excel文件",
+      "填写任何附加信息",
+      "点击\"**处理文件**\"",
+      "等待处理完成"
+    ],
+    "method2_title": "方法2：直接文件处理",
+    "method2_list": [
+      "将Excel文件放入系统文件夹",
+      "运行自动化命令",
+      "检查\"**Verify**\"页面",
+      "审核并批准数据"
+    ],
+    "verification_title": "📋 数据验证过程",
+    "verification_desc": "处理后，您需要**验证您的数据**：",
+    "verification_steps": [
+      "转到\"**Verify**\"页面",
+      "您将看到数据预览",
+      "检查所有信息是否正确：",
+      "- PO编号",
+      "- 项目代码",
+      "- 数量",
+      "- 价格",
+      "- 金额",
+      "如果一切正常，点击\"**✅ 接受**\"",
+      "如果有错误，点击\"**❌ 拒绝**\"并修复Excel文件"
+    ],
+    "tip_message": "💡 **提示**：接受前请务必仔细检查数据。一旦接受，数据将进入您的永久数据库。"
+  },
+  "managing_data": {
+    "title": "✏️ 管理您的发票数据",
+    "system_overview": "系统提供全面的工具来查看、编辑和管理您的发票数据库。以下是如何使用每个组件：",
+    "viewing_database": "🔍 查看和探索发票",
+    "viewing_desc": "`997_Invoice Explorer.py` 页面允许您：",
+    "main_features": "#### 📊 主要功能：",
+    "viewing_features": [
+      "在可搜索表格中查看所有发票",
+      "按日期范围、发票编号或参考筛选",
+      "导出数据到Excel或CSV格式",
+      "查看发票摘要和总计",
+      "检查发票状态（活动/作废）",
+      "查看每张发票的集装箱信息",
+      "**直接编辑：** ✏️ Edit This Invoice 按钮",
+      "**作废功能：** 🚫 Void Invoice 按钮带确认"
+    ],
+    "export_features": [
+      "**Excel导出：** 下载筛选数据为.xlsx",
+      "**CSV导出：** 导出用于外部分析",
+      "**汇总报告：** 按发票汇总数据",
+      "**详细报告：** 完整的行项目数据",
+      "**日期范围导出：** 导出特定时间段"
+    ],
+    "action_buttons": "#### 🎛️ 发票操作按钮",
+    "action_buttons_desc": "摘要表中的每张发票都有三个操作按钮：",
+    "view_button": "**📄 查看行项目**",
+    "view_features": [
+      "- 显示详细分解",
+      "- 显示所有产品线",
+      "- 只读视图",
+      "- 再次点击隐藏"
+    ],
+    "edit_button": "**✏️ 编辑此发票**",
+    "edit_button_features": [
+      "- 打开交互式编辑器",
+      "- 修改任何字段值",
+      "- 添加/删除产品线",
+      "- 保存更改到数据库"
+    ],
+    "void_button": "**🚫 作废发票**",
+    "void_button_features": [
+      "- 标记发票为已取消",
+      "- 需要确认",
+      "- 从总计中排除",
+      "- 稍后可以重新激活"
+    ],
+    "direct_editing": "✏️ 直接发票编辑",
+    "direct_editing_location": "**位置：** `997_Invoice Explorer.py`（发票摘要标签页）",
+    "direct_editing_desc": "**系统在Invoice Explorer中提供强大的直接编辑功能！**",
+    "how_to_edit": "#### 🎯 如何编辑发票：",
+    "edit_steps_detailed": [
+      "转到 `997_Invoice Explorer.py`",
+      "导航到'Invoice Summary'标签页",
+      "找到您要编辑的发票",
+      "点击 **'✏️ Edit This Invoice'** 按钮",
+      "使用交互式数据编辑器修改：",
+      "  - 发票编号、参考、日期、PO编号",
+      "  - 项目代码、描述、数量",
+      "  - 价格、金额、重量、尺寸",
+      "  - 生产订单编号",
+      "编辑集装箱/卡车信息",
+      "点击 **'💾 Save Changes'** 更新数据库"
+    ],
+    "edit_features": "#### ⚡ 编辑功能：",
+    "edit_features_list": [
+      "**交互式数据编辑器：** 类似电子表格的界面",
+      "**添加/删除行：** 动态行管理",
+      "**字段验证：** 系统防止无效更改和重复引用",
+      "**集装箱管理：** 编辑运输集装箱信息",
+      "**灵活引用：** 发票引用可以更改（带重复检查）",
+      "**实时预览：** 保存前查看更改",
+      "**自动更新：** 摘要表立即更新",
+      "**错误处理：** 如有问题显示清晰错误消息"
+    ],
+    "json_upload": "📁 通过JSON上传添加和修改",
+    "json_upload_location": "**位置：** `1_Verify_Data_To_Insert.py`",
+    "adding_new_data": "#### 🆕 添加新数据：",
+    "adding_when_to_use": "**何时使用：** 您有来自发票生成的JSON数据需要添加到数据库。",
+    "adding_steps": [
+      "上传您的JSON文件（来自发票生成）",
+      "系统自动检测数据结构",
+      "查看数据预览表",
+      "检查任何验证警告",
+      "点击'Insert Data'添加到数据库",
+      "系统自动创建摘要记录"
+    ],
+    "amending_data": "#### 🔄 修改现有数据：",
+    "amending_when_to_use": "**何时使用：** 您需要更新或纠正现有发票信息。",
+    "amending_steps": [
+      "上传包含纠正数据的JSON",
+      "系统通过引用/编号检测现有发票",
+      "显示'AMENDMENT'模式与前后对比",
+      "在预览中查看更改",
+      "确认修改以更新数据库",
+      "原始数据自动存档"
+    ],
+    "amendment_warning": "⚠️ **重要：** 修改会更新现有记录。系统自动存档原始数据以确保安全。",
+    "reprocessing": "🔄 替代方案：使用覆盖重新处理",
+    "reprocessing_location": "**位置：** `0_Generate Invoice.py`",
+    "reprocessing_when_to_use": "**何时使用：** 您想用不同信息（编号、日期、集装箱）重新生成发票。",
+    "reprocessing_steps": [
+      "再次上传原始Excel文件",
+      "使用覆盖字段进行更改：",
+      "  - 发票编号",
+      "  - 发票引用",
+      "  - 发票日期",
+      "  - 集装箱/卡车信息",
+      "生成新发票版本",
+      "下载更新的文件"
+    ],
+    "reprocessing_tip": "💡 **专业提示：** 此方法生成新文件但不会自动更新数据库。使用验证页面添加新数据。",
+    "status_management": "🗑️ 管理发票状态",
+    "voiding_invoices_detailed": "#### 作废发票：",
+    "voiding_desc": "**位置：** `997_Invoice Explorer.py`（发票摘要标签页）",
+    "voiding_steps": [
+      "转到 `997_Invoice Explorer.py`",
+      "在发票摘要标签页中找到发票",
+      "点击 **'🚫 Void Invoice'** 按钮",
+      "系统显示确认警告",
+      "点击 **'✅ Yes, Confirm Void'** 继续",
+      "发票状态更改为'voided'并从总计中排除"
+    ],
+    "voiding_note": "**注意**：作废是可逆的 - 如果需要，您可以重新激活已作废的发票。",
+    "status_tracking": "#### ♻️ 状态管理：",
+    "status_info": [
+      "**活动状态：** 正常、有效的发票（包含在总计中）",
+      "**作废状态：** 已取消的发票（从总计中排除）",
+      "**重新激活：** 作废的发票可以重新激活",
+      "**视觉指示器：** 作废的发票清楚标记",
+      "**禁用操作：** 无法编辑或作废已作废的发票",
+      "**审计跟踪：** 跟踪所有状态更改",
+      "**自动更新：** 总计立即更新",
+      "**数据保护：** 数据永不永久删除"
+    ],
+    "database_management": "💾 数据库管理和备份",
+    "database_location": "**位置：** `998_Database_Manager.py`",
+    "backup_features": "#### 🔒 备份功能：",
+    "backup_features_list": [
+      "**创建备份：** 生成带时间戳的数据库副本",
+      "**从备份恢复：** 恢复到以前的数据库状态",
+      "**备份管理：** 查看和删除旧备份",
+      "**柬埔寨时区：** 备份时间戳使用本地时间"
+    ],
+    "admin_warning": "⚠️ **仅限管理员：** 备份操作需要管理员访问权限。",
+    "safety_features": "#### 🛡️ 安全功能：",
+    "safety_features_list": [
+      "**需要确认：** 破坏性操作需要多次确认",
+      "**自动时间戳：** 所有备份都有日期",
+      "**修改存档：** 更新期间保留原始数据",
+      "**数据库完整性：** 系统维护数据一致性"
+    ],
+    "best_practice": "💡 **最佳实践：** 在对发票数据库进行重大更改之前定期创建备份！"
+  },
+  "header_mapping": {
+    "title": "🔧 Excel表头映射指南",
+    "desc": "⚠️ **关键**：没有正确的表头映射，数据将无法流入创建发票！使用本指南确保您的Excel表头与系统期望完全匹配。",
+    "what_is_mapping": "### 什么是表头映射？",
+    "mapping_desc": "系统需要识别Excel文件中的哪些列包含特定数据（如PO编号、数量等）。有时您的列名可能与系统期望的不同。",
+    "required_headers": "📋 必需的表头及其映射",
+    "required_headers_desc": "您的Excel文件必须包含这些数据类型。以下是**系统的实际映射** - 首先使用最简单的选项：",
+    "header_mappings": [
+      "**PO编号** → 最简单：'po' | 也接受：'PO', 'PO NO.', '订单号'",
+      "**项目代码** → 最简单：'item' | 也接受：'物料代码', 'ITEM NO.', 'Item No'",
+      "**件数/数量** → 最简单：'pcs' | 也接受：'PCS', '总张数', '张数'",
+      "**单价** → 最简单：'unit' | 也接受：'USD', '单价', 'price'",
+      "**总金额** → 最简单：'amount' | 也接受：'金额', 'USD', 'total'",
+      "**平方英尺** → 最简单：'sqft' | 也接受：'SF', '尺数', '出货数量(sf)'",
+      "**净重** → 最简单：'net' | 也接受：'NW', '净重', 'net weight'",
+      "**毛重** → 最简单：'gross' | 也接受：'GW', '毛重', 'Gross'",
+      "**描述** → 最简单：'description' | 也接受：'产品名称', '品名规格', 'desc'",
+      "**CBM/备注** → 最简单：'cbm' | 也接受：'材积', 'CBM', '备注'",
+      "**生产订单** → 最简单：'production_order_no' | 也接受：'TTX编号', '生产单号'"
+    ],
+    "common_issues_mapping": "⚠️ 常见表头问题",
+    "mapping_issues": [
+      "**不同语言**：使用本地语言的表头（高棉语、中文等）",
+      "**缩写**：使用非标准缩写",
+      "**多余空格**：表头前后有空格",
+      "**特殊字符**：表头包含符号或标点",
+      "**合并单元格**：表头跨越多个单元格"
+    ],
+    "solutions_title": "✅ 表头不匹配时的解决方案",
+    "solution_option1": "#### 选项1：编辑您的Excel文件（推荐）",
+    "solution1_steps": [
+      "打开您的Excel文件",
+      "将列标题重命名为上述最简单的选项",
+      "示例：'订单号' → 'po'，'物料代码' → 'item'，'总张数' → 'pcs'",
+      "尽可能使用简单的小写英文单词",
+      "保存文件并重新尝试处理"
+    ],
+    "solution_option2": "#### 选项2：报告给管理员",
+    "solution2_steps": [
+      "截取Excel表头的屏幕截图",
+      "记录哪些列包含哪些数据",
+      "联系系统管理员并提供：",
+      "- Excel文件表头的屏幕截图",
+      "- 每列包含数据的描述",
+      "- 请求将您的表头名称添加到系统映射中"
+    ],
+    "example_mapping": "📝 表头映射示例",
+    "example_desc": "以下是如何映射常见变体的示例：",
+    "example_table": [
+      "**您的表头** → **最简单的更改** → **映射到什么**",
+      "'订单号' → 'po' → PO编号（发票关键）",
+      "'物料代码' → 'item' → 项目代码（发票关键）",
+      "'总张数' → 'pcs' → 件数/数量（发票关键）",
+      "'单价' → 'unit' → 单价（发票关键）",
+      "'金额' → 'amount' → 总金额（发票关键）",
+      "'出货数量(sf)' → 'sqft' → 平方英尺（发票关键）",
+      "'净重' → 'net' → 净重",
+      "'毛重' → 'gross' → 毛重",
+      "'TTX编号' → 'production_order_no' → 生产订单",
+      "'材积' → 'cbm' → CBM/备注"
+    ],
+    "best_practices_headers": "💡 Excel表头最佳实践",
+    "header_best_practices": [
+      "**尽可能使用英文名称**以获得更好的兼容性",
+      "**保持表头简单** - 避免特殊字符",
+      "**保持一致性** - 在所有文件中使用相同的表头名称",
+      "**数据列之间无空列**",
+      "**仅第一行** - 将表头放在Excel文件的第一行"
+    ],
+    "admin_contact": "📞 需要映射帮助？",
+    "admin_help": [
+      "如果您经常使用具有非标准表头的Excel文件：",
+      "联系管理员将您的表头变体添加到系统中",
+      "提供典型Excel文件格式的示例",
+      "管理员可以配置系统以识别您的特定表头名称"
+    ]
+  },
+  "troubleshooting": {
+    "title": "❓ 故障排除和常见问题",
+    "common_issues": "🚨 常见问题",
+    "issue0_title": "🔧 最常见：表头无法识别",
+    "issue0_desc": "**90%的问题都是由于列标题不正确造成的！**",
+    "issue0_solution": "**解决方案：查看本指南中的Header Mapping标签页以获取所需的确切表头。**",
+    "hq_headers_label": "**高质量皮革所需表头：**",
+    "hq_headers_list": ["inv_no", "inv_date", "inv_ref", "po", "item", "pcs", "sqft", "pallet_count", "unit", "amount", "net", "gross", "cbm", "production_order_no"],
+    "second_layer_note": "**二层皮革：** 表头更灵活，但必须包括PO、项目描述、数量和重量。",
+    "solution_tip": "💡 这解决了90%的处理问题！",
+    "issue0_headers": [
+      "'po' 用于PO编号",
+      "'item' 用于项目代码",
+      "'pcs' 用于数量",
+      "'unit' 用于单价",
+      "'amount' 用于总金额",
+      "'sqft' 用于平方英尺"
+    ],
+    "issue1_title": "❌ 我的Excel文件无法处理",
+    "issue1_causes": "**可能的原因：**",
+    "issue1_cause_list": [
+      "不支持Excel文件格式（使用.xlsx）",
+      "❗ **最常见原因**：列标题错误 - 系统找不到您的数据！",
+      "缺少必需的列（PO、Item、Amount等）",
+      "数据格式错误（数字列中有文本）"
+    ],
+    "issue1_solutions": "**解决方案：**",
+    "issue1_solution_list": [
+      "将文件保存为.xlsx格式",
+      "🔧 **先检查HEADER MAPPING标签** - 修复您的列标题！",
+      "使用简单标题如：'po', 'item', 'pcs', 'unit', 'amount', 'sqft'",
+      "确保数字格式为数字，而不是文本"
+    ],
+    "issue2_title": "⏳ 处理时间过长",
+    "issue2_causes": "**这可能发生在：**",
+    "issue2_cause_list": [
+      "Excel文件非常大",
+      "文件有很多空行",
+      "Excel文件中有复杂公式"
+    ],
+    "issue2_solutions": "**解决方案：**",
+    "issue2_solution_list": [
+      "从Excel文件中删除空行",
+      "将数据复制到新的干净Excel文件",
+      "如果问题持续存在，请联系支持"
+    ],
+    "issue3_title": "🔍 我找不到我的发票",
+    "issue3_causes": "**检查这些事项：**",
+    "issue3_cause_list": [
+      "发票实际上在数据库中吗？（检查\"Database\"）",
+      "您是否使用正确的参考编号搜索？",
+      "发票是否已被作废？",
+      "检查您的日期筛选器"
+    ],
+    "issue4_title": "💾 我的数据消失了",
+    "issue4_desc": "**不要惊慌！您的数据可能：**",
+    "issue4_cause_list": [
+      "被筛选掉了（检查您的日期/搜索筛选器）",
+      "处于不同状态（检查作废发票）",
+      "在备份文件中"
+    ],
+    "issue4_recovery": "**恢复步骤：**",
+    "issue4_recovery_list": [
+      "清除\"Database\"中的所有筛选器",
+      "检查\"Backup Database\"中的最近备份",
+      "联系您的系统管理员"
+    ],
+    "issue5_title": "🚫 没有数据处理/空结果",
+    "issue5_desc": "**Excel文件上传但没有创建发票：**",
+    "issue5_cause_list": [
+      "❗ **第一原因**：列标题不符合系统期望",
+      "系统找不到PO、Item、Amount或其他关键列",
+      "标题语言或格式错误",
+      "列名中有拼写错误"
+    ],
+    "issue5_solutions": "**解决方案：**",
+    "issue5_solution_list": [
+      "🔧 **转到HEADER MAPPING标签** - 这解决了90%的问题！",
+      "使用最简单的标题：'po', 'item', 'pcs', 'unit', 'amount', 'sqft'",
+      "检查您的Excel标题是否与示例完全匹配",
+      "如果仍然失败，尝试Header Mapping标签中列出的替代标题"
+    ],
+    "getting_help": "📞 获取帮助",
+    "before_help": "#### 寻求帮助前：",
+    "before_help_list": [
+      "🔧 **先检查HEADER MAPPING标签** - 解决大多数问题！",
+      "验证您的Excel标题是否符合系统要求",
+      "尝试重启应用程序",
+      "检查您的Excel文件是否适用于其他数据",
+      "记录您看到的任何错误消息"
+    ],
+    "when_contacting": "#### 联系支持时：",
+    "when_contacting_list": [
+      "描述您试图做什么",
+      "分享任何错误消息",
+      "提及您正在处理哪个文件",
+      "如果有帮助，请包含截图"
+    ],
+    "pro_tips": "💡 成功的专业提示",
+    "excel_tips": "#### Excel文件提示：",
+    "excel_tips_list": [
+      "保持文件整洁有序",
+      "使用一致的列名",
+      "删除空行",
+      "保存为.xlsx格式"
+    ],
+    "data_tips": "#### 数据管理：",
+    "data_tips_list": [
+      "定期创建备份",
+      "接受前审核数据",
+      "使用清晰一致的命名",
+      "保留原始Excel文件"
+    ],
+    "system_tips": "#### 系统使用：",
+    "system_tips_list": [
+      "在非高峰时间处理文件",
+      "处理期间不要关闭浏览器",
+      "定期检查仪表板",
+      "导出重要报告"
+    ]
+  },
+  "footer": {
+    "help_contact": "📧 需要更多帮助？联系您的系统管理员",
+    "last_updated": "🔄 最后更新：2025年7月"
+  }
+}

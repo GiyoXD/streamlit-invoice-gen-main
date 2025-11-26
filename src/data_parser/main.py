@@ -631,9 +631,6 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
         for table_index, table_data in processed_tables.items():
             if 'pallet_count' in table_data:
                 logging.info(f"Final pallet_count in table {table_index}: {table_data['pallet_count']} (types: {[type(v) for v in table_data['pallet_count']]})")
-
-        # --- Log Initial Aggregation Results (DEBUG Level) ---
-        if logging.getLogger().getEffectiveLevel() <= logging.DEBUG:
             # Log Standard Results
             log_str_std = pprint.pformat(global_standard_aggregation_results)
             if len(log_str_std) > MAX_LOG_DICT_LEN: log_str_std = log_str_std[:MAX_LOG_DICT_LEN] + "\n... (output truncated)"

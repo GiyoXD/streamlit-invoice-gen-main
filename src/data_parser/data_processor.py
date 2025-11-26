@@ -657,8 +657,8 @@ def aggregate_custom_by_po_item(
         # Convert SQFT to Decimal for summation (default to 0 if fails/None)
         sqft_dec = _convert_to_decimal(sqft_raw, f"{log_row_context} SQFT")
         if sqft_dec is None:
-            # logging.debug(f"{log_row_context}: SQFT value '{sqft_raw}' is None or failed conversion. Using 0.") # Reduced verbosity
-            sqft_dec = decimal.Decimal(0)
+             # logging.debug(f"{log_row_context}: SQFT value '{sqft_raw}' is None or failed conversion. Using 0.") # Reduced verbosity
+             sqft_dec = decimal.Decimal(0)
         else:
              successful_conversions_sqft +=1
 
@@ -683,7 +683,6 @@ def aggregate_custom_by_po_item(
 
         # Store the updated dictionary back into the global map
         aggregated_results[key] = current_sums
-        # logging.debug(f"{log_row_context}: Global sums for key {key} AFTER add = {aggregated_results[key]}") # Reduced verbosity
 
 
     # --- Log summary for this table's contribution ---
@@ -692,9 +691,136 @@ def aggregate_custom_by_po_item(
     logging.info(f"{prefix} Amount values successfully converted/defaulted for {successful_conversions_amount} rows.")
     logging.info(f"{prefix} Global custom aggregation map now contains {len(aggregated_results)} unique (PO, Item, None, Description) keys.")
 
-    # Log the state of the map at DEBUG level after processing this table
-    # logging.debug(f"{prefix} Global Custom Aggregated Results Dictionary (after this table):\n{pprint.pformat(aggregated_results)}") # Keep DEBUG for detailed tracing if needed
+    return aggregated_results
 
-    return aggregated_results # Return the modified global map
 
-# --- END MODIFIED FILE: data_processor.py ---
+def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, Any]:
+    """
+    Calculates the leather summary (PCS, SQFT, Net, Gross, Pallet Count) per leather type.
+    Iterates through rows to sum values for each leather type found in 'description'.
+    """
+    # Initialize summary structure with default 0s
+    summary = {
+        'BUFFALO': {'pcs': 0, 'sqft': decimal.Decimal(0), 'net': decimal.Decimal(0), 'gross': decimal.Decimal(0), 'pallet_count': 0},
+        'COW': {'pcs': 0, 'sqft': decimal.Decimal(0), 'net': decimal.Decimal(0), 'gross': decimal.Decimal(0), 'pallet_count': 0}
+    }
+
+    if not isinstance(processed_data, dict):
+        return summary
+
+    # Get columns - handle missing description by checking other columns length
+    description_list = processed_data.get('description', [])
+    
+    # robustly determine num_rows
+    lists_to_check = [processed_data.get(col) for col in ['po', 'item', 'sqft', 'amount', 'net', 'gross', 'quantity', 'pcs'] if processed_data.get(col)]
+    if description_list:
+        num_rows = len(description_list)
+    elif lists_to_check:
+        num_rows = len(lists_to_check[0])
+    else:
+        num_rows = 0
+
+    # Get other columns safely
+    pcs_list = processed_data.get('pcs', [])
+    sqft_list = processed_data.get('sqft', [])
+    net_list = processed_data.get('net', [])
+    gross_list = processed_data.get('gross', [])
+    pallet_count_list = processed_data.get('pallet_count', [])
+
+    for i in range(num_rows):
+        desc = str(description_list[i]).upper() if i < len(description_list) and description_list[i] else ""
+        
+        leather_type = None
+        if "BUFFALO" in desc:
+            leather_type = 'BUFFALO'
+        elif "COW" in desc:
+            leather_type = 'COW'
+        
+        if leather_type:
+            # Sum PCS
+            try:
+                val = pcs_list[i] if i < len(pcs_list) else 0
+                summary[leather_type]['pcs'] += int(float(val)) if val else 0
+            except (ValueError, TypeError): pass
+
+            # Sum SQFT
+            try:
+                val = sqft_list[i] if i < len(sqft_list) else 0
+                summary[leather_type]['sqft'] += _convert_to_decimal(val) if val else 0
+            except (ValueError, TypeError): pass
+
+            # Sum Net
+            try:
+                val = net_list[i] if i < len(net_list) else 0
+                summary[leather_type]['net'] += _convert_to_decimal(val) if val else 0
+            except (ValueError, TypeError): pass
+
+            # Sum Gross
+            try:
+                val = gross_list[i] if i < len(gross_list) else 0
+                summary[leather_type]['gross'] += _convert_to_decimal(val) if val else 0
+            except (ValueError, TypeError): pass
+
+            # Sum Pallet Count (if available per row)
+            try:
+                val = pallet_count_list[i] if i < len(pallet_count_list) else 0
+                summary[leather_type]['pallet_count'] += int(float(val)) if val else 0
+            except (ValueError, TypeError): pass
+
+    return summary
+
+def calculate_weight_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, decimal.Decimal]:
+    """
+    Calculates the weight summary (Net Weight and Gross Weight).
+    
+    Args:
+        processed_data: Dictionary representing the data of the current table.
+        
+    Returns:
+        Dictionary containing 'net' and 'gross' weights.
+    """
+    summary = {'net': decimal.Decimal(0), 'gross': decimal.Decimal(0)}
+    
+    if not isinstance(processed_data, dict):
+        return summary
+        
+    # Sum Net Weight
+    net_values = processed_data.get('net', [])
+    for val in net_values:
+        dec_val = _convert_to_decimal(val)
+        if dec_val is not None:
+            summary['net'] += dec_val
+            
+    # Sum Gross Weight
+    gross_values = processed_data.get('gross', [])
+    for val in gross_values:
+        dec_val = _convert_to_decimal(val)
+        if dec_val is not None:
+            summary['gross'] += dec_val
+            
+    return summary
+
+def calculate_pallet_summary(processed_data: Dict[str, List[Any]]) -> int:
+    """
+    Calculates the total pallet count for the table.
+    
+    Args:
+        processed_data: Dictionary representing the data of the current table.
+        
+    Returns:
+        Total pallet count as integer.
+    """
+    total_pallets = 0
+    
+    if not isinstance(processed_data, dict):
+        return 0
+        
+    pallet_values = processed_data.get('pallet_count', [])
+    for val in pallet_values:
+        if val is not None:
+            try:
+                total_pallets += int(float(val))
+            except (ValueError, TypeError):
+                pass
+                
+    return total_pallets

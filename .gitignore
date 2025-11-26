@@ -25,6 +25,7 @@ __pycache__/
 # These contain user data, generated files, and temporary data
 # that should not be tracked in version control
 data/
+!src/invoice_generator/src/data/
 result/
 temp_uploads/
 
@@ -54,9 +55,11 @@ venv/
 
 # --- Sensitive Information ---
 # These files may contain sensitive information and should not be tracked.
-data/
+
 pages/nuke_password.txt
 
 recycle/
 
 
+
+!*.json

@@ -17,7 +17,7 @@ import logging
 from typing import Any, Dict, Optional, Tuple
 from openpyxl.worksheet.worksheet import Worksheet
 
-from invoice_generator.data.global_summary_calculator import GlobalSummaryCalculator
+
 
 logger = logging.getLogger(__name__)
 
@@ -144,17 +144,43 @@ class BuilderConfigResolver:
         if self.invoice_data and 'processed_tables_data' in self.invoice_data:
             base_context['processed_tables_data'] = self.invoice_data['processed_tables_data']
             
-            # Use GlobalSummaryCalculator to compute all global summaries
-            # This provides clean separation: BuilderConfigResolver bundles, GlobalSummaryCalculator calculates
-            try:
-                calculator = GlobalSummaryCalculator(self.invoice_data['processed_tables_data'])
-                summaries = calculator.calculate_all()
+            # Aggregate pre-calculated summaries from data_parser
+            # This replaces GlobalSummaryCalculator with a lighter-weight aggregation
+            total_net = 0.0
+            total_gross = 0.0
+            total_pallets = 0
+            
+            for table_data in self.invoice_data['processed_tables_data'].values():
+                # Check for footer_data first
+                footer_data = table_data.get('footer_data', table_data)
+
+                # Aggregate weights
+                if 'weight_summary' in footer_data:
+                    ws = footer_data['weight_summary']
+                    total_net += float(ws.get('net', 0.0))
+                    total_gross += float(ws.get('gross', 0.0))
                 
-                # Add calculated summaries to context
-                base_context.update(summaries)
-                logger.debug(f"Added global summaries to context: {summaries}")
-            except Exception as e:
-                logger.warning(f"Failed to calculate global summaries: {e}")
+                # Aggregate pallets
+                if 'pallet_summary_total' in footer_data:
+                    total_pallets += int(footer_data['pallet_summary_total'])
+                elif 'pallet_count' in table_data:
+                    # Fallback if summary missing
+                    for p in table_data['pallet_count']:
+                        if p is not None:
+                            try:
+                                total_pallets += int(float(p))
+                            except (ValueError, TypeError):
+                                pass
+
+            summaries = {
+                'total_net_weight': total_net,
+                'total_gross_weight': total_gross,
+                'total_pallets': total_pallets
+            }
+            
+            # Add calculated summaries to context
+            base_context.update(summaries)
+            logger.debug(f"Added global summaries to context: {summaries}")
         
         # Merge in any overrides and additional context
         base_context.update(self.context_overrides)

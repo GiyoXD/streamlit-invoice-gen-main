@@ -150,6 +150,16 @@ class TableDataAdapter:
                 
                 logger.info(f"Merged {num_static_values} static values into first {num_static_values} data rows")
         
+        # Extract summaries if available in data source
+        leather_summary = None
+        weight_summary = None
+        pallet_summary_total = None
+        
+        if isinstance(self.data_source, dict):
+            leather_summary = self.data_source.get('leather_summary')
+            weight_summary = self.data_source.get('weight_summary')
+            pallet_summary_total = self.data_source.get('pallet_summary_total')
+
         return {
             'data_rows': data_rows,
             'pallet_counts': pallet_counts,
@@ -163,7 +173,10 @@ class TableDataAdapter:
                 'apply_special_border_rule': parsed['apply_special_border_rule']
             },
             'formula_rules': parsed['formula_rules'],
-            'static_content': self.static_content  # Pass through static content from layout_bundle
+            'static_content': self.static_content,  # Pass through static content from layout_bundle
+            'leather_summary': leather_summary,
+            'weight_summary': weight_summary,
+            'pallet_summary_total': pallet_summary_total
         }
     
     def _parse_mapping_rules(self) -> Dict[str, Any]:
