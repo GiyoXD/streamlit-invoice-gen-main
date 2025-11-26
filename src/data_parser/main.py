@@ -672,6 +672,26 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
 
         # --- End Final Logging ---
 
+        # --- Calculate Footer Data ---
+        logging.info("--- Calculating Footer Data ---")
+        
+        # Calculate per-table totals
+        table_footer_data = {}
+        for table_id, table_data in processed_tables.items():
+            table_footer_data[table_id] = data_processor.calculate_footer_totals(table_data)
+            logging.info(f"Table {table_id} Footer: {table_footer_data[table_id]}")
+        
+        # Calculate grand total (merged across all tables)
+        merged_processed_data = {
+            "pcs": [], "sqft": [], "net": [], "gross": [], "cbm": [], "amount": [], "pallet_count": []
+        }
+        for table_data in processed_tables.values():
+            for key in merged_processed_data:
+                if key in table_data:
+                    merged_processed_data[key].extend(table_data[key])
+        
+        grand_total_footer = data_processor.calculate_footer_totals(merged_processed_data)
+        logging.info(f"Grand Total Footer: {grand_total_footer}")
 
         # --- 8. Generate JSON Output ---
         logging.info("--- Preparing Data for JSON Output ---")
@@ -690,6 +710,12 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
                 },
                  # Include processed table data (potentially large)
                  "processed_tables_data": make_json_serializable(processed_tables),
+                 
+                 # Include Footer Data - both per-table and grand total
+                 "footer_data": {
+                     "table_totals": make_json_serializable(table_footer_data),  # Per-table totals
+                     "grand_total": make_json_serializable(grand_total_footer)   # Overall grand total
+                 },
 
                 # Include BOTH aggregation results explicitly
                 "standard_aggregation_results": make_json_serializable(global_standard_aggregation_results),

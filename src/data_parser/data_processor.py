@@ -824,3 +824,63 @@ def calculate_pallet_summary(processed_data: Dict[str, List[Any]]) -> int:
                 pass
                 
     return total_pallets
+
+def calculate_footer_totals(processed_data: Dict[str, List[Any]]) -> Dict[str, Any]:
+    """
+    Calculates totals for footer fields based on processed data.
+    Returns a dictionary with keys matching the expected footer data structure.
+    """
+    totals = {
+        "total_pcs": 0,
+        "total_sqft": decimal.Decimal(0),
+        "total_net": decimal.Decimal(0),
+        "total_gross": decimal.Decimal(0),
+        "total_cbm": decimal.Decimal(0),
+        "total_amount": decimal.Decimal(0),
+        "total_pallets": 0
+    }
+    
+    if not processed_data:
+        return totals
+
+    # Helper to safely add
+    def safe_add_decimal(key, value):
+        if value is not None:
+            try:
+                # Handle strings with commas if necessary, though data parser should have cleaned it
+                val_str = str(value).replace(',', '')
+                totals[key] += decimal.Decimal(val_str)
+            except (decimal.InvalidOperation, ValueError, TypeError):
+                pass
+
+    def safe_add_int(key, value):
+        if value is not None:
+            try:
+                val_str = str(value).replace(',', '')
+                totals[key] += int(float(val_str))
+            except (ValueError, TypeError):
+                pass
+
+    # Sum each list independently
+    for val in processed_data.get('pcs', []):
+        safe_add_int('total_pcs', val)
+        
+    for val in processed_data.get('sqft', []):
+        safe_add_decimal('total_sqft', val)
+        
+    for val in processed_data.get('net', []):
+        safe_add_decimal('total_net', val)
+        
+    for val in processed_data.get('gross', []):
+        safe_add_decimal('total_gross', val)
+        
+    for val in processed_data.get('cbm', []):
+        safe_add_decimal('total_cbm', val)
+        
+    for val in processed_data.get('amount', []):
+        safe_add_decimal('total_amount', val)
+        
+    for val in processed_data.get('pallet_count', []):
+        safe_add_int('total_pallets', val)
+
+    return totals

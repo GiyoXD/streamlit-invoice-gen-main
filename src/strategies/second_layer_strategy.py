@@ -240,6 +240,72 @@ class SecondLayerLeatherStrategy(InvoiceGenerationStrategy):
             "unit_price": {"type": "number_input", "label": "Unit Price", "default": 0.61, "min": 0.0, "step": 0.01}
         }
 
+    def _update_and_aggregate_json(self, json_path: Path, po_number: str, **kwargs) -> Optional[Dict[str, Any]]:
+        """
+        Read footer_data from JSON (calculated by data parser) and return summary.
+        The calculation is now done in the data parser, not here.
+        Footer data now has two structures:
+        - table_totals: per-table totals
+        - grand_total: overall totals across all tables
+        """
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Get footer_data calculated by the data parser
+            footer_data = data.get('footer_data', {})
+            aggregated_summary = data.get('aggregated_summary', {})
+            
+            # Get grand_total from footer_data (new structure)
+            # Support both old flat structure and new nested structure
+            if 'grand_total' in footer_data:
+                grand_total = footer_data.get('grand_total', {})
+            else:
+                # Fallback for old structure
+                grand_total = footer_data
+            
+            # Build summary_data from grand_total and aggregated_summary
+            summary_data = {
+                "po_number": po_number,
+                "pcs": grand_total.get('total_pcs', 0),
+                "sqft": float(grand_total.get('total_sqft', 0)),
+                "net": float(grand_total.get('total_net', 0)),
+                "gross": float(grand_total.get('total_gross', 0)),
+                "cbm": float(grand_total.get('total_cbm', 0)),
+                "amount": float(grand_total.get('total_amount', 0)),
+                "pallet_count": grand_total.get('total_pallets', 0),
+                "item": aggregated_summary.get('item', 'N/A'),
+                "po": aggregated_summary.get('po', 'N/A'),
+            }
+            
+            # Update metadata with invoice details from kwargs
+            inv_ref = kwargs.get('inv_ref')
+            inv_date = kwargs.get('inv_date')
+            unit_price = kwargs.get('unit_price')
+            
+            cambodia_tz = ZoneInfo("Asia/Phnom_Penh")
+            creating_date_str = datetime.datetime.now(cambodia_tz).strftime("%Y-%m-%d %H:%M:%S")
+            
+            # Update JSON with metadata
+            if 'metadata' not in data:
+                data['metadata'] = {}
+            
+            data['metadata']['inv_ref'] = inv_ref
+            data['metadata']['inv_date'] = inv_date
+            data['metadata']['unit_price'] = unit_price
+            data['metadata']['creating_date'] = creating_date_str
+            data['metadata']['po_number'] = po_number
+            
+            # Write updated data back to JSON
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=4, ensure_ascii=False, default=str)
+            
+            return summary_data
+            
+        except Exception as e:
+            logging.error(f"Error in _update_and_aggregate_json: {e}")
+            return None
+
     def apply_overrides(self, json_path: Path, overrides: Dict[str, Any]) -> bool:
         """Apply overrides to 2nd layer JSON using TARGET_HEADERS_MAP"""
         try:

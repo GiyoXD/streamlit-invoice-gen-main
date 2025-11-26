@@ -117,9 +117,45 @@ def aggregate_extracted_data(all_tables_data):
     
     return aggregated_summary
 
-def write_output_json(raw_data, aggregated_summary, output_filepath):
+def calculate_footer_data(all_tables_data):
+    """
+    Calculates footer totals from all extracted tables.
+    Returns both per-table totals and grand total.
+    This moves footer calculation from frontend to data parser.
+    """
+    from . import data_processor
+    
+    # Calculate per-table totals
+    table_totals = {}
+    for table_id, table_data in all_tables_data.items():
+        table_totals[table_id] = data_processor.calculate_footer_totals(table_data)
+    
+    # Merge all table data for grand total calculation
+    merged_data = {
+        "pcs": [], "sqft": [], "net": [], "gross": [], 
+        "cbm": [], "amount": [], "pallet_count": []
+    }
+    
+    for table_data in all_tables_data.values():
+        for key in merged_data:
+            if key in table_data:
+                merged_data[key].extend(table_data[key])
+    
+    # Calculate grand total
+    grand_total = data_processor.calculate_footer_totals(merged_data)
+    
+    return {
+        "table_totals": table_totals,
+        "grand_total": grand_total
+    }
+
+def write_output_json(raw_data, aggregated_summary, footer_data, output_filepath):
     """Generates and saves the final JSON output."""
-    final_output = {"raw_data": raw_data, "aggregated_summary": aggregated_summary}
+    final_output = {
+        "raw_data": raw_data, 
+        "aggregated_summary": aggregated_summary,
+        "footer_data": footer_data
+    }
     output_json = json.dumps(final_output, indent=4, default=str)
 
     logging.info("--- Aggregation Complete! ---")
@@ -156,9 +192,12 @@ def run_final_extraction(input_filepath, output_filepath):
 
     # 3. Aggregation
     aggregated_summary = aggregate_extracted_data(processed_data)
+    
+    # 4. Calculate Footer Data (moved from frontend)
+    footer_data = calculate_footer_data(processed_data)
 
-    # 4. Finalize and Output JSON
-    write_output_json(processed_data, aggregated_summary, output_filepath)
+    # 5. Finalize and Output JSON
+    write_output_json(processed_data, aggregated_summary, footer_data, output_filepath)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract and process data from an Excel invoice file.")
