@@ -683,7 +683,9 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
         
         # Calculate grand total (merged across all tables)
         merged_processed_data = {
-            "pcs": [], "sqft": [], "net": [], "gross": [], "cbm": [], "amount": [], "pallet_count": []
+            "pcs": [], "sqft": [], "net": [], "gross": [], "cbm": [], "amount": [], "pallet_count": [],
+            "description": [], "desc": [],  # Include both description field names for leather_summary calculation
+            "po": [], "item": [], "unit_price": [], "price": [], "unit": []  # Include fields for aggregate_per_po_with_pallets
         }
         for table_data in processed_tables.values():
             for key in merged_processed_data:
@@ -692,6 +694,17 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
         
         grand_total_footer = data_processor.calculate_footer_totals(merged_processed_data)
         logging.info(f"Grand Total Footer: {grand_total_footer}")
+        
+        # --- Calculate Add-on Data (Leather Summary) ---
+        logging.info("--- Calculating Add-on Data ---")
+        
+        # Calculate leather summary (BUFFALO vs COW) across all tables
+        leather_summary = data_processor.calculate_leather_summary(merged_processed_data)
+        logging.info(f"Leather Summary: {leather_summary}")
+        
+        # Calculate normal aggregate per PO with pallets (group by PO + price)
+        normal_aggregate_per_po = data_processor.aggregate_per_po_with_pallets(merged_processed_data)
+        logging.info(f"Normal Aggregate Per PO: {len(normal_aggregate_per_po)} unique PO+price combinations")
 
         # --- 8. Generate JSON Output ---
         logging.info("--- Preparing Data for JSON Output ---")
@@ -714,12 +727,18 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
                  # Include Footer Data - both per-table and grand total
                  "footer_data": {
                      "table_totals": make_json_serializable(table_footer_data),  # Per-table totals
-                     "grand_total": make_json_serializable(grand_total_footer)   # Overall grand total
+                     "grand_total": make_json_serializable(grand_total_footer),   # Overall grand total
+                     "add_ons": {
+                         "leather_summary_addon": make_json_serializable(leather_summary),  # BUFFALO vs COW summary
+                     }
                  },
 
                 # Include BOTH aggregation results explicitly
                 "standard_aggregation_results": make_json_serializable(global_standard_aggregation_results),
                 "custom_aggregation_results": make_json_serializable(global_custom_aggregation_results),
+                
+                # Normal aggregate per PO with pallets (group by PO + price)
+                "normal_aggregate_per_po_with_pallets": make_json_serializable(normal_aggregate_per_po),
 
                 # Include the final compounded result (derived from one of the above, based on mode)
                 "final_DAF_compounded_result": make_json_serializable(global_DAF_compounded_result)

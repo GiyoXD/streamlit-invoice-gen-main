@@ -6,7 +6,7 @@
         "DAF_chunk_size": 2,
         "DAF_intra_separator": "/",
         "DAF_inter_separator": "\\n",
-        "timestamp": "2025-11-26T14:16:29.323036"
+        "timestamp": "2025-11-26T15:50:01.990878"
     },
     "processed_tables_data": {
         "1": {
@@ -911,121 +911,273 @@
             "total_cbm": "104.9796",
             "total_amount": "487230.380",
             "total_pallets": 45
+        },
+        "add_ons": {
+            "leather_summary_addon": {
+                "BUFFALO": {
+                    "pcs": 6219,
+                    "sqft": "228936.29999999999954",
+                    "net": "14943.0000",
+                    "gross": "15978.0000",
+                    "pallet_count": 23
+                },
+                "COW": {
+                    "pcs": 4232,
+                    "sqft": "210719.50000000000218",
+                    "net": "17446.5000",
+                    "gross": "18436.5000",
+                    "pallet_count": 22
+                }
+            }
         }
     },
     "standard_aggregation_results": {
         "('PT1ZX77', 140499, Decimal('1.27'), None)": {
-            "sqft_sum": "63552.0",
-            "amount_sum": "80711.040"
+            "sqft_sum": "63552.00000000000109",
+            "amount_sum": "80711.04000000000124"
         },
         "('PT23D48', 140513, Decimal('1.36'), None)": {
-            "sqft_sum": "13798.6",
-            "amount_sum": "18766.096"
+            "sqft_sum": "13798.59999999999964",
+            "amount_sum": "18766.09600000000020"
         },
         "('PT25423', 140518, Decimal('0.9'), None)": {
             "sqft_sum": "8271.5",
-            "amount_sum": "7444.35"
+            "amount_sum": "7444.35000000000036"
         },
         "('PT27N10', 140519, Decimal('0.93'), None)": {
-            "sqft_sum": "40675.8",
-            "amount_sum": "37828.494"
+            "sqft_sum": "40675.79999999999904",
+            "amount_sum": "37828.49400000000060"
         },
         "('PT28253', 140522, Decimal('1.42'), None)": {
-            "sqft_sum": "111603.4",
-            "amount_sum": "158476.828"
+            "sqft_sum": "111603.40000000000100",
+            "amount_sum": "158476.82799999999997"
         },
         "('PT2C925', 140467, Decimal('1'), None)": {
-            "sqft_sum": "3022.9",
-            "amount_sum": "3022.9"
+            "sqft_sum": "3022.90000000000009",
+            "amount_sum": "3022.90000000000009"
         },
         "('PT29J72', 140519, Decimal('0.93'), None)": {
-            "sqft_sum": "16122.2",
-            "amount_sum": "14993.646"
+            "sqft_sum": "16122.20000000000050",
+            "amount_sum": "14993.64600000000018"
         },
         "('PT29R54', 140478, Decimal('0.9'), None)": {
-            "sqft_sum": "92684.8",
-            "amount_sum": "83416.32"
+            "sqft_sum": "92684.79999999999927",
+            "amount_sum": "83416.31999999999987"
         },
         "('PT2B090', 140478, Decimal('0.86'), None)": {
             "sqft_sum": "19329.8",
-            "amount_sum": "16623.628"
+            "amount_sum": "16623.62799999999909"
         },
         "('PT2B845', 140478, Decimal('0.86'), None)": {
-            "sqft_sum": "60123.7",
-            "amount_sum": "51706.382"
+            "sqft_sum": "60123.70000000000073",
+            "amount_sum": "51706.38200000000052"
         },
         "('PT23932', 140513, Decimal('1.36'), None)": {
-            "sqft_sum": "10471.1",
-            "amount_sum": "14240.696"
+            "sqft_sum": "10471.10000000000036",
+            "amount_sum": "14240.69599999999991"
         }
     },
     "custom_aggregation_results": {
         "('PT1ZX77', 140499, None, None)": {
-            "sqft_sum": "63552.0",
-            "amount_sum": "80711.040"
+            "sqft_sum": "63552.00000000000109",
+            "amount_sum": "80711.04000000000124"
         },
         "('PT23D48', 140513, None, None)": {
-            "sqft_sum": "13798.6",
-            "amount_sum": "18766.096"
+            "sqft_sum": "13798.59999999999964",
+            "amount_sum": "18766.09600000000020"
         },
         "('PT25423', 140518, None, None)": {
             "sqft_sum": "8271.5",
-            "amount_sum": "7444.35"
+            "amount_sum": "7444.35000000000036"
         },
         "('PT27N10', 140519, None, None)": {
-            "sqft_sum": "40675.8",
-            "amount_sum": "37828.494"
+            "sqft_sum": "40675.79999999999904",
+            "amount_sum": "37828.49400000000060"
         },
         "('PT28253', 140522, None, None)": {
-            "sqft_sum": "111603.4",
-            "amount_sum": "158476.828"
+            "sqft_sum": "111603.40000000000100",
+            "amount_sum": "158476.82799999999997"
         },
         "('PT2C925', 140467, None, None)": {
-            "sqft_sum": "3022.9",
-            "amount_sum": "3022.9"
+            "sqft_sum": "3022.90000000000009",
+            "amount_sum": "3022.90000000000009"
         },
         "('PT29J72', 140519, None, None)": {
-            "sqft_sum": "16122.2",
-            "amount_sum": "14993.646"
+            "sqft_sum": "16122.20000000000050",
+            "amount_sum": "14993.64600000000018"
         },
         "('PT29R54', 140478, None, None)": {
-            "sqft_sum": "92684.8",
-            "amount_sum": "83416.32"
+            "sqft_sum": "92684.79999999999927",
+            "amount_sum": "83416.31999999999987"
         },
         "('PT2B090', 140478, None, None)": {
             "sqft_sum": "19329.8",
-            "amount_sum": "16623.628"
+            "amount_sum": "16623.62799999999909"
         },
         "('PT2B845', 140478, None, None)": {
-            "sqft_sum": "60123.7",
-            "amount_sum": "51706.382"
+            "sqft_sum": "60123.70000000000073",
+            "amount_sum": "51706.38200000000052"
         },
         "('PT23932', 140513, None, None)": {
-            "sqft_sum": "10471.1",
-            "amount_sum": "14240.696"
+            "sqft_sum": "10471.10000000000036",
+            "amount_sum": "14240.69599999999991"
         }
     },
+    "normal_aggregate_per_po_with_pallets": [
+        {
+            "po": "PT1ZX77",
+            "item": "140499",
+            "desc": "L DAHLMOORE ALMOND U13200",
+            "unit_price": "1.27",
+            "sqft": "63552.00000000000109",
+            "amount": "80711.04000000000124",
+            "pallet_count": 6,
+            "net": "6167.5000",
+            "gross": "6437.5000",
+            "cbm": "16.7112"
+        },
+        {
+            "po": "PT23932",
+            "item": "140513",
+            "desc": "L BEADEL SMOKE (01) U64506",
+            "unit_price": "1.36",
+            "sqft": "10471.10000000000036",
+            "amount": "14240.69599999999991",
+            "pallet_count": 1,
+            "net": "1011",
+            "gross": "1056",
+            "cbm": "3.0492"
+        },
+        {
+            "po": "PT23D48",
+            "item": "140513",
+            "desc": "L BEADEL SMOKE (01) U64506",
+            "unit_price": "1.36",
+            "sqft": "13798.59999999999964",
+            "amount": "18766.09600000000020",
+            "pallet_count": 2,
+            "net": "1301.0000",
+            "gross": "1391.0000",
+            "cbm": "4.2372"
+        },
+        {
+            "po": "PT25423",
+            "item": "140518",
+            "desc": "L BEAMAN PEAK TOFFEE U11436",
+            "unit_price": "0.9",
+            "sqft": "8271.5",
+            "amount": "7444.35000000000036",
+            "pallet_count": 1,
+            "net": "534",
+            "gross": "579",
+            "cbm": "1.7820"
+        },
+        {
+            "po": "PT27N10",
+            "item": "140519",
+            "desc": "L ModMax (Buffalo) Black 74305",
+            "unit_price": "0.93",
+            "sqft": "40675.79999999999904",
+            "amount": "37828.49400000000060",
+            "pallet_count": 4,
+            "net": "2539.0000",
+            "gross": "2719.0000",
+            "cbm": "9.3852"
+        },
+        {
+            "po": "PT28253",
+            "item": "140522",
+            "desc": "L MOSSANO CANYON 72907",
+            "unit_price": "1.42",
+            "sqft": "111603.40000000000100",
+            "amount": "158476.82799999999997",
+            "pallet_count": 11,
+            "net": "8288.0000",
+            "gross": "8783.0000",
+            "cbm": "26.6904"
+        },
+        {
+            "po": "PT29J72",
+            "item": "140519",
+            "desc": "L ModMax (Buffalo) Black 74305",
+            "unit_price": "0.93",
+            "sqft": "16122.20000000000050",
+            "amount": "14993.64600000000018",
+            "pallet_count": 2,
+            "net": "1062.0000",
+            "gross": "1152.0000",
+            "cbm": "3.6828"
+        },
+        {
+            "po": "PT29R54",
+            "item": "140478",
+            "desc": "L LEESWORTH BUFFALO DARK BROWN",
+            "unit_price": "0.9",
+            "sqft": "92684.79999999999927",
+            "amount": "83416.31999999999987",
+            "pallet_count": 9,
+            "net": "6057.0000",
+            "gross": "6462.0000",
+            "cbm": "19.8000"
+        },
+        {
+            "po": "PT2B090",
+            "item": "140478",
+            "desc": "L LEESWORTH BUFFALO DARK BROWN",
+            "unit_price": "0.86",
+            "sqft": "19329.8",
+            "amount": "16623.62799999999909",
+            "pallet_count": 2,
+            "net": "1287.0000",
+            "gross": "1377.0000",
+            "cbm": "4.1580"
+        },
+        {
+            "po": "PT2B845",
+            "item": "140478",
+            "desc": "L LEESWORTH BUFFALO DARK BROWN",
+            "unit_price": "0.86",
+            "sqft": "60123.70000000000073",
+            "amount": "51706.38200000000052",
+            "pallet_count": 6,
+            "net": "3998.0",
+            "gross": "4268.0",
+            "cbm": "13.7808"
+        },
+        {
+            "po": "PT2C925",
+            "item": "140467",
+            "desc": "L GENOA  COCONUT 47704",
+            "unit_price": "1",
+            "sqft": "3022.90000000000009",
+            "amount": "3022.90000000000009",
+            "pallet_count": 1,
+            "net": "145",
+            "gross": "190",
+            "cbm": "1.7028"
+        }
+    ],
     "final_DAF_compounded_result": {
         "1": {
             "combined_po": "PT1ZX77/PT23932\nPT23D48/PT25423\nPT27N10",
             "combined_item": "140499/140513\n140518/140519",
             "combined_description": "",
-            "total_sqft": "136769.0",
-            "total_amount": "158990.676"
+            "total_sqft": "136769.00000000000013",
+            "total_amount": "158990.67600000000231"
         },
         "2": {
             "combined_po": "PT28253/PT29J72\nPT29R54/PT2B090\nPT2B845",
             "combined_item": "140478/140519\n140522",
             "combined_description": "",
-            "total_sqft": "299863.9",
-            "total_amount": "325216.804"
+            "total_sqft": "299863.90000000000150",
+            "total_amount": "325216.80399999999963"
         },
         "3": {
             "combined_po": "PT2C925",
             "combined_item": "140467",
             "combined_description": "",
-            "total_sqft": "3022.9",
-            "total_amount": "3022.9"
+            "total_sqft": "3022.90000000000009",
+            "total_amount": "3022.90000000000009"
         }
     }
 }

@@ -21,12 +21,30 @@ class ProcessingError(Exception):
     pass
 
 def _convert_to_decimal(value: Any, context: str = "") -> Optional[decimal.Decimal]:
-    """Safely convert a value to Decimal, logging errors."""
+    """Safely convert a value to Decimal, logging errors.
+    
+    For floats, we round to a reasonable precision to avoid floating-point errors
+    like 0.30000000000000004 becoming an issue.
+    """
     prefix = "[_convert_to_decimal]"
     if isinstance(value, decimal.Decimal):
         return value
     if value is None:
         return None
+    
+    # Handle floats specially to avoid floating-point precision issues
+    # Round to 14 decimal places before converting to avoid issues like 0.30000000000000004
+    if isinstance(value, float):
+        # Use string formatting with precision to clean up float representation
+        value_str = f"{value:.14f}".rstrip('0').rstrip('.')
+        if not value_str or value_str == '-':
+            return None
+        try:
+            return decimal.Decimal(value_str)
+        except (decimal.InvalidOperation, TypeError, ValueError) as e:
+            logging.warning(f"{prefix} Could not convert float '{value}' to Decimal {context}: {e}")
+            return None
+    
     value_str = str(value).strip()
     if not value_str:
         return None
@@ -310,15 +328,33 @@ def distribute_values(
 
                          logging.debug(f"{log_row_context}: Distributing {current_val_dec} across {len(indices_with_valid_basis)} rows with positive basis using precision {dist_precision}.")
 
-                         # Distribute ONLY to rows with positive basis
-                         for k in indices_with_valid_basis:
-                             basis_val = basis_values_dec[k] # Known > 0
-                             proportion = basis_val / total_basis_in_block
-                             distributed_value = (current_val_dec * proportion).quantize(dist_precision, rounding=decimal.ROUND_HALF_UP)
-                             # Assign the calculated value to the processed list
-                             processed_col_values[k] = distributed_value
-                             distributed_sum_check += distributed_value
-                             logging.debug(f"{log_row_context}:   Index {k}: Basis={basis_val}, Prop={proportion:.6f}, Dist Val={distributed_value}")
+                         # Use remainder adjustment method to ensure exact sum
+                         # Distribute to all rows EXCEPT the last one, then assign remainder to the last
+                         num_valid_indices = len(indices_with_valid_basis)
+                         
+                         if num_valid_indices == 1:
+                             # Only one row - assign the entire value
+                             k = indices_with_valid_basis[0]
+                             processed_col_values[k] = current_val_dec.quantize(dist_precision, rounding=decimal.ROUND_HALF_UP)
+                             distributed_sum_check = processed_col_values[k]
+                             logging.debug(f"{log_row_context}:   Index {k}: Single row, assigned full value={processed_col_values[k]}")
+                         else:
+                             # Multiple rows - use remainder adjustment
+                             # Distribute to all but the last row
+                             for k in indices_with_valid_basis[:-1]:
+                                 basis_val = basis_values_dec[k]  # Known > 0
+                                 proportion = basis_val / total_basis_in_block
+                                 distributed_value = (current_val_dec * proportion).quantize(dist_precision, rounding=decimal.ROUND_HALF_UP)
+                                 processed_col_values[k] = distributed_value
+                                 distributed_sum_check += distributed_value
+                                 logging.debug(f"{log_row_context}:   Index {k}: Basis={basis_val}, Prop={proportion:.6f}, Dist Val={distributed_value}")
+                             
+                             # Last row gets the exact remainder to ensure perfect sum
+                             last_idx = indices_with_valid_basis[-1]
+                             remainder = current_val_dec - distributed_sum_check
+                             processed_col_values[last_idx] = remainder.quantize(dist_precision, rounding=decimal.ROUND_HALF_UP)
+                             distributed_sum_check += processed_col_values[last_idx]
+                             logging.debug(f"{log_row_context}:   Index {last_idx}: REMAINDER row, assigned={processed_col_values[last_idx]} (ensures exact sum)")
 
                          # Assign 0 to rows in the block that had missing/zero/negative basis
                          for k in block_indices:
@@ -330,7 +366,7 @@ def distribute_values(
                                      logging.warning(f"{log_row_context}:   Index {k}: Assigning 0 due to {log_reason}.")
 
 
-                         # --- Distribution Check ---
+                         # --- Distribution Check (should always pass now with remainder adjustment) ---
                          tolerance = dist_precision / decimal.Decimal(2)
                          diff = abs(distributed_sum_check - current_val_dec)
                          if not diff <= tolerance:
@@ -697,7 +733,9 @@ def aggregate_custom_by_po_item(
 def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, Any]:
     """
     Calculates the leather summary (PCS, SQFT, Net, Gross, Pallet Count) per leather type.
-    Iterates through rows to sum values for each leather type found in 'description'.
+    Iterates through rows to sum values for each leather type found in 'description' or 'desc'.
+    BUFFALO = rows containing "BUFFALO" in description
+    COW = rows NOT containing "BUFFALO" (all other leather)
     """
     # Initialize summary structure with default 0s
     summary = {
@@ -708,8 +746,8 @@ def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str,
     if not isinstance(processed_data, dict):
         return summary
 
-    # Get columns - handle missing description by checking other columns length
-    description_list = processed_data.get('description', [])
+    # Get columns - check both 'description' and 'desc' field names
+    description_list = processed_data.get('description', []) or processed_data.get('desc', [])
     
     # robustly determine num_rows
     lists_to_check = [processed_data.get(col) for col in ['po', 'item', 'sqft', 'amount', 'net', 'gross', 'quantity', 'pcs'] if processed_data.get(col)]
@@ -730,44 +768,181 @@ def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str,
     for i in range(num_rows):
         desc = str(description_list[i]).upper() if i < len(description_list) and description_list[i] else ""
         
+        # BUFFALO = contains "BUFFALO", COW = everything else (non-buffalo leather)
         leather_type = None
         if "BUFFALO" in desc:
             leather_type = 'BUFFALO'
-        elif "COW" in desc:
-            leather_type = 'COW'
+        else:
+            leather_type = 'COW'  # All non-buffalo is considered COW/regular leather
         
-        if leather_type:
-            # Sum PCS
-            try:
-                val = pcs_list[i] if i < len(pcs_list) else 0
-                summary[leather_type]['pcs'] += int(float(val)) if val else 0
-            except (ValueError, TypeError): pass
+        # Sum PCS
+        try:
+            val = pcs_list[i] if i < len(pcs_list) else 0
+            summary[leather_type]['pcs'] += int(float(val)) if val else 0
+        except (ValueError, TypeError): pass
 
-            # Sum SQFT
-            try:
-                val = sqft_list[i] if i < len(sqft_list) else 0
-                summary[leather_type]['sqft'] += _convert_to_decimal(val) if val else 0
-            except (ValueError, TypeError): pass
+        # Sum SQFT
+        try:
+            val = sqft_list[i] if i < len(sqft_list) else 0
+            summary[leather_type]['sqft'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
 
-            # Sum Net
-            try:
-                val = net_list[i] if i < len(net_list) else 0
-                summary[leather_type]['net'] += _convert_to_decimal(val) if val else 0
-            except (ValueError, TypeError): pass
+        # Sum Net
+        try:
+            val = net_list[i] if i < len(net_list) else 0
+            summary[leather_type]['net'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
 
-            # Sum Gross
-            try:
-                val = gross_list[i] if i < len(gross_list) else 0
-                summary[leather_type]['gross'] += _convert_to_decimal(val) if val else 0
-            except (ValueError, TypeError): pass
+        # Sum Gross
+        try:
+            val = gross_list[i] if i < len(gross_list) else 0
+            summary[leather_type]['gross'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
 
-            # Sum Pallet Count (if available per row)
-            try:
-                val = pallet_count_list[i] if i < len(pallet_count_list) else 0
-                summary[leather_type]['pallet_count'] += int(float(val)) if val else 0
-            except (ValueError, TypeError): pass
+        # Sum Pallet Count (if available per row)
+        try:
+            val = pallet_count_list[i] if i < len(pallet_count_list) else 0
+            summary[leather_type]['pallet_count'] += int(float(val)) if val else 0
+        except (ValueError, TypeError): pass
 
     return summary
+
+
+def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[Dict[str, Any]]:
+    """
+    Aggregates data by PO and Price, summing sqft, amount, and pallet_count.
+    Groups rows that have the same PO and unit_price together.
+    
+    Returns a list of aggregated records with:
+    - po: The PO number
+    - item: Combined unique items (comma-separated)
+    - desc: Combined unique descriptions (comma-separated)
+    - unit_price: The unit price
+    - sqft: Total sqft for this PO+price combination
+    - amount: Total amount for this PO+price combination
+    - pallet_count: Total pallets for this PO+price combination
+    - net: Total net weight for this PO+price combination
+    - gross: Total gross weight for this PO+price combination
+    - cbm: Total cbm for this PO+price combination
+    """
+    if not isinstance(processed_data, dict):
+        return []
+    
+    # Get column data - check both field name variants
+    po_list = processed_data.get('po', [])
+    item_list = processed_data.get('item', [])
+    desc_list = processed_data.get('description', []) or processed_data.get('desc', [])
+    price_list = processed_data.get('unit_price', []) or processed_data.get('price', []) or processed_data.get('unit', [])
+    sqft_list = processed_data.get('sqft', [])
+    amount_list = processed_data.get('amount', [])
+    pallet_list = processed_data.get('pallet_count', [])
+    net_list = processed_data.get('net', [])
+    gross_list = processed_data.get('gross', [])
+    cbm_list = processed_data.get('cbm', [])
+    
+    if not po_list:
+        return []
+    
+    num_rows = len(po_list)
+    
+    # Aggregation map: (po, price) -> {items: set, descs: set, sqft: Decimal, amount: Decimal, pallets: int, net: Decimal, gross: Decimal, cbm: Decimal}
+    aggregation_map = {}
+    
+    for i in range(num_rows):
+        po = str(po_list[i]) if i < len(po_list) and po_list[i] else ""
+        
+        # Get price - try to convert to Decimal for consistent key
+        try:
+            price_val = price_list[i] if i < len(price_list) else 0
+            price = _convert_to_decimal(price_val) if price_val else decimal.Decimal(0)
+        except:
+            price = decimal.Decimal(0)
+        
+        key = (po, price)
+        
+        if key not in aggregation_map:
+            aggregation_map[key] = {
+                'items': set(),
+                'descs': set(),
+                'sqft': decimal.Decimal(0),
+                'amount': decimal.Decimal(0),
+                'pallet_count': 0,
+                'net': decimal.Decimal(0),
+                'gross': decimal.Decimal(0),
+                'cbm': decimal.Decimal(0)
+            }
+        
+        # Collect unique items
+        if i < len(item_list) and item_list[i]:
+            aggregation_map[key]['items'].add(str(item_list[i]))
+        
+        # Collect unique descriptions
+        if i < len(desc_list) and desc_list[i]:
+            aggregation_map[key]['descs'].add(str(desc_list[i]))
+        
+        # Sum sqft
+        try:
+            val = sqft_list[i] if i < len(sqft_list) else 0
+            aggregation_map[key]['sqft'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+        except (ValueError, TypeError):
+            pass
+        
+        # Sum amount
+        try:
+            val = amount_list[i] if i < len(amount_list) else 0
+            aggregation_map[key]['amount'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+        except (ValueError, TypeError):
+            pass
+        
+        # Sum pallet_count
+        try:
+            val = pallet_list[i] if i < len(pallet_list) else 0
+            aggregation_map[key]['pallet_count'] += int(float(val)) if val else 0
+        except (ValueError, TypeError):
+            pass
+        
+        # Sum net
+        try:
+            val = net_list[i] if i < len(net_list) else 0
+            aggregation_map[key]['net'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+        except (ValueError, TypeError):
+            pass
+        
+        # Sum gross
+        try:
+            val = gross_list[i] if i < len(gross_list) else 0
+            aggregation_map[key]['gross'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+        except (ValueError, TypeError):
+            pass
+        
+        # Sum cbm
+        try:
+            val = cbm_list[i] if i < len(cbm_list) else 0
+            aggregation_map[key]['cbm'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+        except (ValueError, TypeError):
+            pass
+    
+    # Convert to list of dicts
+    result = []
+    for (po, price), data in aggregation_map.items():
+        result.append({
+            'po': po,
+            'item': ', '.join(sorted(data['items'])),
+            'desc': ', '.join(sorted(data['descs'])),
+            'unit_price': price,
+            'sqft': data['sqft'],
+            'amount': data['amount'],
+            'pallet_count': data['pallet_count'],
+            'net': data['net'],
+            'gross': data['gross'],
+            'cbm': data['cbm']
+        })
+    
+    # Sort by PO for consistent output
+    result.sort(key=lambda x: x['po'])
+    
+    return result
+
 
 def calculate_weight_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, decimal.Decimal]:
     """

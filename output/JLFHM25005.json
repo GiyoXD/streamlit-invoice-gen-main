@@ -6,7 +6,7 @@
         "DAF_chunk_size": 2,
         "DAF_intra_separator": "/",
         "DAF_inter_separator": "\\n",
-        "timestamp": "2025-11-26T12:45:06.332184"
+        "timestamp": "2025-11-26T15:07:33.751707"
     },
     "processed_tables_data": {
         "1": {
@@ -45,20 +45,58 @@
             ],
             "cbm": [
                 "1.5246"
-            ],
-            "leather_summary": {
+            ]
+        }
+    },
+    "footer_data": {
+        "table_totals": {
+            "1": {
+                "total_pcs": 89,
+                "total_sqft": "4903.6",
+                "total_net": "481",
+                "total_gross": "516",
+                "total_cbm": "1.5246",
+                "total_amount": "7012.148",
+                "total_pallets": 1
+            }
+        },
+        "grand_total": {
+            "total_pcs": 89,
+            "total_sqft": "4903.6",
+            "total_net": "481",
+            "total_gross": "516",
+            "total_cbm": "1.5246",
+            "total_amount": "7012.148",
+            "total_pallets": 1
+        },
+        "add_ons": {
+            "leather_summary_addon": {
                 "BUFFALO": {
+                    "pcs": 0,
+                    "sqft": "0",
+                    "net": "0",
+                    "gross": "0",
                     "pallet_count": 0
                 },
                 "COW": {
-                    "pallet_count": 0
+                    "pcs": 89,
+                    "sqft": "4903.6",
+                    "net": "481",
+                    "gross": "516",
+                    "pallet_count": 1
                 }
             },
-            "weight_summary": {
-                "net": "481",
-                "gross": "516"
-            },
-            "pallet_summary_total": 1
+            "normal_aggregate_per_po_with_pallets": [
+                {
+                    "po": "PO-HS-25080341",
+                    "item": "WALNUT M2895-X",
+                    "desc": "",
+                    "unit_price": "1.43",
+                    "sqft": "4903.6",
+                    "amount": "7012.148",
+                    "pallet_count": 1
+                }
+            ]
         }
     },
     "standard_aggregation_results": {

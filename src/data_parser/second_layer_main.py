@@ -120,7 +120,7 @@ def aggregate_extracted_data(all_tables_data):
 def calculate_footer_data(all_tables_data):
     """
     Calculates footer totals from all extracted tables.
-    Returns both per-table totals and grand total.
+    Returns both per-table totals, grand total, and add_ons (leather_summary).
     This moves footer calculation from frontend to data parser.
     """
     from . import data_processor
@@ -133,7 +133,9 @@ def calculate_footer_data(all_tables_data):
     # Merge all table data for grand total calculation
     merged_data = {
         "pcs": [], "sqft": [], "net": [], "gross": [], 
-        "cbm": [], "amount": [], "pallet_count": []
+        "cbm": [], "amount": [], "pallet_count": [],
+        "description": [], "desc": [],  # Include both description field names for leather_summary calculation
+        "po": [], "item": [], "unit_price": [], "price": []  # Include fields for aggregate_per_po_with_pallets
     }
     
     for table_data in all_tables_data.values():
@@ -144,9 +146,19 @@ def calculate_footer_data(all_tables_data):
     # Calculate grand total
     grand_total = data_processor.calculate_footer_totals(merged_data)
     
+    # Calculate leather summary (BUFFALO vs COW) across all tables
+    leather_summary = data_processor.calculate_leather_summary(merged_data)
+    
+    # Calculate normal aggregate per PO with pallets (group by PO + price)
+    normal_aggregate_per_po = data_processor.aggregate_per_po_with_pallets(merged_data)
+    
     return {
         "table_totals": table_totals,
-        "grand_total": grand_total
+        "grand_total": grand_total,
+        "add_ons": {
+            "leather_summary_addon": leather_summary,  # BUFFALO vs COW summary
+            "normal_aggregate_per_po_with_pallets": normal_aggregate_per_po  # PO+price aggregation
+        }
     }
 
 def write_output_json(raw_data, aggregated_summary, footer_data, output_filepath):
