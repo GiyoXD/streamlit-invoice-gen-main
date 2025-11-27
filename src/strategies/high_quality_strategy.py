@@ -7,8 +7,11 @@ import datetime
 from pathlib import Path
 from typing import Dict, List, Any, Tuple
 from zoneinfo import ZoneInfo
+import sys
+import os
+import subprocess # Added for subprocess.CalledProcessError
 
-from .base_strategy import InvoiceGenerationStrategy
+from .base_strategy import InvoiceGenerationStrategy, SCRIPT_DIR
 from .components.excel_processor import ExcelProcessor
 from .components.calculator import Calculator
 
@@ -154,31 +157,55 @@ class HighQualityLeatherStrategy(InvoiceGenerationStrategy):
         if not config_dir.is_absolute():
             config_dir = config_dir.resolve()
 
-        # Import here to avoid circular imports
-        from src.invoice_generator import generate_invoice
+        # Construct command to run generate_invoice.py as a subprocess
+        # We run it as a module to ensure relative imports work correctly
+        # The script is located at src/invoice_generator/src/generate_invoice.py
+        # So the module path is src.invoice_generator.src.generate_invoice
+        
+        # Base command structure
+        base_cmd = [
+            sys.executable, "-m", "src.invoice_generator.src.generate_invoice",
+            str(json_path),
+            "--templatedir", str(template_dir),
+            "--configdir", str(config_dir)
+        ]
 
         for option in options:
             option_config = next((opt for opt in self.get_generation_options() if opt['key'] == option), None)
             if not option_config:
                 continue
 
+            # Create a specific command for this option
+            current_cmd = base_cmd.copy()
+            
+            output_file_for_option = output_dir / f"{identifier}_{option}.xlsx"
+            current_cmd.extend(["--output", str(output_file_for_option)]) # Add output path
+
             flags = option_config.get('flags', [])
-            output_file = output_dir / f"{identifier}_{option}.xlsx"
+            if flags:
+                current_cmd.extend(flags)
 
             try:
-                generate_invoice(
-                    json_file_path=json_path,
-                    output_file_path=output_file,
-                    flags=flags,
-                    template_dir=str(template_dir),
-                    config_dir=str(config_dir),
-                    verbose=True
-                )
-                generated_files.append(output_file)
-                st.success(f"Generated {option_config['name']}: {output_file.name}")
+                # Run the subprocess
+                # _run_subprocess adds SCRIPT_DIR (root) to PYTHONPATH, so 'src' module should be found
+                self._run_subprocess(current_cmd, cwd=SCRIPT_DIR, identifier_for_error=identifier)
+                
+                generated_files.append(output_file_for_option)
+                st.success(f"Generated {option_config['name']}: {output_file_for_option.name}")
 
+            except subprocess.CalledProcessError as e:
+                # The _run_subprocess method already handles logging, but we can add specific context here if needed
+                # or just let it propagate if _run_subprocess raises it.
+                # However, since _run_subprocess raises, we catch it here to prevent the whole loop from crashing?
+                # Actually, _run_subprocess raises to halt execution.
+                # But if we want to show specific error for this option:
+                st.error(f"Failed to generate {option_config['name']}.")
+                # The detailed error is already shown by _run_subprocess
+                
             except Exception as e:
-                st.error(f"Failed to generate {option_config['name']}: {e}")
+                st.error(f"An unexpected error occurred while generating {option_config['name']}: {e}")
+                import traceback
+                st.code(traceback.format_exc())
 
         return generated_files
 

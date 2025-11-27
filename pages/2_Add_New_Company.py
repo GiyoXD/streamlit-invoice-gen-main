@@ -26,10 +26,10 @@ st.title("✨ New Invoice Template Generator")
 # --- Path Setup ---
 try:
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
-    CONFIG_GEN_DIR = PROJECT_ROOT / "config_template_cli"
+    CONFIG_GEN_DIR = PROJECT_ROOT / "src" / "config_manager"
     TEMP_DIR = PROJECT_ROOT / "data" / "temp_uploads"
-    CONFIG_OUTPUT_DIR = PROJECT_ROOT / "invoice_generator" / "config"
-    TEMPLATE_OUTPUT_DIR = PROJECT_ROOT / "invoice_generator" / "TEMPLATE"
+    CONFIG_OUTPUT_DIR = PROJECT_ROOT / "src" / "invoice_generator" / "src" / "config_bundled"
+    TEMPLATE_OUTPUT_DIR = PROJECT_ROOT / "src" / "invoice_generator" / "src" / "template"
     MAPPING_CONFIG_PATH = CONFIG_GEN_DIR / "mapping_config.json" # Added for local functions
     
     # Create necessary directories
@@ -312,6 +312,9 @@ if invoice_template_file:
         st.markdown("---")
         st.subheader("Step 3: Generate and Save New Template")
         
+        # Add checkbox for Bundle Format
+        use_bundle_format = st.checkbox("Use New Bundle Format (Recommended)", value=True, help="Generates configuration in the new, more robust bundle format.")
+
         if st.button("Generate New Template & Config", use_container_width=True, type="primary"):
             file_prefix = st.session_state.get('file_prefix', '').strip()
             if not file_prefix:
@@ -345,7 +348,9 @@ if invoice_template_file:
                 with open(temp_invoice_path, 'wb') as f:
                     f.write(st.session_state['original_file_bytes_for_template'])
 
-                config_output_path = CONFIG_OUTPUT_DIR / f"{file_prefix}_config.json"
+                # Determine output filename based on format
+                config_suffix = "_bundle_config.json" if use_bundle_format else "_config.json"
+                config_output_path = CONFIG_OUTPUT_DIR / f"{file_prefix}{config_suffix}"
                 template_output_path = TEMPLATE_OUTPUT_DIR / f"{file_prefix}.xlsx"
                 main_script_path = CONFIG_GEN_DIR / "main.py"
 
@@ -359,6 +364,9 @@ if invoice_template_file:
                     "--generate-xlsx",
                     "--xlsx-output", str(template_output_path)
                 ]
+
+                if use_bundle_format:
+                    command.append("--bundle")
                 
                 # This command now handles everything: analysis, config gen, and template gen.
                 if not run_command(command, verbose=True, cwd=str(CONFIG_GEN_DIR)):

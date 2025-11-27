@@ -69,14 +69,26 @@ def derive_paths(input_data_path_str: str, template_dir_str: str, config_dir_str
         logger.debug(f"Derived initial template name part: '{template_name_part}'")
 
         exact_template_filename = f"{template_name_part}.xlsx"
+        
+        # Check for bundle config first
+        bundle_config_filename = f"{template_name_part}_bundle_config.json"
+        bundle_config_path = config_dir / bundle_config_filename
+        
         exact_config_filename = f"{template_name_part}_config.json"
-        exact_template_path = template_dir / exact_template_filename
         exact_config_path = config_dir / exact_config_filename
-        logger.debug(f"Checking for exact match: Template='{exact_template_path}', Config='{exact_config_path}'")
+        
+        exact_template_path = template_dir / exact_template_filename
+        
+        logger.debug(f"Checking for match: Template='{exact_template_path}'")
+        logger.debug(f"Checking configs: Bundle='{bundle_config_path}', Legacy='{exact_config_path}'")
 
-        if exact_template_path.is_file() and exact_config_path.is_file():
-            logger.info("Found exact match for template and config")
-            return {"data": input_data_path, "template": exact_template_path, "config": exact_config_path}
+        if exact_template_path.is_file():
+            if bundle_config_path.is_file():
+                logger.info(f"Found exact match for template and BUNDLE config: {bundle_config_path}")
+                return {"data": input_data_path, "template": exact_template_path, "config": bundle_config_path}
+            elif exact_config_path.is_file():
+                logger.info(f"Found exact match for template and LEGACY config: {exact_config_path}")
+                return {"data": input_data_path, "template": exact_template_path, "config": exact_config_path}
         
         # Check for bundled config subdirectory pattern: config_bundled/JF_config/JF_config.json
         bundled_config_subdir = config_dir / exact_config_filename.replace('.json', '') / exact_config_filename
@@ -93,16 +105,27 @@ def derive_paths(input_data_path_str: str, template_dir_str: str, config_dir_str
                 prefix = prefix_match.group(1)
                 logger.debug(f"Extracted prefix: '{prefix}'")
                 prefix_template_filename = f"{prefix}.xlsx"
-                prefix_config_filename = f"{prefix}_config.json"
+                prefix_bundle_config_filename = f"{prefix}_bundle_config.json"
+                prefix_legacy_config_filename = f"{prefix}_config.json"
+                
                 prefix_template_path = template_dir / prefix_template_filename
-                prefix_config_path = config_dir / prefix_config_filename
-                logger.debug(f"Checking for prefix match: Template='{prefix_template_path}', Config='{prefix_config_path}'")
+                prefix_bundle_config_path = config_dir / prefix_bundle_config_filename
+                prefix_legacy_config_path = config_dir / prefix_legacy_config_filename
+                
+                logger.debug(f"Checking for prefix match: Template='{prefix_template_path}'")
+                logger.debug(f"Checking configs: Bundle='{prefix_bundle_config_path}', Legacy='{prefix_legacy_config_path}'")
 
-                if prefix_template_path.is_file() and prefix_config_path.is_file():
-                    logger.info("Found prefix match for template and config")
-                    return {"data": input_data_path, "template": prefix_template_path, "config": prefix_config_path}
+                if prefix_template_path.is_file():
+                    if prefix_bundle_config_path.is_file():
+                        logger.info(f"Found prefix match for template and BUNDLE config: {prefix_bundle_config_path}")
+                        return {"data": input_data_path, "template": prefix_template_path, "config": prefix_bundle_config_path}
+                    elif prefix_legacy_config_path.is_file():
+                        logger.info(f"Found prefix match for template and LEGACY config: {prefix_legacy_config_path}")
+                        return {"data": input_data_path, "template": prefix_template_path, "config": prefix_legacy_config_path}
+                    else:
+                        logger.debug("Prefix match found for template, but no config file found.")
                 else:
-                    logger.debug("Prefix match not found")
+                    logger.debug("Prefix match not found for template.")
             else:
                 logger.debug("Could not extract a letter-based prefix")
 

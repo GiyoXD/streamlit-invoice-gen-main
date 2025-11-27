@@ -4,7 +4,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 from openpyxl import Workbook
 
 from ..styling.models import StylingConfigModel, FooterData
-from invoice_generator.data.table_calculator import TableCalculator
+from ..data.table_calculator import TableCalculator
 from .header_builder import HeaderBuilderStyler as HeaderBuilder
 from .data_table_builder import DataTableBuilderStyler as DataTableBuilder
 from .footer_builder import FooterBuilder as FooterBuilder

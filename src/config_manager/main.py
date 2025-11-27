@@ -454,7 +454,10 @@ def run_command(command, verbose=False):
         return False
 
     if verbose and stdout:
-        print(stdout)
+        try:
+            print(stdout)
+        except UnicodeEncodeError:
+            print(stdout.encode(sys.stdout.encoding, errors='replace').decode(sys.stdout.encoding))
 
     return True
 
@@ -511,6 +514,12 @@ This tool streamlines the process of creating an invoice configuration by:
     parser.add_argument(
         '--xlsx-output',
         help='Output path for the generated XLSX file (Default: result/{excel_file_name}/{excel_file_name}_processed.xlsx)'
+    )
+
+    parser.add_argument(
+        '--bundle',
+        action='store_true',
+        help='Generate configuration in the new bundle format.'
     )
 
     args = parser.parse_args()
@@ -570,36 +579,53 @@ This tool streamlines the process of creating an invoice configuration by:
     if args.output:
         final_output_path = output_dir / args.output
     else:
-        final_output_path = output_dir / f"{excel_file_path.stem}_config.json"
+        suffix = "_bundle_config.json" if args.bundle else "_config.json"
+        final_output_path = output_dir / f"{excel_file_path.stem}{suffix}"
 
-    generate_command = [
-        sys.executable,
-        '-X', 'utf8',
-        str(GENERATE_SCRIPT_PATH),
-        analysis_output_path,
-        '-t',
-        str(args.template),
-        '-o',
-        str(final_output_path)
-    ]
+    if args.bundle:
+        # Use the new BundleConfigGenerator
+        print("[ORCHESTRATOR] Using BundleConfigGenerator (New Format)...")
+        generate_command = [
+            sys.executable,
+            '-X', 'utf8',
+            str(BASE_DIR / "generate_bundle_config.py"),
+            analysis_output_path,
+            '-o',
+            str(final_output_path)
+        ]
+    else:
+        # Use the legacy generator
+        generate_command = [
+            sys.executable,
+            '-X', 'utf8',
+            str(GENERATE_SCRIPT_PATH),
+            analysis_output_path,
+            '-t',
+            str(args.template),
+            '-o',
+            str(final_output_path)
+        ]
 
-    if args.verbose:
-        generate_command.append('-v')
-        
-    if args.interactive:
-        generate_command.append('--interactive')
+        if args.verbose:
+            generate_command.append('-v')
+            
+        if args.interactive:
+            generate_command.append('--interactive')
 
     if not run_command(generate_command, args.verbose):
         print("\n[ORCHESTRATOR] Failed during the configuration generation step. Aborting.", file=sys.stderr)
-        if not args.keep_intermediate:
-            os.remove(analysis_output_path)
+        if not args.keep_intermediate and os.path.exists(analysis_output_path):
+            try:
+                os.remove(analysis_output_path)
+            except Exception:
+                pass
         sys.exit(1)
 
     print("\n[ORCHESTRATOR] Process finished successfully!")
-    print(f"✅ Final configuration file generated at: {final_output_path}")
+    print(f"[SUCCESS] Final configuration file generated at: {final_output_path}")
     if header_log_path:
-        print(f"📋 Header log file created at: {header_log_path}")
-        print(f"💡 Check the header log to identify any missing mappings!")
+        print(f"[INFO] Header log file created at: {header_log_path}")
+        print(f"[INFO] Check the header log to identify any missing mappings!")
 
     # --- Add metadata to the final configuration ---
     try:
@@ -616,9 +642,9 @@ This tool streamlines the process of creating an invoice configuration by:
         with open(final_output_path, 'w', encoding='utf-8') as f:
             json.dump(config_data, f, indent=2, ensure_ascii=False)
 
-        print(f"📊 Configuration metadata added (collision prevention info included)")
+        print(f"[INFO] Configuration metadata added (collision prevention info included)")
     except Exception as e:
-        print(f"⚠️  Warning: Could not add metadata to configuration file: {e}")
+        print(f"[WARNING] Warning: Could not add metadata to configuration file: {e}")
 
     # --- Step 3: Generate XLSX file if requested ---
     if args.generate_xlsx and XLSX_GENERATOR_AVAILABLE:
@@ -637,11 +663,11 @@ This tool streamlines the process of creating an invoice configuration by:
                 enable_text_replacement=True,
                 enable_row_removal=True
             )
-            print(f"✅ Processed XLSX file generated at: {xlsx_output}")
+            print(f"[SUCCESS] Processed XLSX file generated at: {xlsx_output}")
         except Exception as e:
-            print(f"❌ Error generating XLSX file: {e}")
+            print(f"[ERROR] Error generating XLSX file: {e}")
     elif args.generate_xlsx and not XLSX_GENERATOR_AVAILABLE:
-        print("❌ XLSX generation requested but xlsx_generator module not available")
+        print("[ERROR] XLSX generation requested but xlsx_generator module not available")
 
     # --- Step 4: Cleanup ---
     if not args.keep_intermediate and os.path.exists(analysis_output_path):

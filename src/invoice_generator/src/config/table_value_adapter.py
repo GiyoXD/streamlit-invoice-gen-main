@@ -18,7 +18,7 @@ import logging
 from typing import Any, Dict, List, Tuple, Union, Optional
 from decimal import Decimal
 
-from invoice_generator.data.data_preparer import (
+from ..data.data_preparer import (
     prepare_data_rows,
     parse_mapping_rules,
     _to_numeric,

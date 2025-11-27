@@ -8,20 +8,19 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
-from invoice_generator.data.data_preparer import prepare_data_rows, parse_mapping_rules
-from invoice_generator.utils.layout import apply_column_widths
-from invoice_generator.styling.style_applier import apply_row_heights
-from invoice_generator.utils.layout import merge_contiguous_cells_by_id
-from invoice_generator.utils.merge_utils import merge_vertical_cells_in_range, apply_horizontal_merge_by_id
+from ..data.data_preparer import prepare_data_rows, parse_mapping_rules
+from ..utils.layout import apply_column_widths, merge_contiguous_cells_by_id
+from ..styling.style_applier import apply_row_heights
+from ..utils.merge_utils import merge_vertical_cells_in_range, apply_horizontal_merge_by_id
 # Legacy apply_cell_style removed - using only StyleRegistry + CellStyler
-from invoice_generator.styling.style_registry import StyleRegistry
-from invoice_generator.styling.cell_styler import CellStyler
+from ..styling.style_registry import StyleRegistry
+from ..styling.cell_styler import CellStyler
 # FooterBuilder is now called by LayoutBuilder (proper Director pattern)
-from invoice_generator.styling.style_config import THIN_BORDER, NO_BORDER, CENTER_ALIGNMENT, LEFT_ALIGNMENT, BOLD_FONT, FORMAT_GENERAL, FORMAT_TEXT, FORMAT_NUMBER_COMMA_SEPARATED1, FORMAT_NUMBER_COMMA_SEPARATED2
+from ..styling.style_config import THIN_BORDER, NO_BORDER, CENTER_ALIGNMENT, LEFT_ALIGNMENT, BOLD_FONT, FORMAT_GENERAL, FORMAT_TEXT, FORMAT_NUMBER_COMMA_SEPARATED1, FORMAT_NUMBER_COMMA_SEPARATED2
 
 
 
-from invoice_generator.styling.models import StylingConfigModel
+from ..styling.models import StylingConfigModel
 from .bundle_accessor import BundleAccessor
 
 class DataTableBuilderStyler:

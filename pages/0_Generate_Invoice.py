@@ -36,8 +36,8 @@ try:
     DATA_DIR = PROJECT_ROOT / "data"
     JSON_OUTPUT_DIR = DATA_DIR / "invoices_to_process"
     TEMP_UPLOAD_DIR = DATA_DIR / "temp_uploads"
-    TEMPLATE_DIR = INVOICE_GEN_DIR / "TEMPLATE"
-    CONFIG_DIR = INVOICE_GEN_DIR / "config"
+    TEMPLATE_DIR = INVOICE_GEN_DIR / "src" / "template"
+    CONFIG_DIR = INVOICE_GEN_DIR / "src" / "config_bundled"
     DATA_DIRECTORY = DATA_DIR / 'Invoice Record'
     DATABASE_FILE = DATA_DIRECTORY / 'master_invoice_data.db'
     TABLE_NAME = 'invoices'
