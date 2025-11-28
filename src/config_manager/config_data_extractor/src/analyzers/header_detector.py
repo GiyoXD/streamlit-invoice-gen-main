@@ -25,74 +25,16 @@ class HeaderDetector:
         """
         self.quantity_mode = quantity_mode
         self.mapping_config = mapping_config
-        self.header_keywords = self._load_header_keywords()
-        # Load exact headers from mapping config if available
-        if self.mapping_config:
-            self.exact_headers = list(self.mapping_config.get('header_text_mappings', {}).get('mappings', {}).keys())
-        else:
-            self.exact_headers = []
-    
-    def _load_header_keywords(self) -> List[str]:
-        """Load header keywords from mapping config or use defaults."""
-        keywords = set()
-        
-        # Try to load from mapping config first
-        if self.mapping_config:
-            try:
-                header_mappings = self.mapping_config.get('header_text_mappings', {}).get('mappings', {})
-                for header in header_mappings.keys():
-                    # Extract base keywords from headers
-                    keywords.update(self._extract_keywords_from_header(header))
-            except Exception as e:
-                import logging
-                logging.warning(f"Could not load keywords from mapping config: {e}")
-                print(f"Warning: Could not load keywords from mapping config: {e}")
-        
-        # If no keywords loaded from config, use defaults
-        if not keywords:
-            keywords.update([
-                "P.O", "ITEM", "Description", "Quantity", "Amount",
-                "Mark", "Unit price", "Price", "Total", "Weight", "CBM", "Pallet",
-                "Remarks", "HS CODE", "Name", "Commodity", "Goods", "Product",
-                "PCS", "SF", "No.", "N.W", "G.W", "Net", "Gross", "FCA"
-            ])
-        
-        return list(keywords)
-    
-    def _extract_keywords_from_header(self, header: str) -> List[str]:
-        """Extract meaningful keywords from a header string."""
-        import re
-        
-        keywords = []
-        header_lower = header.lower()
-        
-        # Split by common separators and extract meaningful words
-        filtered_words = [word for word in words if word not in generic_words]
-        keywords.extend(filtered_words)
-        
-        # Add common combinations that might appear in headers
-        if 'unit' in header_lower and 'price' in header_lower:
-            keywords.append('unit price')
-        
-        # Add common combinations that might appear in headers
-        if 'unit' in header_lower and 'price' in header_lower:
-            keywords.append('unit price')
-        if 'gross' in header_lower and 'weight' in header_lower:
-            keywords.append('gross weight')
-        if 'net' in header_lower and 'weight' in header_lower:
-            keywords.append('net weight')
-        if 'p.o' in header_lower:
-            keywords.append('p.o')
-        if 'hs' in header_lower and 'code' in header_lower:
-            keywords.append('hs code')
-        
-        return keywords
+        # We don't need header keywords anymore for the new logic, but keeping init clean
     
     def find_headers(self, worksheet: Worksheet) -> List[HeaderMatch]:
         """
-        Search for header keywords in the worksheet and record their positions.
-        Once a header row is found, extract all headers from that entire row.
-        Handles both single-row and two-row headers by checking for merged cells.
+        Search for the header row based on table width and content type.
+        
+        Logic:
+        1. Find the row that extends to the highest column index (widest row) and contains only text.
+        2. If multiple such rows exist, pick the one with the most filled columns.
+        3. Check the row below for double header detection.
         
         Args:
             worksheet: The openpyxl worksheet to analyze
@@ -101,40 +43,114 @@ class HeaderDetector:
             List of HeaderMatch objects containing keyword, row, and column positions
         """
         header_matches = []
-        header_matches = []
-        # First pass: Find any header keyword to identify the header row
-        max_rows_to_check = 30
-        header_row_found = None  # Initialize before use
-        for idx, row in enumerate(worksheet.iter_rows()):
-            if idx >= max_rows_to_check:
-                break
-            for cell in row:
-                if cell.value is not None:
-                    cell_value = str(cell.value).strip()
-                    
-                    # Check if cell contains any of our header keywords
-                    for keyword in self.header_keywords:
-                        if self._matches_keyword(cell_value, keyword):
-                            header_row_found = cell.row
-            if header_row_found:
-                break
-            if header_row_found:
-                break
-        if header_row_found:
-            is_double_header = self._is_double_header(worksheet, header_row_found)
-            
-            if is_double_header:
-                # Extract headers from both rows for double header
-                header_matches = self._extract_double_header(worksheet, header_row_found)
-            else:
-                # Extract headers from single row
-                header_matches = self._extract_all_headers_from_row(worksheet, header_row_found)
-            
-            # Apply quantity mode enhancement if enabled
-            if self.quantity_mode:
-                header_matches = self._apply_quantity_mode_enhancement(header_matches, worksheet)
         
+        # 1. Analyze all rows to find candidates
+        max_rows_to_check = 50 # Limit search to first 50 rows
+        candidates = []
+        
+        for row in worksheet.iter_rows(max_row=max_rows_to_check):
+            # Get non-empty cells in this row
+            non_empty_cells = [cell for cell in row if cell.value is not None and str(cell.value).strip()]
+            
+            if not non_empty_cells:
+                continue
+                
+            # Check if row is a potential header (mostly text)
+            if not self._is_potential_header_row(non_empty_cells):
+                continue
+                
+            # Get the rightmost column index for this row
+            max_col_index = max(cell.column for cell in non_empty_cells)
+            
+            candidates.append({
+                'row_obj': row,
+                'row_num': row[0].row,
+                'max_col': max_col_index,
+                'cell_count': len(non_empty_cells)
+            })
+            
+        if not candidates:
+            return []
+            
+        # 2. Find the max width among the CANDIDATES (not global max which might be data)
+        max_candidate_width = max(c['max_col'] for c in candidates)
+            
+        # 3. Filter candidates that are close to the max CANDIDATE width
+        # Allow a small tolerance (e.g., 1-2 columns less than max candidate width)
+        width_tolerance = 2
+        wide_candidates = [c for c in candidates if c['max_col'] >= (max_candidate_width - width_tolerance)]
+        
+        if not wide_candidates:
+            # Fallback to any candidate if none are wide enough (shouldn't happen if logic is correct)
+            wide_candidates = candidates
+            
+        # 4. Select the best candidate (most filled columns)
+        # Sort by cell_count descending, then by row_num ascending (prefer top row if counts are equal)
+        wide_candidates.sort(key=lambda x: (-x['cell_count'], x['row_num']))
+        best_candidate = wide_candidates[0]
+        header_row = best_candidate['row_num']
+        
+        # 5. Check for double header
+        # Check row immediately below
+        next_row_num = header_row + 1
+        is_double = False
+        
+        if next_row_num <= worksheet.max_row:
+            next_row_cells = [cell for cell in worksheet[next_row_num] if cell.value is not None and str(cell.value).strip()]
+            if next_row_cells:
+                # If next row has text, it's a double header
+                # If it has numbers, it's data (so single header)
+                if self._is_potential_header_row(next_row_cells):
+                    is_double = True
+        
+        # 6. Extract headers
+        if is_double:
+            header_matches = self._extract_double_header(worksheet, header_row)
+        else:
+            header_matches = self._extract_all_headers_from_row(worksheet, header_row)
+            
+        # Apply quantity mode enhancement if enabled
+        if self.quantity_mode:
+            header_matches = self._apply_quantity_mode_enhancement(header_matches, worksheet)
+            
         return header_matches
+
+    def _is_potential_header_row(self, cells) -> bool:
+        """
+        Check if a row is a potential header row.
+        Allows for a small percentage of numeric values (e.g. years '2024', column numbers '1', '2').
+        Rejects rows that are primarily numeric (data rows).
+        """
+        if not cells:
+            return False
+            
+        numeric_count = 0
+        total_count = len(cells)
+        
+        import re
+        
+        for cell in cells:
+            val = cell.value
+            if val is None:
+                continue
+                
+            is_numeric = False
+            if isinstance(val, (int, float)):
+                is_numeric = True
+            else:
+                s_val = str(val).strip()
+                if s_val and re.match(r'^-?\d+(\.\d+)?$', s_val):
+                    is_numeric = True
+            
+            if is_numeric:
+                numeric_count += 1
+        
+        # Calculate numeric ratio
+        numeric_ratio = numeric_count / total_count
+        
+        # If more than 30% of cells are numeric, it's likely a data row, not a header
+        # Headers might have 1-2 numeric columns (like Year), but not the majority
+        return numeric_ratio <= 0.3
     
     def calculate_start_row(self, header_positions: List[HeaderMatch]) -> int:
         """
@@ -229,29 +245,6 @@ class HeaderDetector:
         
         return enhanced_headers
     
-    def _is_double_header(self, worksheet: Worksheet, header_row: int) -> bool:
-        """
-        Check if the header has two rows by examining if the first column is merged.
-        
-        Args:
-            worksheet: The openpyxl worksheet to analyze
-            header_row: The row number where header was found
-            
-        Returns:
-            True if this is a double header (first column is merged), False otherwise
-        """
-        # Get the first column cell (column A) of the header row
-        first_cell = worksheet.cell(row=header_row, column=1)
-        
-        # Check if this cell is part of a merged range
-        for merged_range in worksheet.merged_cells.ranges:
-            if first_cell.coordinate in merged_range:
-                # If the merged range spans multiple rows, it's a double header
-                if merged_range.max_row > merged_range.min_row:
-                    return True
-        
-        return False
-    
     def _extract_double_header(self, worksheet: Worksheet, header_row: int) -> List[HeaderMatch]:
         """
         Extract headers from a two-row header structure.
@@ -291,43 +284,3 @@ class HeaderDetector:
                     header_matches.append(header_match)
         
         return header_matches
-    
-    def _matches_keyword(self, cell_value: str, keyword: str) -> bool:
-        """
-        Check if a cell value matches a header keyword.
-        Uses strict matching to avoid false positives - cell should be primarily the keyword.
-        
-        Args:
-            cell_value: The cell value to check
-            keyword: The keyword to match against
-            
-        Returns:
-            True if the cell value is primarily the keyword (case-insensitive)
-        """
-        cell_lower = cell_value.lower().strip()
-        keyword_lower = keyword.lower()
-        
-        # Exact match
-        if cell_lower == keyword_lower:
-            return True
-            
-        # Allow some common variations but keep it strict
-        # Remove common punctuation and extra spaces
-        import re
-        cell_clean = re.sub(r'[^\w\s]', ' ', cell_lower)
-        cell_clean = ' '.join(cell_clean.split())  # normalize whitespace
-        
-        keyword_clean = re.sub(r'[^\w\s]', ' ', keyword_lower)
-        keyword_clean = ' '.join(keyword_clean.split())
-        
-        # Check if cleaned versions match
-        if cell_clean == keyword_clean:
-            return True
-            
-        # For very short cells (likely headers), allow if keyword is majority of content
-        if len(cell_lower) <= 20 and keyword_lower in cell_lower:
-            # Calculate similarity - keyword should be significant portion
-            similarity = len(keyword_lower) / len(cell_lower)
-            return similarity >= 0.6
-        
-        return False

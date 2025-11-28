@@ -94,7 +94,9 @@
       "Unit Price(USD)\nĐơn giá": "col_unit_price",
       "Description\nTả hàng hóa": "col_desc",
       "Name of Cormodity\nTên và miêu tả": "col_item",
-      "Quantity(SF)\nSố lượng(SF)": "col_qty_sf"
+      "Quantity(SF)\nSố lượng(SF)": "col_qty_sf",
+      "CUT.P.O.": "col_po",
+      "DC": "col_dc"
     }
   },
   "shipping_list_header_map": {

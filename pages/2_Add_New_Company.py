@@ -169,7 +169,7 @@ def update_mapping_config(new_mappings: dict):
 SYSTEM_HEADERS = [
     "col_po", "col_item", "col_desc", "col_qty_pcs", "col_qty_sf", 
     "col_unit_price", "col_amount", "col_net", "col_gross", "col_cbm", 
-    "col_pallet", "col_remarks", "col_static"
+    "col_pallet", "col_remarks", "col_static", "col_dc"
 ]
 
 # --- Session State Check ---

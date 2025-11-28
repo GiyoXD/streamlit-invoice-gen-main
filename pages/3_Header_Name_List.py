@@ -9,7 +9,8 @@ sys.path.append('create_json')
 from config import TARGET_HEADERS_MAP
 
 # Load existing headers from JSON (adjust path as needed)
-HEADERS_FILE = "config_template_cli/mapping_config.json"
+# Load existing headers from JSON (adjust path as needed)
+HEADERS_FILE = "src/config_manager/mapping_config.json"
 if os.path.exists(HEADERS_FILE):
     with open(HEADERS_FILE, "r", encoding="utf-8") as f:
         config = json.load(f)

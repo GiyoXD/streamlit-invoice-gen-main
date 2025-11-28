@@ -234,6 +234,8 @@ class BundleConfigGenerator:
                     col_style["width"] = 25
                 elif col_id == "col_static":
                     col_style["width"] = 25
+                elif col_id == "col_dc":
+                    col_style["width"] = 15
                     
                 columns_style[col_id] = col_style
 
@@ -279,24 +281,127 @@ class BundleConfigGenerator:
                 continue
                 
             # 1. Structure
+            # 1. Structure
             columns_structure = []
-            # Sort headers by column index to ensure correct order
-            sorted_headers = sorted(sheet.header_positions, key=lambda x: x.column)
             
-            for header in sorted_headers:
-                col_id = self._map_header_to_col_id(header.keyword)
-                col_def = {
-                    "id": col_id,
-                    "header": header.keyword
-                }
+            # Group headers by row
+            headers_by_row = {}
+            for h in sheet.header_positions:
+                if h.row not in headers_by_row:
+                    headers_by_row[h.row] = {}
+                headers_by_row[h.row][h.column] = h
+            
+            sorted_rows = sorted(headers_by_row.keys())
+            
+            if len(sorted_rows) >= 2:
+                # Double header logic
+                top_row = sorted_rows[0]
+                bottom_row = sorted_rows[1]
                 
-                # Add format to structure if needed (some builders look here)
-                if col_id in ["col_qty_sf", "col_unit_price", "col_amount"]:
-                    col_def["format"] = "#,##0.00"
-                elif col_id == "col_po":
-                    col_def["format"] = "@"
+                # Determine range of columns
+                all_cols = set(headers_by_row[top_row].keys()) | set(headers_by_row[bottom_row].keys())
+                min_col = min(all_cols)
+                max_col = max(all_cols)
+                
+                current_parent_def = None
+                
+                for col_idx in range(min_col, max_col + 1):
+                    h_top = headers_by_row[top_row].get(col_idx)
+                    h_bottom = headers_by_row[bottom_row].get(col_idx)
                     
-                columns_structure.append(col_def)
+                    if h_top:
+                        # New parent column
+                        col_id = self._map_header_to_col_id(h_top.keyword)
+                        current_parent_def = {
+                            "id": col_id,
+                            "header": h_top.keyword,
+                            "children": []
+                        }
+                        
+                        # Add format if needed
+                        if col_id in ["col_qty_sf", "col_unit_price", "col_amount"]:
+                            current_parent_def["format"] = "#,##0.00"
+                        elif col_id == "col_po":
+                            current_parent_def["format"] = "@"
+                            
+                        columns_structure.append(current_parent_def)
+                        
+                        if h_bottom:
+                            # Parent has a child in the same column
+                            child_id = self._map_header_to_col_id(h_bottom.keyword)
+                            child_def = {
+                                "id": child_id,
+                                "header": h_bottom.keyword
+                            }
+                             # Add format to child
+                            if child_id in ["col_qty_sf", "col_qty_pcs", "col_unit_price", "col_amount", "col_net", "col_gross", "col_cbm"]:
+                                child_def["format"] = "#,##0.00"
+                                if "pcs" in child_id: child_def["format"] = "#,##0"
+                                if "cbm" in child_id: child_def["format"] = "0.00"
+                                
+                            current_parent_def["children"].append(child_def)
+                        else:
+                            # Parent exists but no child in this column.
+                            # It might be a rowspan=2 column (if no children added later)
+                            # OR it might cover children in next columns.
+                            pass
+                            
+                    elif h_bottom:
+                        # No top header, but bottom header exists.
+                        # Must belong to previous parent
+                        if current_parent_def:
+                            child_id = self._map_header_to_col_id(h_bottom.keyword)
+                            child_def = {
+                                "id": child_id,
+                                "header": h_bottom.keyword
+                            }
+                            # Add format to child
+                            if child_id in ["col_qty_sf", "col_qty_pcs", "col_unit_price", "col_amount", "col_net", "col_gross", "col_cbm"]:
+                                child_def["format"] = "#,##0.00"
+                                if "pcs" in child_id: child_def["format"] = "#,##0"
+                                if "cbm" in child_id: child_def["format"] = "0.00"
+
+                            current_parent_def["children"].append(child_def)
+                        else:
+                            # Orphan bottom header? Treat as top level
+                            col_id = self._map_header_to_col_id(h_bottom.keyword)
+                            col_def = {
+                                "id": col_id,
+                                "header": h_bottom.keyword
+                            }
+                            columns_structure.append(col_def)
+                            
+                # Post-processing: Set rowspan/colspan
+                for col_def in columns_structure:
+                    if "children" in col_def:
+                        if not col_def["children"]:
+                            # No children -> Rowspan 2
+                            col_def["rowspan"] = 2
+                            del col_def["children"]
+                        else:
+                            # Has children -> Colspan = len(children)
+                            col_def["colspan"] = len(col_def["children"])
+                            # Parent usually doesn't need format if it has children
+                            if "format" in col_def:
+                                del col_def["format"]
+
+            else:
+                # Single header logic (Flat)
+                sorted_headers = sorted(sheet.header_positions, key=lambda x: x.column)
+                for header in sorted_headers:
+                    col_id = self._map_header_to_col_id(header.keyword)
+                    col_def = {
+                        "id": col_id,
+                        "header": header.keyword
+                    }
+                    
+                    # Add format to structure if needed (some builders look here)
+                    if col_id in ["col_qty_sf", "col_unit_price", "col_amount"]:
+                        col_def["format"] = "#,##0.00"
+                    elif col_id == "col_po":
+                        col_def["format"] = "@"
+                        
+                    columns_structure.append(col_def)
 
             structure = {
                 "header_row": sheet.start_row,
@@ -373,7 +478,8 @@ class BundleConfigGenerator:
                 "pcs": {"column": "col_qty_pcs"},
                 "net": {"column": "col_net"},
                 "gross": {"column": "col_gross"},
-                "cbm": {"column": "col_cbm"}
+                "cbm": {"column": "col_cbm"},
+                "dc": {"column": "col_dc"}
             })
             
         return base_mappings

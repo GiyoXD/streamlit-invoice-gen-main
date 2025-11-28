@@ -159,7 +159,10 @@ class LayoutBuilder:
         # Calculate footer_start_row from template (estimate: table_header_row + 2-row table header + minimal data rows)
         # Table header is at table_header_row, second header row at table_header_row + 1
         # Data starts at table_header_row + 2, footer would be around data_start + 2 rows
-        template_footer_start_row = table_header_row + 4  # table_header + 2-row header + ~2 data rows
+        # Calculate footer_start_row dynamically from template
+        # Instead of guessing (table_header_row + 4), we scan for the actual footer content
+        template_footer_start_row = self._detect_template_footer_start(self.template_worksheet, table_header_row)
+        logger.info(f"Detected template footer start at row {template_footer_start_row} (table header at {table_header_row})")
         logger.debug(f"[LayoutBuilder DEBUG] template_header: rows {template_header_start_row}-{template_header_end_row}, table_header: row {table_header_row}, footer_start: row {template_footer_start_row}")
         
         # IMPORTANT: Use table_header_row for HeaderBuilder (where column headers go)
@@ -635,3 +638,106 @@ class LayoutBuilder:
                 return
         else:
              logger.warning("LayoutBuilder: Legacy styling config format detected (not a dict). Row heights NOT applied.")
+
+    def _detect_template_footer_start(self, worksheet: Worksheet, table_header_row: int) -> int:
+        """
+        Dynamically detect the start of the footer in the template.
+        Scans downwards from the table header to find where the data area likely ends
+        and the footer (static content) begins.
+        
+        Args:
+            worksheet: The template worksheet
+            table_header_row: The row number of the table header
+            
+        Returns:
+            The detected footer start row number
+        """
+        # Start scanning after the header. 
+        # We assume at least 1 row for the header itself, and maybe 1 row for a sub-header or first data row.
+        scan_start_row = table_header_row + 2
+        max_scan_row = min(scan_start_row + 50, worksheet.max_row + 1) # Limit scan to 50 rows
+        
+        logger.debug(f"Scanning for footer start from row {scan_start_row} to {max_scan_row}")
+        
+        # Static keywords: These definitely mark the start of the static footer we want to capture
+        static_keywords = [
+            "REMARKS", "NOTE", "SIGNATURE", "AUTHORIZED", "BUYER", "SELLER", 
+            "BANK", "ACCOUNT", "BENEFICIARY", "SWIFT", "IBAN", "PLEASE", "THANK",
+            "HS.CODE", "ORIGIN"
+        ]
+        
+        # Dynamic keywords: These mark the start of the dynamic footer (Totals)
+        # We want to detect them but usually SKIP them because FooterBuilder regenerates them
+        dynamic_keywords = ["TOTAL", "SUBTOTAL", "AMOUNT", "VAT", "TAX", "DUE"]
+        
+        found_dynamic_row = None
+        
+        # 1. Scan for keywords
+        for r_idx in range(scan_start_row, max_scan_row):
+            row_text = ""
+            for c_idx in range(1, min(20, worksheet.max_column + 1)):
+                cell = worksheet.cell(row=r_idx, column=c_idx)
+                if cell.value:
+                    row_text += str(cell.value).upper() + " "
+            
+            # Check for static keywords (Priority)
+            for keyword in static_keywords:
+                if keyword in row_text:
+                    logger.info(f"Found static footer keyword '{keyword}' at row {r_idx}. Using this as footer start.")
+                    return r_idx
+            
+            # Check for dynamic keywords (Secondary)
+            if found_dynamic_row is None:
+                for keyword in dynamic_keywords:
+                    if keyword in row_text:
+                        logger.info(f"Found dynamic footer keyword '{keyword}' at row {r_idx}. Continuing scan for static content...")
+                        found_dynamic_row = r_idx
+                        break
+        
+        # 2. If we found a dynamic row (Total) but no static row (Remarks),
+        # assume the static footer starts AFTER the dynamic row.
+        if found_dynamic_row is not None:
+            # Look for the next non-empty row after the dynamic row
+            for r_idx in range(found_dynamic_row + 1, max_scan_row):
+                is_empty = True
+                for c_idx in range(1, min(20, worksheet.max_column + 1)):
+                    cell = worksheet.cell(row=r_idx, column=c_idx)
+                    if cell.value:
+                        is_empty = False
+                        break
+                if not is_empty:
+                    logger.info(f"Found content at row {r_idx} after dynamic footer (row {found_dynamic_row}). Using this as footer start.")
+                    return r_idx
+            
+            # If no content found after Total, return Total + 1 (capture nothing)
+            logger.info(f"No static content found after dynamic footer (row {found_dynamic_row}). Starting capture at {found_dynamic_row + 1}.")
+            return found_dynamic_row + 1
+
+        # 3. Fallback: Look for structural changes (gaps)
+        consecutive_empty_rows = 0
+        gap_threshold = 3
+        found_gap = False
+        
+        for r_idx in range(scan_start_row, max_scan_row):
+            is_empty = True
+            for c_idx in range(1, min(20, worksheet.max_column + 1)):
+                cell = worksheet.cell(row=r_idx, column=c_idx)
+                if cell.value:
+                    is_empty = False
+                    break
+            
+            if is_empty:
+                consecutive_empty_rows += 1
+                if consecutive_empty_rows >= gap_threshold:
+                    found_gap = True
+            else:
+                # Found content
+                if found_gap:
+                    logger.info(f"Found content at row {r_idx} after a gap of {consecutive_empty_rows} empty rows. Assuming footer start.")
+                    return r_idx
+                consecutive_empty_rows = 0
+                
+        # Final Fallback
+        fallback_row = table_header_row + 4
+        logger.warning(f"Could not dynamically detect footer start. Falling back to {fallback_row}")
+        return fallback_row
