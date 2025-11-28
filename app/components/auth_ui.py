@@ -208,6 +208,17 @@ def require_authentication(page_name=None, admin_required=False):
 
         # Provide a link back to main page
         if st.button("🏠 Go to Login Page", use_container_width=True):
+            try:
+                from streamlit.source_util import get_pages
+                import os
+                # Try to find the main script path
+                main_script = os.path.join(os.getcwd(), "app", "main.py")
+                pages = get_pages(main_script)
+                print(f"DEBUG: Available pages: {pages}")
+                st.write(f"DEBUG: Available pages: {pages}")
+            except Exception as e:
+                print(f"DEBUG: Error getting pages: {e}")
+            
             st.switch_page("main.py")
 
         st.stop()
@@ -218,7 +229,7 @@ def require_authentication(page_name=None, admin_required=False):
         st.info("Contact your administrator if you need access to this feature.")
 
         if st.button("🏠 Back to Dashboard", use_container_width=True):
-            st.switch_page("main.py")
+            st.switch_page("app/main.py")
 
         st.stop()
 

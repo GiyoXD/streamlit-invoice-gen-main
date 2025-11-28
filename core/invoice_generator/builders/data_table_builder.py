@@ -135,7 +135,25 @@ class DataTableBuilderStyler:
                             formula_str = self._build_formula_string(value, current_row_idx)
                             cell.value = formula_str
                         else:
-                            cell.value = value
+                            # Try to convert string numbers to actual numbers for Excel
+                            if isinstance(value, str):
+                                # Convert empty strings to None to avoid ' in Excel
+                                if not value.strip():
+                                    cell.value = None
+                                else:
+                                    try:
+                                        # Try converting to float first
+                                        float_val = float(value)
+                                        # If it's an integer (e.g. 10.0), convert to int
+                                        if float_val.is_integer():
+                                            cell.value = int(float_val)
+                                        else:
+                                            cell.value = float_val
+                                    except (ValueError, TypeError):
+                                        # Keep as string if conversion fails
+                                        cell.value = value
+                            else:
+                                cell.value = value
                         
                         # Apply styling using StyleRegistry if available
                         col_id = self.idx_to_id_map.get(col_idx)

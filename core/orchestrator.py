@@ -1,76 +1,41 @@
+# core/orchestrator.py
 import sys
 import os
-import subprocess
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Tuple
+
+# Import the logic directly!
+from core.invoice_generator.generate_invoice import run_invoice_generation
+from core.data_parser.main import run_invoice_automation
 
 class Orchestrator:
     """
-    Service to orchestrate backend processes, decoupling frontend from backend logic.
-    Handles execution of data parsing and invoice generation scripts.
+    Service to orchestrate backend processes.
+    Refactored to use direct python calls where possible.
     """
 
     def __init__(self):
-        # Determine project root
-        # core/orchestrator.py -> core -> root
         self.project_root = Path(__file__).parent.parent
         
-    def _run_subprocess(self, command: List[str], cwd: Path, env_vars: Dict[str, str] = None) -> subprocess.CompletedProcess:
-        """Helper to run subprocesses with consistent environment setup"""
-        env = os.environ.copy()
-        env['PYTHONPATH'] = os.pathsep.join(sys.path)
-        
-        if env_vars:
-            env.update(env_vars)
-
-        try:
-            result = subprocess.run(
-                command,
-                check=True,
-                capture_output=True,
-                text=True,
-                cwd=cwd,
-                encoding='utf-8',
-                errors='replace',
-                env=env
-            )
-            return result
-        except subprocess.CalledProcessError as e:
-            # Re-raise with captured output for better error handling upstream
-            raise subprocess.CalledProcessError(
-                e.returncode,
-                e.cmd,
-                output=e.stdout,
-                stderr=e.stderr
-            ) from e
-
     def process_excel_to_json(self, excel_path: Path, output_dir: Path) -> Tuple[Path, str]:
         """
-        Orchestrate the Excel to JSON conversion process.
-        
-        Args:
-            excel_path: Path to the input Excel file
-            output_dir: Directory to save the JSON output
-            
-        Returns:
-            Tuple[Path, str]: (Path to generated JSON file, Identifier/PO number)
+        Directly calls the Data Parser library function.
+        No more subprocess overhead.
         """
-        identifier = excel_path.stem
-        json_path = output_dir / f"{identifier}.json"
-        
-        command = [
-            sys.executable,
-            "-m", "core.data_parser.main",
-            "--input-excel", str(excel_path),
-            "--output-dir", str(output_dir)
-        ]
-        
-        self._run_subprocess(command, cwd=self.project_root)
-        
-        if not json_path.exists() or json_path.stat().st_size == 0:
-            raise RuntimeError("Processing script completed but JSON file was not created or is empty.")
-            
-        return json_path, identifier
+        try:
+            # Call the refactored main function from data_parser
+            # It returns (json_path, identifier) on success
+            json_path, identifier = run_invoice_automation(
+                input_excel_override=str(excel_path),
+                output_dir_override=str(output_dir)
+            )
+            return json_path, identifier
+
+        except Exception as e:
+            # Capture the full traceback for the UI to display
+            import traceback
+            tb = traceback.format_exc()
+            raise RuntimeError(f"Data Parser Failed:\n{tb}") from e
 
     def generate_invoice(self, 
                         json_path: Path, 
@@ -79,33 +44,29 @@ class Orchestrator:
                         config_dir: Path, 
                         flags: List[str] = None) -> Path:
         """
-        Orchestrate the Invoice Generation process.
-        
-        Args:
-            json_path: Path to the input JSON data
-            output_path: Path where the generated invoice should be saved
-            template_dir: Path to templates directory
-            config_dir: Path to configuration directory
-            flags: Optional list of additional flags (e.g., ['--DAF', '--custom'])
-            
-        Returns:
-            Path: Path to the generated invoice file
+        Directly calls the Invoice Generator library function.
+        No more subprocess overhead or serialization issues.
         """
-        command = [
-            sys.executable, 
-            "-m", "core.invoice_generator.generate_invoice",
-            str(json_path),
-            "--templatedir", str(template_dir),
-            "--configdir", str(config_dir),
-            "--output", str(output_path)
-        ]
+        flags = flags or []
         
-        if flags:
-            command.extend(flags)
-            
-        self._run_subprocess(command, cwd=self.project_root)
-        
-        if not output_path.exists():
-             raise RuntimeError(f"Invoice generation script completed but output file {output_path.name} was not created.")
-             
-        return output_path
+        # Convert legacy CLI flags to function arguments
+        daf_mode = "--DAF" in flags
+        custom_mode = "--custom" in flags
+
+        try:
+            # CALLING DIRECTLY
+            result_path = run_invoice_generation(
+                input_data_path=json_path,
+                output_path=output_path,
+                template_dir=template_dir,
+                config_dir=config_dir,
+                daf_mode=daf_mode,
+                custom_mode=custom_mode
+            )
+            return result_path
+
+        except Exception as e:
+            # Capture the full traceback for the UI to display
+            import traceback
+            tb = traceback.format_exc()
+            raise RuntimeError(f"Invoice Generation Failed:\n{tb}") from e

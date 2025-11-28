@@ -17,6 +17,8 @@ Pattern:
 import logging
 from typing import Any, Dict, List, Tuple, Union, Optional
 from decimal import Decimal
+import ast
+import re
 
 from ..data.data_preparer import (
     prepare_data_rows,
@@ -210,6 +212,24 @@ class TableDataAdapter:
             return self.data_source
         
         # For other types like aggregation, return as-is
+        # FIX: Check for stringified tuple keys (JSON artifact) and convert back to tuples
+        if isinstance(self.data_source, dict):
+            new_data = {}
+            for k, v in self.data_source.items():
+                if isinstance(k, str) and k.startswith('(') and k.endswith(')'):
+                    try:
+                        # It's a stringified tuple!
+                        # Clean up Decimal wrappers for literal_eval: "Decimal('1.2')" -> "1.2"
+                        clean_k = re.sub(r"Decimal\((['\"])(.*?)\1\)", r"\2", k)
+                        new_key = ast.literal_eval(clean_k)
+                        new_data[new_key] = v
+                    except (ValueError, SyntaxError):
+                        # Not a valid tuple string, keep as is
+                        new_data[k] = v
+                else:
+                    new_data[k] = v
+            return new_data
+
         return self.data_source
     
     def _get_desc_col_idx(self) -> int:

@@ -763,43 +763,46 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
             json_output_filename = f"{input_stem}.json" # Simplified filename
             output_json_path = output_dir / json_output_filename # Combine output dir and filename
             logging.info(f"Determined output JSON path: {output_json_path}")
-            # --- END MODIFICATION ---
             try:
                 with open(output_json_path, 'w', encoding='utf-8') as f_json:
                      f_json.write(json_output_string)
                 logging.info(f"Successfully saved JSON output to '{output_json_path}'")
             except IOError as io_err:
                 logging.error(f"Failed to write JSON output to file '{output_json_path}': {io_err}")
+                raise io_err
             except Exception as write_err:
                  logging.error(f"An unexpected error occurred while writing JSON file: {write_err}", exc_info=True)
+                 raise write_err
 
         except TypeError as json_err:
             logging.error(f"Failed to serialize data to JSON: {json_err}. Check data types and default handler.", exc_info=True)
+            raise json_err
         except Exception as e:
             logging.error(f"An unexpected error occurred during JSON generation: {e}", exc_info=True)
+            raise e
         # --- End JSON Generation ---
 
-
-        # Calculate and log total processing time
-        total_time = time.time() - start_time
-        logging.info("--- Invoice Automation Finished Successfully ---")
-        logging.info(f"🕒 TOTAL PROCESSING TIME: {total_time:.2f} seconds ({total_time/60:.1f} minutes)")
         logging.info(f"📁 Processed file: {input_filename}")
+        
+        return output_json_path, input_stem
 
     except FileNotFoundError as e: 
         total_time = time.time() - start_time
         logging.error(f"Input file error: {e}")
         logging.info(f"🕒 Processing failed after {total_time:.2f} seconds")
+        raise e
     except RuntimeError as e: 
         total_time = time.time() - start_time
         logging.error(f"Processing halted due to critical error: {e}")
         logging.info(f"🕒 Processing failed after {total_time:.2f} seconds")
+        raise e
     except Exception as e: 
         total_time = time.time() - start_time
         logging.error(f"An unexpected error occurred in the main script execution: {e}", exc_info=True)
         logging.info(f"🕒 Processing failed after {total_time:.2f} seconds")
+        raise e
     finally:
-        if handler:
+        if 'handler' in locals() and handler:
             handler.close()
         logging.info("--- Automation Run Complete ---")
 
@@ -831,5 +834,3 @@ if __name__ == "__main__":
         output_dir_override=args.output_dir # Pass the output dir argument
     )
     # --- End Run Logic ---
-
-# --- END OF FULL FILE: main.py ---
