@@ -1,0 +1,112 @@
+{
+    "raw_data": {
+        "1": {
+            "description": [
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split",
+                "wet blue split"
+            ],
+            "item": [
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide",
+                "split hide"
+            ],
+            "po": [
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003",
+                "VRH25003"
+            ],
+            "pcs": [
+                300,
+                300,
+                300,
+                300,
+                300,
+                250,
+                230,
+                300,
+                300,
+                300,
+                300,
+                300
+            ],
+            "net": [
+                2160,
+                2110,
+                2060,
+                2038,
+                1960,
+                1841,
+                1650,
+                1980,
+                2180,
+                2228,
+                2088,
+                2159
+            ],
+            "gross": [
+                2200,
+                2150,
+                2100,
+                2078,
+                2000,
+                1881,
+                1690,
+                2020,
+                2220,
+                2268,
+                2128,
+                2199
+            ],
+            "cbm": [
+                "2.750",
+                "2.750",
+                "2.750",
+                "2.640",
+                "2.640",
+                "2.640",
+                "2.750",
+                "2.860",
+                "2.860",
+                "2.860",
+                "2.640",
+                "2.640"
+            ]
+        }
+    },
+    "aggregated_summary": {
+        "net": 24454.0,
+        "gross": 24934.0,
+        "cbm": 32.78,
+        "item": "split hide",
+        "description": "wet blue split",
+        "po": "VRH25003"
+    }
+}
