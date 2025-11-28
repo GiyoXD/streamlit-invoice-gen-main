@@ -344,38 +344,46 @@ if invoice_template_file:
                         st.warning(f"Activity logging failed: {e}")
                 
                 # 2. Define paths for the single, correct command.
-                temp_invoice_path = TEMP_DIR / file_name
-                with open(temp_invoice_path, 'wb') as f:
+                # We copy the uploaded file to the TEMPLATE_OUTPUT_DIR directly, 
+                # as the new config generator expects the template to exist there or uses it as source.
+                # In the new bundle architecture, the "template" IS the Excel file.
+                
+                # Ensure template output directory exists
+                TEMPLATE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+                
+                # The target template path
+                target_template_path = TEMPLATE_OUTPUT_DIR / f"{file_prefix}.xlsx"
+                
+                # Copy the uploaded bytes to the target template path
+                with open(target_template_path, 'wb') as f:
                     f.write(st.session_state['original_file_bytes_for_template'])
 
-                # Determine output filename based on format
-                config_suffix = "_bundle_config.json" if use_bundle_format else "_config.json"
-                config_output_path = CONFIG_OUTPUT_DIR / f"{file_prefix}{config_suffix}"
-                template_output_path = TEMPLATE_OUTPUT_DIR / f"{file_prefix}.xlsx"
+                # Define output directory for the config
+                # The generator will create a subdirectory {file_prefix}_config inside this
+                config_base_dir = CONFIG_OUTPUT_DIR
+                
                 main_script_path = CONFIG_GEN_DIR / "main.py"
 
                 # 3. Build and run the single, correct command.
+                # New CLI: python main.py <excel_file> -o <output_dir> --verbose
                 command = [
                     sys.executable,
-                    "-X", "utf8", # Force UTF-8 mode to handle emojis in script output on Windows
+                    "-X", "utf8",
                     str(main_script_path),
-                    str(temp_invoice_path),
-                    "-o", str(config_output_path),
-                    "--generate-xlsx",
-                    "--xlsx-output", str(template_output_path)
+                    str(target_template_path),
+                    "-o", str(config_base_dir),
+                    "--verbose"
                 ]
-
-                if use_bundle_format:
-                    command.append("--bundle")
                 
-                # This command now handles everything: analysis, config gen, and template gen.
+                # Note: --bundle, --generate-xlsx, --xlsx-output are no longer needed/supported 
+                # as the new generator handles bundle creation automatically and we manually placed the template.
+
                 if not run_command(command, verbose=True, cwd=str(CONFIG_GEN_DIR)):
                     st.error("The main generation script failed. Please check the logs above.")
                     st.stop()
 
                 # 4. Clean up temporary files
-                if temp_invoice_path.exists():
-                    temp_invoice_path.unlink()
+                # temp_invoice_path is no longer used/created, so we don't need to clean it up.
                 
                 # Also clean up the temporary analysis file if it exists from the old workflow
                 if 'analysis_path' in st.session_state and Path(st.session_state['analysis_path']).exists():
@@ -392,7 +400,7 @@ if invoice_template_file:
                         username=user_info['username'],
                         activity_type='TEMPLATE_CREATED',
                         description=f"Created new invoice template for {file_prefix} from file: {file_name}",
-                        action_description=f"Generated config file: {config_output_path.name}, Template file: {template_output_path.name} from '{file_name}'",
+                        action_description=f"Generated config in: {config_base_dir}, Template file: {target_template_path.name} from '{file_name}'",
                         success=True
                     )
                 except Exception as e:

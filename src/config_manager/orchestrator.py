@@ -31,16 +31,32 @@ class ConfigOrchestrator:
             return False
 
         # 1. Setup Workspace
-        output_dir, metadata = self.workspace.setup_output_directory(excel_path)
-        logger.info(f"Output directory: {output_dir}")
+        # If output_dir is specified in options, use it. Otherwise, use WorkspaceManager default.
+        custom_output = options.get('output_dir')
+        if custom_output:
+            output_dir = Path(custom_output)
+            output_dir.mkdir(parents=True, exist_ok=True)
+            logger.info(f"Using custom output directory: {output_dir}")
+        else:
+            output_dir, metadata = self.workspace.setup_output_directory(excel_path)
+            logger.info(f"Output directory: {output_dir}")
 
         success = False
         try:
             # 2. Analyze (Intermediate step for header logging)
             # We create a temp file for analysis JSON
-            analysis_json_path = self.workspace.get_temp_file(
-                suffix=".json", prefix="analysis_", dir=output_dir
-            )
+            # If using custom output, we might want to put temp files there or in a temp dir
+            # For simplicity, let's put it in the output dir (or a temp subdir if custom)
+            
+            if custom_output:
+                # Use a temp dir for intermediate files to avoid cluttering the target config dir
+                import tempfile
+                temp_dir = Path(tempfile.mkdtemp())
+                analysis_json_path = str(temp_dir / f"analysis_{excel_path.stem}.json")
+            else:
+                analysis_json_path = self.workspace.get_temp_file(
+                    suffix=".json", prefix="analysis_", dir=output_dir
+                )
             
             if not self.analyzer.analyze(str(excel_path), analysis_json_path, verbose=options.get('verbose')):
                 logger.error("Analysis failed.")
