@@ -33,6 +33,18 @@ def derive_paths(input_data_path: str, template_dir: str, config_dir: str) -> Op
     
     # Prioritize bundle config to avoid picking up data file as config
     config_path = Path(config_dir) / f"{stem}_bundle_config.json"
+    
+    # Heuristic: If exact match not found, try stripping trailing numbers/underscores (e.g., JF25057 -> JF)
+    effective_stem = stem
+    if not config_path.exists():
+        prefix = re.sub(r'[\d_]+$', '', stem)
+        if prefix and prefix != stem:
+            prefix_config = Path(config_dir) / f"{prefix}_bundle_config.json"
+            if prefix_config.exists():
+                config_path = prefix_config
+                effective_stem = prefix # Use the prefix for template lookup too
+                logger.info(f"Found config using prefix match: '{stem}' -> '{prefix}'")
+
     if not config_path.exists():
         config_path = Path(config_dir) / f"{stem}.json"
     
@@ -60,7 +72,12 @@ def derive_paths(input_data_path: str, template_dir: str, config_dir: str) -> Op
             pass
     
     if not template_path:
-        template_path = Path(template_dir) / f"{stem}.xlsx"
+        # Try effective stem first (e.g. JF.xlsx)
+        template_path = Path(template_dir) / f"{effective_stem}.xlsx"
+        if not template_path.exists() and effective_stem != stem:
+             # Try original stem if effective stem failed (e.g. JF25057.xlsx)
+             template_path = Path(template_dir) / f"{stem}.xlsx"
+
         if not template_path.exists():
              # Fallback to generic Invoice.xlsx
              fallback = Path(template_dir) / "Invoice.xlsx"

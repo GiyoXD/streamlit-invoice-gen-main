@@ -25,7 +25,7 @@ __pycache__/
 # These contain user data, generated files, and temporary data
 # that should not be tracked in version control
 data/
-!src/invoice_generator/src/data/
+!core/invoice_generator/data/
 result/
 temp_uploads/
 

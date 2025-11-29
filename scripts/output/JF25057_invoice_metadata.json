@@ -1,0 +1,28 @@
+{
+    "status": "success",
+    "timestamp": "2025-11-29T14:07:27.174109",
+    "duration_seconds": 6.727689266204834,
+    "output_file": "JF25057_invoice.xlsx",
+    "sheets_processed": [
+        "Invoice",
+        "Contract",
+        "Packing list"
+    ],
+    "sheets_failed": [],
+    "error_message": null,
+    "input_metadata": {
+        "workbook_filename": "JF25057.xlsx",
+        "worksheet_name": "Sheet1",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-11-29T14:07:20.423045"
+    },
+    "generation_args": {
+        "DAF": false,
+        "custom": true,
+        "input_data_file": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\scripts\\output\\JF25057.json",
+        "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\core\\invoice_generator"
+    }
+}

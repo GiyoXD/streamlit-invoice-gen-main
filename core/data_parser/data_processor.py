@@ -140,13 +140,155 @@ def _calculate_single_cbm(cbm_value: Any, row_index: int) -> Optional[decimal.De
         return None
 
 # process_cbm_column function remains unchanged...
+# --- START MODIFIED FILE: data_processor.py ---
+
+import logging
+from typing import Dict, List, Any, Optional, Tuple
+import decimal # Use Decimal for precise calculations
+import re
+import pprint
+# Import config values (consider passing as arguments)
+from .config import DISTRIBUTION_BASIS_COLUMN # Keep this
+
+# Set precision for Decimal calculations
+decimal.getcontext().prec = 28 # Default precision, adjust if needed
+# Define precision specifically for CBM results (e.g., 4 decimal places)
+CBM_DECIMAL_PLACES = decimal.Decimal('0.0001')
+# Define default precision for other distributions (e.g., 4 decimal places)
+DEFAULT_DIST_PRECISION = decimal.Decimal('0.0001')
+
+
+class ProcessingError(Exception):
+    """Custom exception for data processing errors."""
+    pass
+
+def _convert_to_decimal(value: Any, context: str = "") -> Optional[decimal.Decimal]:
+    """Safely convert a value to Decimal, logging errors.
+    
+    For floats, we round to a reasonable precision to avoid floating-point errors
+    like 0.30000000000000004 becoming an issue.
+    """
+    prefix = "[_convert_to_decimal]"
+    if isinstance(value, decimal.Decimal):
+        return value
+    if value is None:
+        return None
+    
+    # Handle floats specially to avoid floating-point precision issues
+    # Round to 14 decimal places before converting to avoid issues like 0.30000000000000004
+    if isinstance(value, float):
+        # Use string formatting with precision to clean up float representation
+        value_str = f"{value:.14f}".rstrip('0').rstrip('.')
+        if not value_str or value_str == '-':
+            return None
+        try:
+            return decimal.Decimal(value_str)
+        except (decimal.InvalidOperation, TypeError, ValueError) as e:
+            logging.warning(f"{prefix} Could not convert float '{value}' to Decimal {context}: {e}")
+            return None
+    
+    value_str = str(value).strip()
+    if not value_str:
+        return None
+    try:
+        result = decimal.Decimal(value_str)
+        return result
+    except (decimal.InvalidOperation, TypeError, ValueError) as e:
+        logging.warning(f"{prefix} Could not convert '{value}' (Str: '{value_str}') to Decimal {context}: {e}")
+        return None
+
+# _calculate_single_cbm function remains unchanged...
+def _calculate_single_cbm(cbm_value: Any, row_index: int) -> Optional[decimal.Decimal]:
+    """
+    Parses a CBM string (e.g., "L*W*H" or "LxWxH") and calculates the volume.
+
+    Args:
+        cbm_value: The value from the CBM cell (can be string, number, None).
+        row_index: The 0-based index of the row for logging purposes.
+
+    Returns:
+        The calculated CBM as a Decimal, or None if parsing fails or input is invalid.
+    """
+    prefix = "[_calculate_single_cbm]"
+    log_context = f"for CBM at row index {row_index}" # Use 0-based index internally
+
+    if cbm_value is None:
+        logging.debug(f"{prefix} Input CBM value is None. {log_context}")
+        return None
+
+    # If it's already a number, convert to Decimal and quantize
+    if isinstance(cbm_value, (int, float, decimal.Decimal)):
+        logging.debug(f"{prefix} Input CBM is already numeric: {cbm_value}. {log_context}")
+        calculated = _convert_to_decimal(cbm_value, log_context)
+        if calculated is not None:
+             result = calculated.quantize(CBM_DECIMAL_PLACES, rounding=decimal.ROUND_HALF_UP)
+             logging.debug(f"{prefix} Quantized pre-numeric CBM to {result}. {log_context}")
+             return result
+        else:
+             # Conversion should ideally not fail here, but handle it
+             logging.warning(f"{prefix} Failed to convert pre-numeric CBM value {cbm_value} to Decimal. {log_context}")
+             return None
+
+
+    if not isinstance(cbm_value, str):
+        logging.warning(f"{prefix} Unexpected type '{type(cbm_value).__name__}' for CBM value '{cbm_value}'. Cannot calculate. {log_context}")
+        return None
+
+    cbm_str = cbm_value.strip()
+    if not cbm_str:
+        logging.debug(f"{prefix} Input CBM string is empty after strip. {log_context}")
+        return None
+
+    logging.debug(f"{prefix} Attempting to parse CBM string: '{cbm_str}'. {log_context}")
+
+    # Try splitting by '*' first
+    parts = cbm_str.split('*')
+    separator_used = "'*'"
+
+    # If not 3 parts, try splitting by 'x' or 'X' (case-insensitive)
+    if len(parts) != 3:
+        if '*' not in cbm_str and ('x' in cbm_str.lower()):
+             parts = re.split(r'[xX]', cbm_str) # Split by 'x' or 'X'
+             separator_used = "'x' or 'X'"
+             logging.debug(f"{prefix} Split by '*' failed, trying split by {separator_used}. Parts: {parts}. {log_context}")
+
+    # Check if we have exactly 3 parts after trying separators
+    if len(parts) != 3:
+        logging.warning(f"{prefix} Invalid CBM format: '{cbm_str}'. Expected 3 parts separated by '*' or 'x'. Found {len(parts)} parts: {parts}. {log_context}")
+        return None
+
+    try:
+        # Convert each part to Decimal
+        dims = []
+        valid_dims = True
+        for i, part in enumerate(parts):
+             dim = _convert_to_decimal(part, f"{log_context}, part {i+1} ('{part}')")
+             if dim is None:
+                 logging.warning(f"{prefix} Failed to convert dimension part {i+1} ('{part}') to Decimal. {log_context}")
+                 valid_dims = False
+             dims.append(dim)
+
+        if not valid_dims:
+            logging.warning(f"{prefix} Failed to convert one or more dimensions for CBM string '{cbm_str}'. Cannot calculate volume. {log_context}")
+            return None
+
+        dim1, dim2, dim3 = dims
+        volume = (dim1 * dim2 * dim3).quantize(CBM_DECIMAL_PLACES, rounding=decimal.ROUND_HALF_UP)
+        logging.debug(f"{prefix} Calculated CBM volume: {volume} from '{cbm_str}' (Dims: {dims}). {log_context}")
+        return volume
+
+    except Exception as e:
+        logging.error(f"{prefix} Unexpected error calculating CBM from '{cbm_str}': {e}. {log_context}", exc_info=True)
+        return None
+
+# process_cbm_column function remains unchanged...
 def process_cbm_column(raw_data: Dict[str, List[Any]]) -> Dict[str, List[Any]]:
     """
     Iterates through the 'cbm' list in raw_data, calculates numeric CBM values
     from strings (L*W*H or LxWxH format), and updates the list in place.
     """
     prefix = "[process_cbm_column]"
-    cbm_key = 'cbm' # Canonical name
+    cbm_key = 'col_cbm' # Canonical name
 
     if cbm_key not in raw_data:
         logging.debug(f"{prefix} No '{cbm_key}' column found in this table's extracted data. Skipping CBM calculation.")
@@ -202,8 +344,21 @@ def distribute_values(
         raise ProcessingError("Input data for distribution must be a dictionary.")
 
     if basis_column not in processed_data:
-        logging.error(f"{prefix} Basis column '{basis_column}' not found in data dictionary keys: {list(processed_data.keys())}. Cannot distribute.")
-        raise ProcessingError(f"Basis column '{basis_column}' not found for distribution.")
+        # Try finding the basis column with 'col_' prefix or specific mapping
+        candidate_basis = basis_column
+        if not candidate_basis.startswith('col_'):
+            if basis_column == 'pcs':
+                 candidate_basis = 'col_qty_pcs'
+            elif basis_column == 'sqft':
+                 candidate_basis = 'col_qty_sf'
+            else:
+                 candidate_basis = f"col_{basis_column}"
+        
+        if candidate_basis in processed_data:
+             basis_column = candidate_basis
+        else:
+            logging.error(f"{prefix} Basis column '{basis_column}' (or '{candidate_basis}') not found in data dictionary keys: {list(processed_data.keys())}. Cannot distribute.")
+            raise ProcessingError(f"Basis column '{basis_column}' not found for distribution.")
 
     basis_values_list = processed_data.get(basis_column)
     if not isinstance(basis_values_list, list):
@@ -214,12 +369,24 @@ def distribute_values(
     valid_columns_to_distribute = []
     if columns_to_distribute: # Ensure it's not None or empty
         for col in columns_to_distribute:
-            if col not in processed_data:
-                 logging.warning(f"{prefix} Column '{col}' specified for distribution but not found in this table's data keys: {list(processed_data.keys())}. Skipping this column.")
-            elif not isinstance(processed_data.get(col), list):
-                 logging.warning(f"{prefix} Column '{col}' specified for distribution exists but is not a list (Type: {type(processed_data.get(col)).__name__}). Skipping this column.")
+            # Map legacy config names to new col_ names if needed
+            target_col = col
+            if not target_col.startswith('col_'):
+                if target_col == 'net': target_col = 'col_net'
+                elif target_col == 'gross': target_col = 'col_gross'
+                elif target_col == 'cbm': target_col = 'col_cbm'
+                elif target_col == 'sqft': target_col = 'col_qty_sf'
+                elif target_col == 'pcs': target_col = 'col_qty_pcs'
+                elif target_col == 'amount': target_col = 'col_amount'
+                elif target_col == 'pallet_count': target_col = 'col_pallet_count'
+                else: target_col = f"col_{target_col}"
+
+            if target_col not in processed_data:
+                 logging.warning(f"{prefix} Column '{col}' (mapped to '{target_col}') specified for distribution but not found in this table's data keys: {list(processed_data.keys())}. Skipping this column.")
+            elif not isinstance(processed_data.get(target_col), list):
+                 logging.warning(f"{prefix} Column '{col}' (mapped to '{target_col}') specified for distribution exists but is not a list (Type: {type(processed_data.get(target_col)).__name__}). Skipping this column.")
             else:
-                valid_columns_to_distribute.append(col)
+                valid_columns_to_distribute.append(target_col)
     else:
         logging.info(f"{prefix} No columns specified in 'columns_to_distribute' list. Skipping distribution.")
         return processed_data
@@ -313,7 +480,7 @@ def distribute_values(
                     for k in block_indices:
                         basis_val = basis_values_dec[k]
                         if basis_val is not None and basis_val > 0:
-                            total_basis_in_block += basis_val
+                            total_basis_in_in_block += basis_val
                             indices_with_valid_basis.append(k)
                         elif basis_val is not None: # Log zero/negative basis
                              logging.debug(f"{log_row_context}: Basis value is zero or negative ({basis_val}) at index {k} in block. Excluded from total.")
@@ -324,7 +491,7 @@ def distribute_values(
                     # --- Perform distribution if possible ---
                     if total_basis_in_block > 0 and indices_with_valid_basis:
                          distributed_sum_check = decimal.Decimal(0)
-                         dist_precision = CBM_DECIMAL_PLACES if col_name == 'cbm' else DEFAULT_DIST_PRECISION
+                         dist_precision = CBM_DECIMAL_PLACES if col_name == 'col_cbm' else DEFAULT_DIST_PRECISION
 
                          logging.debug(f"{log_row_context}: Distributing {current_val_dec} across {len(indices_with_valid_basis)} rows with positive basis using precision {dist_precision}.")
 
@@ -437,7 +604,7 @@ def aggregate_standard_by_po_item_price(
     """
     aggregated_results = global_aggregation_map
     # UPDATED: Add 'description' to required columns (handle its absence later)
-    required_cols = ['po', 'item', 'unit', 'sqft', 'amount'] # Keep description optional for now
+    required_cols = ['col_po', 'col_item', 'col_unit_price', 'col_qty_sf', 'col_amount'] # Keep description optional for now
     prefix = "[aggregate_standard]"
 
     logging.debug(f"{prefix} Updating global STANDARD aggregation (SQFT & Amount by PO/Item/Price/Desc) with new table data.")
@@ -454,34 +621,34 @@ def aggregate_standard_by_po_item_price(
         return aggregated_results
 
     # --- Check for optional 'description' column ---
-    has_description_col = 'description' in processed_data
-    if has_description_col and not isinstance(processed_data.get('description'), list):
-        logging.warning(f"{prefix} 'description' column exists but is not a list. Will use None for description keys.")
+    has_description_col = 'col_desc' in processed_data
+    if has_description_col and not isinstance(processed_data.get('col_desc'), list):
+        logging.warning(f"{prefix} 'col_desc' column exists but is not a list. Will use None for description keys.")
         has_description_col = False # Treat as missing if not a list
     elif not has_description_col:
-        logging.info(f"{prefix} 'description' column not found or is invalid. Will use None for description keys.")
+        logging.info(f"{prefix} 'col_desc' column not found or is invalid. Will use None for description keys.")
 
-    # Safely get lists and check types - Use get() with default empty list
-    po_list = processed_data.get('po', [])
-    item_list = processed_data.get('item', [])
-    unit_list = processed_data.get('unit', [])
-    sqft_list = processed_data.get('sqft', [])
-    amount_list = processed_data.get('amount', [])
-    description_list = processed_data.get('description', []) if has_description_col else [] # Get description list if valid
+    # Safely get lists and check types - Use get() with    # Get column data using new 'col_' keys
+    po_list = processed_data.get('col_po', [])
+    item_list = processed_data.get('col_item', [])
+    unit_list = processed_data.get('col_unit_price', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    amount_list = processed_data.get('col_amount', [])
+    description_list = processed_data.get('col_desc', []) if has_description_col else [] # Get description list if valid
 
     # Use length of 'po' list as the reference number of rows
     num_rows = len(po_list)
-    logging.debug(f"{prefix} Input data contains lists. Number of rows based on 'po' list: {num_rows}")
+    logging.debug(f"{prefix} Input data contains lists. Number of rows based on 'col_po' list: {num_rows}")
 
     # Check for length consistency across all required lists
-    all_lists_to_check = {'item': item_list, 'unit': unit_list, 'sqft': sqft_list, 'amount': amount_list}
+    all_lists_to_check = {'col_item': item_list, 'col_unit_price': unit_list, 'col_qty_sf': sqft_list, 'col_amount': amount_list}
     # Add description list to check only if it exists and is supposed to be used
     if has_description_col:
-        all_lists_to_check['description'] = description_list
+        all_lists_to_check['col_desc'] = description_list
 
     if not all(len(lst) == num_rows for lst in all_lists_to_check.values()):
         lengths = {k: len(v) for k, v in all_lists_to_check.items()}
-        lengths['po'] = num_rows # Add PO length for context
+        lengths['col_po'] = num_rows # Add PO length for context
         logging.error(f"{prefix} Data length mismatch! Lengths:{lengths}. Aborting standard aggregation for this table.")
         return aggregated_results
 
@@ -590,7 +757,7 @@ def aggregate_custom_by_po_item(
     """
     aggregated_results = global_custom_aggregation_map
     # Required columns for this aggregation (Description is optional)
-    required_cols = ['po', 'item', 'sqft', 'amount']
+    required_cols = ['col_po', 'col_item', 'col_qty_sf', 'col_amount']
     prefix = "[aggregate_custom]"
 
     logging.debug(f"{prefix} Updating global CUSTOM aggregation (SQFT & Amount by PO/Item/Desc) with new table data.")
@@ -607,20 +774,20 @@ def aggregate_custom_by_po_item(
         # Allow proceeding, rows without needed data will be skipped or defaulted
 
     # --- Check for optional 'description' column ---
-    has_description_col = 'description' in processed_data
-    if has_description_col and not isinstance(processed_data.get('description'), list):
-        logging.warning(f"{prefix} 'description' column exists but is not a list. Will use None for description keys.")
+    has_description_col = 'col_desc' in processed_data
+    if has_description_col and not isinstance(processed_data.get('col_desc'), list):
+        logging.warning(f"{prefix} 'col_desc' column exists but is not a list. Will use None for description keys.")
         has_description_col = False
     elif not has_description_col:
-        logging.info(f"{prefix} 'description' column not found or is invalid. Will use None for description keys.")
+        logging.info(f"{prefix} 'col_desc' column not found or is invalid. Will use None for description keys.")
 
 
-    # Safely get lists and check types - Use get() with default empty list
-    po_list = processed_data.get('po', [])
-    item_list = processed_data.get('item', [])
-    sqft_list = processed_data.get('sqft', [])
-    amount_list = processed_data.get('amount', [])
-    description_list = processed_data.get('description', []) if has_description_col else []
+    # Safely get lists and check types - Use get() with    # Get column data using new 'col_' keys
+    po_list = processed_data.get('col_po', [])
+    item_list = processed_data.get('col_item', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    amount_list = processed_data.get('col_amount', [])
+    description_list = processed_data.get('col_desc', []) if has_description_col else []
 
     # Use length of 'po' list as reference (handle potential missing 'po'?)
     num_rows = len(po_list) if po_list else 0
@@ -629,17 +796,17 @@ def aggregate_custom_by_po_item(
         core_lists = [l for l in [item_list, sqft_list, amount_list] if l]
         if core_lists:
             num_rows = len(core_lists[0])
-            logging.warning(f"{prefix} 'po' list missing or empty, using length of another list ({num_rows}) as reference.")
+            logging.warning(f"{prefix} 'col_po' list missing or empty, using length of another list ({num_rows}) as reference.")
         else:
-            logging.warning(f"{prefix} Core lists ('po', 'item', 'sqft', 'amount') seem missing or empty. Cannot reliably determine row count.")
+            logging.warning(f"{prefix} Core lists ('col_po', 'col_item', 'col_qty_sf', 'col_amount') seem missing or empty. Cannot reliably determine row count.")
             num_rows = 0 # Cannot proceed safely
 
     logging.debug(f"{prefix} Determined number of rows: {num_rows}")
 
     # Check for length consistency across all *found* required lists + description if present
-    all_lists = {'po': po_list, 'item': item_list, 'sqft': sqft_list, 'amount': amount_list}
+    all_lists = {'col_po': po_list, 'col_item': item_list, 'col_qty_sf': sqft_list, 'col_amount': amount_list}
     if has_description_col:
-        all_lists['description'] = description_list
+        all_lists['col_desc'] = description_list
 
     found_lists = {k: v for k, v in all_lists.items() if k in processed_data and isinstance(processed_data[k], list)}
 
@@ -747,10 +914,10 @@ def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str,
         return summary
 
     # Get columns - check both 'description' and 'desc' field names
-    description_list = processed_data.get('description', []) or processed_data.get('desc', [])
+    description_list = processed_data.get('col_desc', [])
     
     # robustly determine num_rows
-    lists_to_check = [processed_data.get(col) for col in ['po', 'item', 'sqft', 'amount', 'net', 'gross', 'quantity', 'pcs'] if processed_data.get(col)]
+    lists_to_check = [processed_data.get(col) for col in ['col_po', 'col_item', 'col_qty_sf', 'col_amount', 'col_net', 'col_gross', 'col_quantity', 'col_qty_pcs'] if processed_data.get(col)]
     if description_list:
         num_rows = len(description_list)
     elif lists_to_check:
@@ -759,11 +926,11 @@ def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str,
         num_rows = 0
 
     # Get other columns safely
-    pcs_list = processed_data.get('pcs', [])
-    sqft_list = processed_data.get('sqft', [])
-    net_list = processed_data.get('net', [])
-    gross_list = processed_data.get('gross', [])
-    pallet_count_list = processed_data.get('pallet_count', [])
+    pcs_list = processed_data.get('col_qty_pcs', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    net_list = processed_data.get('col_net', [])
+    gross_list = processed_data.get('col_gross', [])
+    pallet_count_list = processed_data.get('col_pallet_count', [])
 
     for i in range(num_rows):
         desc = str(description_list[i]).upper() if i < len(description_list) and description_list[i] else ""
@@ -829,16 +996,16 @@ def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[
         return []
     
     # Get column data - check both field name variants
-    po_list = processed_data.get('po', [])
-    item_list = processed_data.get('item', [])
-    desc_list = processed_data.get('description', []) or processed_data.get('desc', [])
-    price_list = processed_data.get('unit_price', []) or processed_data.get('price', []) or processed_data.get('unit', [])
-    sqft_list = processed_data.get('sqft', [])
-    amount_list = processed_data.get('amount', [])
-    pallet_list = processed_data.get('pallet_count', [])
-    net_list = processed_data.get('net', [])
-    gross_list = processed_data.get('gross', [])
-    cbm_list = processed_data.get('cbm', [])
+    po_list = processed_data.get('col_po', [])
+    item_list = processed_data.get('col_item', [])
+    desc_list = processed_data.get('col_desc', [])
+    price_list = processed_data.get('col_unit_price', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    amount_list = processed_data.get('col_amount', [])
+    pallet_list = processed_data.get('col_pallet_count', [])
+    net_list = processed_data.get('col_net', [])
+    gross_list = processed_data.get('col_gross', [])
+    cbm_list = processed_data.get('col_cbm', [])
     
     if not po_list:
         return []
@@ -960,14 +1127,14 @@ def calculate_weight_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, 
         return summary
         
     # Sum Net Weight
-    net_values = processed_data.get('net', [])
+    net_values = processed_data.get('col_net', [])
     for val in net_values:
         dec_val = _convert_to_decimal(val)
         if dec_val is not None:
             summary['net'] += dec_val
             
     # Sum Gross Weight
-    gross_values = processed_data.get('gross', [])
+    gross_values = processed_data.get('col_gross', [])
     for val in gross_values:
         dec_val = _convert_to_decimal(val)
         if dec_val is not None:
@@ -990,7 +1157,7 @@ def calculate_pallet_summary(processed_data: Dict[str, List[Any]]) -> int:
     if not isinstance(processed_data, dict):
         return 0
         
-    pallet_values = processed_data.get('pallet_count', [])
+    pallet_values = processed_data.get('col_pallet_count', [])
     for val in pallet_values:
         if val is not None:
             try:
@@ -1037,25 +1204,25 @@ def calculate_footer_totals(processed_data: Dict[str, List[Any]]) -> Dict[str, A
                 pass
 
     # Sum each list independently
-    for val in processed_data.get('pcs', []):
+    for val in processed_data.get('col_qty_pcs', []):
         safe_add_int('total_pcs', val)
         
-    for val in processed_data.get('sqft', []):
+    for val in processed_data.get('col_qty_sf', []):
         safe_add_decimal('total_sqft', val)
         
-    for val in processed_data.get('net', []):
+    for val in processed_data.get('col_net', []):
         safe_add_decimal('total_net', val)
         
-    for val in processed_data.get('gross', []):
+    for val in processed_data.get('col_gross', []):
         safe_add_decimal('total_gross', val)
         
-    for val in processed_data.get('cbm', []):
+    for val in processed_data.get('col_cbm', []):
         safe_add_decimal('total_cbm', val)
         
-    for val in processed_data.get('amount', []):
+    for val in processed_data.get('col_amount', []):
         safe_add_decimal('total_amount', val)
         
-    for val in processed_data.get('pallet_count', []):
+    for val in processed_data.get('col_pallet_count', []):
         safe_add_int('total_pallets', val)
 
     return totals
