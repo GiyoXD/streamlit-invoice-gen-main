@@ -1,7 +1,7 @@
 {
     "status": "success",
-    "timestamp": "2025-11-29T14:07:27.174109",
-    "duration_seconds": 6.727689266204834,
+    "timestamp": "2025-12-01T10:47:18.219346",
+    "duration_seconds": 2.4315476417541504,
     "output_file": "JF25057_invoice.xlsx",
     "sheets_processed": [
         "Invoice",
@@ -17,12 +17,12 @@
         "DAF_chunk_size": 2,
         "DAF_intra_separator": "/",
         "DAF_inter_separator": "\\n",
-        "timestamp": "2025-11-29T14:07:20.423045"
+        "timestamp": "2025-12-01T10:47:15.784153"
     },
     "generation_args": {
         "DAF": false,
         "custom": true,
         "input_data_file": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\scripts\\output\\JF25057.json",
-        "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\core\\invoice_generator"
+        "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\database\\config\\bundled"
     }
 }

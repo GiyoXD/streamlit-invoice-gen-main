@@ -205,7 +205,7 @@ def prepare_data_rows(
     if data_source_type == 'DAF_aggregation':
         DAF_data = data_source or {}
         num_data_rows_from_source = len(DAF_data)
-        id_to_data_key_map = {"col_po": "combined_po", "col_item": "combined_item", "col_description": "combined_description", "col_sqft": "total_sqft", "col_amount": "total_amount"}
+        id_to_data_key_map = {"col_po": "col_po", "col_item": "col_item", "col_desc": "col_desc", "col_qty_sf": "col_qty_sf", "col_amount": "col_amount"}
         price_col_idx = column_id_map.get("col_unit_price")
         
         for row_key in sorted(DAF_data.keys()):

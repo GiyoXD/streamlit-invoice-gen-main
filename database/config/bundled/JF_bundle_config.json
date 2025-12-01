@@ -519,13 +519,6 @@
             "format": "@"
           },
           {
-            "id": "col_blank_test",
-            "header": "blank test",
-            "rowspan": 2,
-            "format": "@",
-            "skip_in_daf": true
-          },
-          {
             "id": "col_desc",
             "header": "Description",
             "rowspan": 2,

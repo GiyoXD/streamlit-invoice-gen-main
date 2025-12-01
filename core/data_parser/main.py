@@ -87,11 +87,11 @@ def perform_DAF_compounding(
     # Helper function for creating a default empty group result
     def default_group_result() -> DAFCompoundingResult:
         return {
-            'combined_po': '',
-            'combined_item': '',
-            'combined_description': '',
-            'total_sqft': decimal.Decimal(0),
-            'total_amount': decimal.Decimal(0)
+            'col_po': '',
+            'col_item': '',
+            'col_desc': '',
+            'col_qty_sf': decimal.Decimal(0),
+            'col_amount': decimal.Decimal(0)
         }
 
     # Handle empty input consistently -> returns default BUFFALO split dict
@@ -171,8 +171,15 @@ def perform_DAF_compounding(
              desc_str = str(desc_key_val).strip() if desc_key_val is not None else ""
              is_buffalo = False
              if desc_str and "BUFFALO" in desc_str.upper(): is_buffalo = True
-             sqft_sum = sums_dict.get('sqft_sum', decimal.Decimal(0))
-             amount_sum = sums_dict.get('amount_sum', decimal.Decimal(0))
+             
+             # Use new col_ keys for sums
+             sqft_sum = sums_dict.get('col_qty_sf', decimal.Decimal(0))
+             amount_sum = sums_dict.get('col_amount', decimal.Decimal(0))
+             
+             # Fallback for legacy keys if not found (just in case)
+             if sqft_sum == 0 and 'sqft_sum' in sums_dict: sqft_sum = sums_dict.get('sqft_sum', decimal.Decimal(0))
+             if amount_sum == 0 and 'amount_sum' in sums_dict: amount_sum = sums_dict.get('amount_sum', decimal.Decimal(0))
+
              if not isinstance(sqft_sum, decimal.Decimal): sqft_sum = decimal.Decimal(0)
              if not isinstance(amount_sum, decimal.Decimal): amount_sum = decimal.Decimal(0)
 
@@ -196,22 +203,22 @@ def perform_DAF_compounding(
         sorted_buffalo_items = sorted(list(buffalo_items))
         sorted_buffalo_descriptions = sorted([d for d in buffalo_descriptions if d])
         buffalo_result: DAFCompoundingResult = {
-            'combined_po': format_chunks(sorted_buffalo_pos, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
-            'combined_item': format_chunks(sorted_buffalo_items, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
-            'combined_description': format_chunks(sorted_buffalo_descriptions, 1, "", "\n"),
-            'total_sqft': buffalo_sqft,
-            'total_amount': buffalo_amount
+            'col_po': format_chunks(sorted_buffalo_pos, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
+            'col_item': format_chunks(sorted_buffalo_items, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
+            'col_desc': format_chunks(sorted_buffalo_descriptions, 1, "", "\n"),
+            'col_qty_sf': buffalo_sqft,
+            'col_amount': buffalo_amount
         }
         # Format NON-BUFFALO Group ("2")
         sorted_non_buffalo_pos = sorted(list(non_buffalo_pos))
         sorted_non_buffalo_items = sorted(list(non_buffalo_items))
         sorted_non_buffalo_descriptions = sorted([d for d in non_buffalo_descriptions if d])
         non_buffalo_result: DAFCompoundingResult = {
-            'combined_po': format_chunks(sorted_non_buffalo_pos, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
-            'combined_item': format_chunks(sorted_non_buffalo_items, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
-            'combined_description': format_chunks(sorted_non_buffalo_descriptions, 1, "", "\n"),
-            'total_sqft': non_buffalo_sqft,
-            'total_amount': non_buffalo_amount
+            'col_po': format_chunks(sorted_non_buffalo_pos, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
+            'col_item': format_chunks(sorted_non_buffalo_items, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR),
+            'col_desc': format_chunks(sorted_non_buffalo_descriptions, 1, "", "\n"),
+            'col_qty_sf': non_buffalo_sqft,
+            'col_amount': non_buffalo_amount
         }
         # Construct Final Result Dictionary for BUFFALO Split Case
         final_buffalo_split_result: FinalDAFResultType = {
@@ -243,8 +250,15 @@ def perform_DAF_compounding(
 
              po_str = str(po_key_val) if po_key_val is not None else "<MISSING_PO>"
              item_str = str(item_key_val) if item_key_val is not None else "<MISSING_ITEM>"
-             sqft_sum = sums_dict.get('sqft_sum', decimal.Decimal(0))
-             amount_sum = sums_dict.get('amount_sum', decimal.Decimal(0))
+             
+             # Use new col_ keys
+             sqft_sum = sums_dict.get('col_qty_sf', decimal.Decimal(0))
+             amount_sum = sums_dict.get('col_amount', decimal.Decimal(0))
+             
+             # Fallback
+             if sqft_sum == 0 and 'sqft_sum' in sums_dict: sqft_sum = sums_dict.get('sqft_sum', decimal.Decimal(0))
+             if amount_sum == 0 and 'amount_sum' in sums_dict: amount_sum = sums_dict.get('amount_sum', decimal.Decimal(0))
+
              if not isinstance(sqft_sum, decimal.Decimal): sqft_sum = decimal.Decimal(0)
              if not isinstance(amount_sum, decimal.Decimal): amount_sum = decimal.Decimal(0)
 
@@ -294,31 +308,16 @@ def perform_DAF_compounding(
             sorted_chunk_items = sorted(list(chunk_items))
 
             # Step 4: Format the collected POs and Items using desired format (size 2)
-            # --- Add Debugging --- 
-            logging.debug(f"{prefix} Chunk {i+1}: Formatting POs. Input list ({len(po_list_for_formatting)} items): {po_list_for_formatting}")
-            logging.debug(f"{prefix} Chunk {i+1}: PO Format Params: size={DAF_CHUNK_SIZE}, intra='{DAF_INTRA_CHUNK_SEPARATOR}', inter={repr(DAF_INTER_CHUNK_SEPARATOR)}")
-            # --- End Debugging --- 
             formatted_po_chunk = format_chunks(po_list_for_formatting, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR)
-            # --- Add Debugging --- 
-            logging.debug(f"{prefix} Chunk {i+1}: Formatted POs Result: {repr(formatted_po_chunk)}")
-            # --- End Debugging --- 
-
-            # --- Add Debugging --- 
-            logging.debug(f"{prefix} Chunk {i+1}: Formatting Items. Input list ({len(sorted_chunk_items)} items): {sorted_chunk_items}")
-            logging.debug(f"{prefix} Chunk {i+1}: Item Format Params: size={DAF_CHUNK_SIZE}, intra='{DAF_INTRA_CHUNK_SEPARATOR}', inter={repr(DAF_INTER_CHUNK_SEPARATOR)}")
-            # --- End Debugging --- 
             formatted_item_chunk = format_chunks(sorted_chunk_items, DAF_CHUNK_SIZE, DAF_INTRA_CHUNK_SEPARATOR, DAF_INTER_CHUNK_SEPARATOR)
-            # --- Add Debugging --- 
-            logging.debug(f"{prefix} Chunk {i+1}: Formatted Items Result: {repr(formatted_item_chunk)}")
-            # --- End Debugging --- 
 
             # Create the result dictionary for this chunk index
             chunk_result: DAFCompoundingResult = {
-                'combined_po': formatted_po_chunk,
-                'combined_item': formatted_item_chunk,
-                'combined_description': '', # No descriptions in this path
-                'total_sqft': chunk_sqft_total,    # Use CHUNK total (calculated based on group of 8)
-                'total_amount': chunk_amount_total # Use CHUNK total (calculated based on group of 8)
+                'col_po': formatted_po_chunk,
+                'col_item': formatted_item_chunk,
+                'col_desc': '', # No descriptions in this path
+                'col_qty_sf': chunk_sqft_total,    # Use CHUNK total (calculated based on group of 8)
+                'col_amount': chunk_amount_total   # Use CHUNK total (calculated based on group of 8)
             }
             chunk_index_str = str(i + 1)
             final_po_count_split_result[chunk_index_str] = chunk_result
@@ -508,10 +507,10 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
         logging.info(f"Found a total of {len(all_header_rows)} table(s) to process at rows: {all_header_rows}")
         
         # 6. Perform final checks on the validated mapping.
-        if 'amount' not in column_mapping:
-            raise RuntimeError("Essential 'amount' column mapping failed, even with smart detection.")
-        if 'description' not in column_mapping:
-            logging.warning("Column 'description' not found during mapping. Aggregation keys will use None for description.")
+        if 'col_amount' not in column_mapping:
+            raise RuntimeError("Essential 'col_amount' column mapping failed, even with smart detection.")
+        if 'col_desc' not in column_mapping:
+            logging.warning("Column 'col_desc' not found during mapping. Aggregation keys will use None for description.")
 
 
         logging.info("Extracting data for all tables...")
@@ -649,11 +648,11 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
             for chunk_index, chunk_data in sorted(global_DAF_compounded_result.items()):
                 logging.info(f"--- DAF Group {chunk_index} --- ")
                 if chunk_data and isinstance(chunk_data, dict):
-                    po_string_value = chunk_data.get('combined_po', '<Not Found>')
-                    item_string_value = chunk_data.get('combined_item', '<Not Found>')
-                    desc_string_value = chunk_data.get('combined_description', '<Not Found>')
-                    total_sqft_value = chunk_data.get('total_sqft', 'N/A')
-                    total_amount_value = chunk_data.get('total_amount', 'N/A')
+                    po_string_value = chunk_data.get('col_po', '<Not Found>')
+                    item_string_value = chunk_data.get('col_item', '<Not Found>')
+                    desc_string_value = chunk_data.get('col_desc', '<Not Found>')
+                    total_sqft_value = chunk_data.get('col_qty_sf', 'N/A')
+                    total_amount_value = chunk_data.get('col_amount', 'N/A')
 
                     logging.info(f"  Combined POs:\n{po_string_value}")
                     logging.info(f"  Combined Items:\n{item_string_value}")
@@ -683,9 +682,9 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
         
         # Calculate grand total (merged across all tables)
         merged_processed_data = {
-            "pcs": [], "sqft": [], "net": [], "gross": [], "cbm": [], "amount": [], "pallet_count": [],
-            "description": [], "desc": [],  # Include both description field names for leather_summary calculation
-            "po": [], "item": [], "unit_price": [], "price": [], "unit": []  # Include fields for aggregate_per_po_with_pallets
+            "col_qty_pcs": [], "col_qty_sf": [], "col_net": [], "col_gross": [], "col_cbm": [], "col_amount": [], "col_pallet_count": [],
+            "col_desc": [],  # Include both description field names for leather_summary calculation
+            "col_po": [], "col_item": [], "col_unit_price": []  # Include fields for aggregate_per_po_with_pallets
         }
         for table_data in processed_tables.values():
             for key in merged_processed_data:
@@ -733,9 +732,9 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
                      }
                  },
 
-                # Include BOTH aggregation results explicitly
-                "standard_aggregation_results": make_json_serializable(global_standard_aggregation_results),
-                "custom_aggregation_results": make_json_serializable(global_custom_aggregation_results),
+                # Include BOTH aggregation results explicitly (formatted as lists)
+                "standard_aggregation_results": data_processor.format_aggregation_as_list(global_standard_aggregation_results, mode='standard'),
+                "custom_aggregation_results": data_processor.format_aggregation_as_list(global_custom_aggregation_results, mode='custom'),
                 
                 # Normal aggregate per PO with pallets (group by PO + price)
                 "normal_aggregate_per_po_with_pallets": make_json_serializable(normal_aggregate_per_po),
@@ -762,6 +761,7 @@ def run_invoice_automation(input_excel_override: Optional[str] = None, output_di
             input_stem = Path(input_filename).stem # Get filename without extension
             json_output_filename = f"{input_stem}.json" # Simplified filename
             output_json_path = output_dir / json_output_filename # Combine output dir and filename
+
             logging.info(f"Determined output JSON path: {output_json_path}")
             try:
                 with open(output_json_path, 'w', encoding='utf-8') as f_json:

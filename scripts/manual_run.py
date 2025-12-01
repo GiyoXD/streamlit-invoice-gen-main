@@ -21,10 +21,10 @@ def main():
     output_dir = project_root / "scripts" / "output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Use the core/invoice_generator directory for config as requested
-    config_dir = project_root / "core" / "invoice_generator"
-    # Use core/invoice_generator for template as well, since JF.xlsx is there
-    template_dir = project_root / "core" / "invoice_generator"
+    # Use database/config/bundled for config
+    config_dir = project_root / "database" / "config" / "bundled"
+    # Use database/template for template
+    template_dir = project_root / "database" / "template"
     
     if not input_excel.exists():
         print(f"Error: Input file not found at {input_excel}")

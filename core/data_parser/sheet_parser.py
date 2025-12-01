@@ -147,27 +147,32 @@ def find_and_map_smart_headers(sheet: Worksheet) -> Optional[Tuple[int, Dict[str
                 for canonical_name, patterns in HEADERLESS_COLUMN_PATTERNS.items():
                     if _matches_any_pattern(data_value, patterns):
                         all_column_candidates[col_num] = [{'score': 4, 'name': canonical_name}]
-                        break
 
+        # --- Process candidates for this row ---
         potential_mapping: Dict[str, str] = {}
         current_row_score = 0
         processed_canonicals = set()
         
+        # Tie-breaking for unit price vs amount (both numeric)
         unit_amt_tie_cols = [
             col for col, candidates in all_column_candidates.items()
-            if {c['name'] for c in candidates} == {'unit', 'amount'} and all(c['score'] == 5 for c in candidates)
+            if {c['name'] for c in candidates} == {'col_unit_price', 'col_amount'} and all(c['score'] == 5 for c in candidates)
         ]
         if len(unit_amt_tie_cols) == 2:
             col1, col2 = sorted(unit_amt_tie_cols)
-            potential_mapping['unit'] = get_column_letter(col1)
-            potential_mapping['amount'] = get_column_letter(col2)
-            processed_canonicals.update(['unit', 'amount'])
-            current_row_score += 10
+            # Heuristic: Unit Price is usually to the left of Amount
+            potential_mapping['col_unit_price'] = get_column_letter(col1)
+            potential_mapping['col_amount'] = get_column_letter(col2)
+            processed_canonicals.update(['col_unit_price', 'col_amount'])
+            current_row_score += 10 # Bonus for resolving tie
             del all_column_candidates[col1], all_column_candidates[col2]
         
+        # Greedy selection for remaining columns
         for col_num, candidates in sorted(all_column_candidates.items()):
             valid_candidates = [c for c in candidates if c['name'] not in processed_canonicals]
             if not valid_candidates: continue
+            
+            # Pick the highest scoring candidate for this column
             best_candidate = sorted(valid_candidates, key=lambda x: x['score'], reverse=True)[0]
             potential_mapping[best_candidate['name']] = get_column_letter(col_num)
             processed_canonicals.add(best_candidate['name'])
@@ -243,7 +248,7 @@ def extract_multiple_tables(sheet, header_rows: List[int], column_mapping: Dict[
                 current_table_data[canonical_name].append(processed_value)
 
         all_tables_data[table_index] = current_table_data
-        logging.info(f"{prefix} Successfully stored {len(current_table_data.get('po',[]))} rows for Table Index {table_index}.")
+        logging.info(f"{prefix} Successfully stored {len(current_table_data.get('col_po',[]))} rows for Table Index {table_index}.")
         
     return all_tables_data
 

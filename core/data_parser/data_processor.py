@@ -1024,6 +1024,201 @@ def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[
             price = _convert_to_decimal(price_val) if price_val else decimal.Decimal(0)
         except:
             price = decimal.Decimal(0)
+        # logging.debug(f"{log_row_context} --- Processing ---") # Reduced verbosity
+
+        # Get raw values (handle potential missing lists safely using get with default None)
+        po_val = po_list[i] if i < len(po_list) else None
+        item_val = item_list[i] if i < len(item_list) else None
+        sqft_raw = sqft_list[i] if i < len(sqft_list) else None
+        amount_raw = amount_list[i] if i < len(amount_list) else None
+        desc_raw = description_list[i] if has_description_col and i < len(description_list) else None
+
+        # logging.debug(f"{log_row_context}: Raw values - PO='{po_val}', Item='{item_val}', Desc='{desc_raw}', SQFT='{sqft_raw}', Amount='{amount_raw}'") # Reduced verbosity
+
+        # Prepare the key components (Handle None, strip strings)
+        po_key = str(po_val).strip() if isinstance(po_val, str) else po_val
+        item_key = str(item_val).strip() if isinstance(item_val, str) else item_val
+        description_key = str(desc_raw).strip() if isinstance(desc_raw, str) else desc_raw
+        description_key = description_key if description_key else None # Ensure empty strings become None
+
+
+        po_key = po_key if po_key is not None else "<MISSING_PO>"
+        item_key = item_key if item_key is not None else "<MISSING_ITEM>"
+        # Description key can be None
+
+        # logging.debug(f"{log_row_context}: Key parts - PO Key='{po_key}', Item Key='{item_key}', Desc Key='{description_key}'") # Reduced verbosity
+
+        # UPDATED Key: (PO, Item, None, Description) - Move description to index 3 to match standard
+        key = (po_key, item_key, None, description_key)
+        # logging.debug(f"{log_row_context}: Generated Key Tuple = {key}") # Reduced verbosity
+
+        # Convert SQFT to Decimal for summation (default to 0 if fails/None)
+        sqft_dec = _convert_to_decimal(sqft_raw, f"{log_row_context} SQFT")
+        if sqft_dec is None:
+             # logging.debug(f"{log_row_context}: SQFT value '{sqft_raw}' is None or failed conversion. Using 0.") # Reduced verbosity
+             sqft_dec = decimal.Decimal(0)
+        else:
+             successful_conversions_sqft +=1
+
+        # Convert Amount to Decimal for summation (default to 0 if fails/None)
+        amount_dec = _convert_to_decimal(amount_raw, f"{log_row_context} Amount")
+        if amount_dec is None:
+            # logging.debug(f"{log_row_context}: Amount value '{amount_raw}' is None or failed conversion. Using 0.") # Reduced verbosity
+            amount_dec = decimal.Decimal(0)
+        else:
+            successful_conversions_amount +=1
+
+        # logging.debug(f"{log_row_context}: Converted values - SQFT='{sqft_dec}', Amount='{amount_dec}'") # Reduced verbosity
+
+        # --- Add to the global aggregate sums (SQFT & Amount) ---
+        current_sums = aggregated_results.get(key, {'sqft_sum': decimal.Decimal(0), 'amount_sum': decimal.Decimal(0)})
+
+        # logging.debug(f"{log_row_context}: Sums for key {key} BEFORE add = {current_sums}") # Reduced verbosity
+
+        # Update the sums
+        current_sums['sqft_sum'] += sqft_dec
+        current_sums['amount_sum'] += amount_dec
+
+        # Store the updated dictionary back into the global map
+        aggregated_results[key] = current_sums
+
+
+    # --- Log summary for this table's contribution ---
+    logging.info(f"{prefix} Finished processing {rows_processed_this_table} rows for this table.")
+    logging.info(f"{prefix} SQFT values successfully converted/defaulted for {successful_conversions_sqft} rows.")
+    logging.info(f"{prefix} Amount values successfully converted/defaulted for {successful_conversions_amount} rows.")
+    logging.info(f"{prefix} Global custom aggregation map now contains {len(aggregated_results)} unique (PO, Item, None, Description) keys.")
+
+    return aggregated_results
+
+
+def calculate_leather_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, Any]:
+    """
+    Calculates the leather summary (PCS, SQFT, Net, Gross, Pallet Count) per leather type.
+    Iterates through rows to sum values for each leather type found in 'description' or 'desc'.
+    BUFFALO = rows containing "BUFFALO" in description
+    COW = rows NOT containing "BUFFALO" (all other leather)
+    """
+    # Initialize summary structure with default 0s
+    summary = {
+        'BUFFALO': {'col_qty_pcs': 0, 'col_qty_sf': decimal.Decimal(0), 'col_net': decimal.Decimal(0), 'col_gross': decimal.Decimal(0), 'col_pallet_count': 0},
+        'COW': {'col_qty_pcs': 0, 'col_qty_sf': decimal.Decimal(0), 'col_net': decimal.Decimal(0), 'col_gross': decimal.Decimal(0), 'col_pallet_count': 0}
+    }
+
+    if not isinstance(processed_data, dict):
+        return summary
+
+    # Get columns - check both 'description' and 'desc' field names
+    description_list = processed_data.get('col_desc', [])
+    
+    # robustly determine num_rows
+    lists_to_check = [processed_data.get(col) for col in ['col_po', 'col_item', 'col_qty_sf', 'col_amount', 'col_net', 'col_gross', 'col_quantity', 'col_qty_pcs'] if processed_data.get(col)]
+    if description_list:
+        num_rows = len(description_list)
+    elif lists_to_check:
+        num_rows = len(lists_to_check[0])
+    else:
+        num_rows = 0
+
+    # Get other columns safely
+    pcs_list = processed_data.get('col_qty_pcs', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    net_list = processed_data.get('col_net', [])
+    gross_list = processed_data.get('col_gross', [])
+    pallet_count_list = processed_data.get('col_pallet_count', [])
+
+    for i in range(num_rows):
+        desc = str(description_list[i]).upper() if i < len(description_list) and description_list[i] else ""
+        
+        # BUFFALO = contains "BUFFALO", COW = everything else (non-buffalo leather)
+        leather_type = None
+        if "BUFFALO" in desc:
+            leather_type = 'BUFFALO'
+        else:
+            leather_type = 'COW'  # All non-buffalo is considered COW/regular leather
+        
+        # Sum PCS
+        try:
+            val = pcs_list[i] if i < len(pcs_list) else 0
+            summary[leather_type]['col_qty_pcs'] += int(float(val)) if val else 0
+        except (ValueError, TypeError): pass
+
+        # Sum SQFT
+        try:
+            val = sqft_list[i] if i < len(sqft_list) else 0
+            summary[leather_type]['col_qty_sf'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
+
+        # Sum Net
+        try:
+            val = net_list[i] if i < len(net_list) else 0
+            summary[leather_type]['col_net'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
+
+        # Sum Gross
+        try:
+            val = gross_list[i] if i < len(gross_list) else 0
+            summary[leather_type]['col_gross'] += _convert_to_decimal(val) if val else 0
+        except (ValueError, TypeError): pass
+
+        # Sum Pallet Count (if available per row)
+        try:
+            val = pallet_count_list[i] if i < len(pallet_count_list) else 0
+            summary[leather_type]['col_pallet_count'] += int(float(val)) if val else 0
+        except (ValueError, TypeError): pass
+
+    return summary
+
+
+def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[Dict[str, Any]]:
+    """
+    Aggregates data by PO and Price, summing sqft, amount, and pallet_count.
+    Groups rows that have the same PO and unit_price together.
+    
+    Returns a list of aggregated records with:
+    - po: The PO number
+    - item: Combined unique items (comma-separated)
+    - desc: Combined unique descriptions (comma-separated)
+    - unit_price: The unit price
+    - sqft: Total sqft for this PO+price combination
+    - amount: Total amount for this PO+price combination
+    - pallet_count: Total pallets for this PO+price combination
+    - net: Total net weight for this PO+price combination
+    - gross: Total gross weight for this PO+price combination
+    - cbm: Total cbm for this PO+price combination
+    """
+    if not isinstance(processed_data, dict):
+        return []
+    
+    # Get column data - check both field name variants
+    po_list = processed_data.get('col_po', [])
+    item_list = processed_data.get('col_item', [])
+    desc_list = processed_data.get('col_desc', [])
+    price_list = processed_data.get('col_unit_price', [])
+    sqft_list = processed_data.get('col_qty_sf', [])
+    amount_list = processed_data.get('col_amount', [])
+    pallet_list = processed_data.get('col_pallet_count', [])
+    net_list = processed_data.get('col_net', [])
+    gross_list = processed_data.get('col_gross', [])
+    cbm_list = processed_data.get('col_cbm', [])
+    
+    if not po_list:
+        return []
+    
+    num_rows = len(po_list)
+    
+    # Aggregation map: (po, price) -> {items: set, descs: set, sqft: Decimal, amount: Decimal, pallets: int, net: Decimal, gross: Decimal, cbm: Decimal}
+    aggregation_map = {}
+    
+    for i in range(num_rows):
+        po = str(po_list[i]) if i < len(po_list) and po_list[i] else ""
+        
+        # Get price - try to convert to Decimal for consistent key
+        try:
+            price_val = price_list[i] if i < len(price_list) else 0
+            price = _convert_to_decimal(price_val) if price_val else decimal.Decimal(0)
+        except:
+            price = decimal.Decimal(0)
         
         key = (po, price)
         
@@ -1031,12 +1226,12 @@ def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[
             aggregation_map[key] = {
                 'items': set(),
                 'descs': set(),
-                'sqft': decimal.Decimal(0),
-                'amount': decimal.Decimal(0),
-                'pallet_count': 0,
-                'net': decimal.Decimal(0),
-                'gross': decimal.Decimal(0),
-                'cbm': decimal.Decimal(0)
+                'col_qty_sf': decimal.Decimal(0),
+                'col_amount': decimal.Decimal(0),
+                'col_pallet_count': 0,
+                'col_net': decimal.Decimal(0),
+                'col_gross': decimal.Decimal(0),
+                'col_cbm': decimal.Decimal(0)
             }
         
         # Collect unique items
@@ -1050,42 +1245,42 @@ def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[
         # Sum sqft
         try:
             val = sqft_list[i] if i < len(sqft_list) else 0
-            aggregation_map[key]['sqft'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+            aggregation_map[key]['col_qty_sf'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
         except (ValueError, TypeError):
             pass
         
         # Sum amount
         try:
             val = amount_list[i] if i < len(amount_list) else 0
-            aggregation_map[key]['amount'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+            aggregation_map[key]['col_amount'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
         except (ValueError, TypeError):
             pass
         
         # Sum pallet_count
         try:
             val = pallet_list[i] if i < len(pallet_list) else 0
-            aggregation_map[key]['pallet_count'] += int(float(val)) if val else 0
+            aggregation_map[key]['col_pallet_count'] += int(float(val)) if val else 0
         except (ValueError, TypeError):
             pass
         
         # Sum net
         try:
             val = net_list[i] if i < len(net_list) else 0
-            aggregation_map[key]['net'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+            aggregation_map[key]['col_net'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
         except (ValueError, TypeError):
             pass
         
         # Sum gross
         try:
             val = gross_list[i] if i < len(gross_list) else 0
-            aggregation_map[key]['gross'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+            aggregation_map[key]['col_gross'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
         except (ValueError, TypeError):
             pass
         
         # Sum cbm
         try:
             val = cbm_list[i] if i < len(cbm_list) else 0
-            aggregation_map[key]['cbm'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
+            aggregation_map[key]['col_cbm'] += _convert_to_decimal(val) if val else decimal.Decimal(0)
         except (ValueError, TypeError):
             pass
     
@@ -1093,20 +1288,20 @@ def aggregate_per_po_with_pallets(processed_data: Dict[str, List[Any]]) -> List[
     result = []
     for (po, price), data in aggregation_map.items():
         result.append({
-            'po': po,
-            'item': ', '.join(sorted(data['items'])),
-            'desc': ', '.join(sorted(data['descs'])),
-            'unit_price': price,
-            'sqft': data['sqft'],
-            'amount': data['amount'],
-            'pallet_count': data['pallet_count'],
-            'net': data['net'],
-            'gross': data['gross'],
-            'cbm': data['cbm']
+            'col_po': po,
+            'col_item': ', '.join(sorted(data['items'])),
+            'col_desc': ', '.join(sorted(data['descs'])),
+            'col_unit_price': price,
+            'col_qty_sf': data['col_qty_sf'],
+            'col_amount': data['col_amount'],
+            'col_pallet_count': data['col_pallet_count'],
+            'col_net': data['col_net'],
+            'col_gross': data['col_gross'],
+            'col_cbm': data['col_cbm']
         })
     
     # Sort by PO for consistent output
-    result.sort(key=lambda x: x['po'])
+    result.sort(key=lambda x: x['col_po'])
     
     return result
 
@@ -1121,7 +1316,7 @@ def calculate_weight_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, 
     Returns:
         Dictionary containing 'net' and 'gross' weights.
     """
-    summary = {'net': decimal.Decimal(0), 'gross': decimal.Decimal(0)}
+    summary = {'col_net': decimal.Decimal(0), 'col_gross': decimal.Decimal(0)}
     
     if not isinstance(processed_data, dict):
         return summary
@@ -1131,14 +1326,14 @@ def calculate_weight_summary(processed_data: Dict[str, List[Any]]) -> Dict[str, 
     for val in net_values:
         dec_val = _convert_to_decimal(val)
         if dec_val is not None:
-            summary['net'] += dec_val
+            summary['col_net'] += dec_val
             
     # Sum Gross Weight
     gross_values = processed_data.get('col_gross', [])
     for val in gross_values:
         dec_val = _convert_to_decimal(val)
         if dec_val is not None:
-            summary['gross'] += dec_val
+            summary['col_gross'] += dec_val
             
     return summary
 
@@ -1173,13 +1368,13 @@ def calculate_footer_totals(processed_data: Dict[str, List[Any]]) -> Dict[str, A
     Returns a dictionary with keys matching the expected footer data structure.
     """
     totals = {
-        "total_pcs": 0,
-        "total_sqft": decimal.Decimal(0),
-        "total_net": decimal.Decimal(0),
-        "total_gross": decimal.Decimal(0),
-        "total_cbm": decimal.Decimal(0),
-        "total_amount": decimal.Decimal(0),
-        "total_pallets": 0
+        "col_qty_pcs": 0,
+        "col_qty_sf": decimal.Decimal(0),
+        "col_net": decimal.Decimal(0),
+        "col_gross": decimal.Decimal(0),
+        "col_cbm": decimal.Decimal(0),
+        "col_amount": decimal.Decimal(0),
+        "col_pallet_count": 0
     }
     
     if not processed_data:
@@ -1205,24 +1400,80 @@ def calculate_footer_totals(processed_data: Dict[str, List[Any]]) -> Dict[str, A
 
     # Sum each list independently
     for val in processed_data.get('col_qty_pcs', []):
-        safe_add_int('total_pcs', val)
+        safe_add_int('col_qty_pcs', val)
         
     for val in processed_data.get('col_qty_sf', []):
-        safe_add_decimal('total_sqft', val)
+        safe_add_decimal('col_qty_sf', val)
         
     for val in processed_data.get('col_net', []):
-        safe_add_decimal('total_net', val)
+        safe_add_decimal('col_net', val)
         
     for val in processed_data.get('col_gross', []):
-        safe_add_decimal('total_gross', val)
+        safe_add_decimal('col_gross', val)
         
     for val in processed_data.get('col_cbm', []):
-        safe_add_decimal('total_cbm', val)
+        safe_add_decimal('col_cbm', val)
         
     for val in processed_data.get('col_amount', []):
-        safe_add_decimal('total_amount', val)
+        safe_add_decimal('col_amount', val)
         
     for val in processed_data.get('col_pallet_count', []):
-        safe_add_int('total_pallets', val)
+        safe_add_int('col_pallet_count', val)
 
     return totals
+
+
+def format_aggregation_as_list(
+    aggregation_map: Dict[Tuple, Dict[str, decimal.Decimal]],
+    mode: str = 'standard'
+) -> List[Dict[str, Any]]:
+    """
+    Converts the internal tuple-keyed aggregation map into a clean list of dictionaries
+    suitable for JSON output. Removes tuple keys and uses 'col_' prefixed keys for all fields.
+
+    Args:
+        aggregation_map: The dictionary holding the aggregation results.
+        mode: 'standard' or 'custom' indicating the key structure.
+
+    Returns:
+        A list of dictionaries, each representing an aggregated row.
+    """
+    flattened_list = []
+    
+    for key_tuple, values in aggregation_map.items():
+        row_dict = {}
+        
+        # Extract values from the tuple key based on mode
+        if mode == 'standard':
+            # Key: (PO, Item, Price, Desc)
+            # Mapping: Index 0->col_po, 1->col_item, 2->col_unit_price, 3->col_desc
+            if len(key_tuple) >= 4:
+                row_dict['col_po'] = str(key_tuple[0]) if key_tuple[0] is not None else ""
+                row_dict['col_item'] = str(key_tuple[1]) if key_tuple[1] is not None else ""
+                row_dict['col_unit_price'] = str(key_tuple[2]) if key_tuple[2] is not None else ""
+                row_dict['col_desc'] = str(key_tuple[3]) if key_tuple[3] is not None else ""
+            else:
+                # Fallback for unexpected key length
+                row_dict['col_po'] = str(key_tuple[0]) if len(key_tuple) > 0 else ""
+                row_dict['col_item'] = str(key_tuple[1]) if len(key_tuple) > 1 else ""
+                
+        elif mode == 'custom':
+            # Key: (PO, Item, None, Desc)
+            # Mapping: Index 0->col_po, 1->col_item, 3->col_desc (Index 2 is None/Ignored)
+            if len(key_tuple) >= 4:
+                row_dict['col_po'] = str(key_tuple[0]) if key_tuple[0] is not None else ""
+                row_dict['col_item'] = str(key_tuple[1]) if key_tuple[1] is not None else ""
+                row_dict['col_desc'] = str(key_tuple[3]) if key_tuple[3] is not None else ""
+            else:
+                 # Fallback
+                row_dict['col_po'] = str(key_tuple[0]) if len(key_tuple) > 0 else ""
+                row_dict['col_item'] = str(key_tuple[1]) if len(key_tuple) > 1 else ""
+
+        # Extract summed values (already using col_ keys internally, but safe get)
+        # Handle both new col_ keys and potential legacy keys if any remain
+        row_dict['col_qty_sf'] = values.get('col_qty_sf', values.get('sqft_sum', decimal.Decimal(0)))
+        row_dict['col_amount'] = values.get('col_amount', values.get('amount_sum', decimal.Decimal(0)))
+        
+        flattened_list.append(row_dict)
+        
+    return flattened_list
