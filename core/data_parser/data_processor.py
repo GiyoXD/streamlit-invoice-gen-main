@@ -480,7 +480,7 @@ def distribute_values(
                     for k in block_indices:
                         basis_val = basis_values_dec[k]
                         if basis_val is not None and basis_val > 0:
-                            total_basis_in_in_block += basis_val
+                            total_basis_in_block += basis_val
                             indices_with_valid_basis.append(k)
                         elif basis_val is not None: # Log zero/negative basis
                              logging.debug(f"{log_row_context}: Basis value is zero or negative ({basis_val}) at index {k} in block. Excluded from total.")

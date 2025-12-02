@@ -1,0 +1,711 @@
+<frozen runpy>:128: RuntimeWarning: 'core.data_parser.main' found in sys.modules after import of package 'core.data_parser', but prior to execution of 'core.data_parser.main'; this may result in unpredictable behaviour
+2025-12-02 12:40:35,662 - INFO - main.py:371 - --- Starting Invoice Automation ---
+2025-12-02 12:40:35,662 - INFO - main.py:382 - Using input Excel path from command line: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:40:35,662 - INFO - main.py:413 - Processing workbook: JF25057.xlsx
+2025-12-02 12:40:35,662 - INFO - main.py:419 - Using output directory from command line: C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output
+2025-12-02 12:40:35,667 - INFO - main.py:448 - Checking workbook filename 'JF25057.xlsx' to determine PRIMARY aggregation mode for DAF compounding.
+2025-12-02 12:40:35,667 - WARNING - main.py:452 - cfg.CUSTOM_AGGREGATION_WORKBOOK_PREFIXES is not a list. Using empty list.
+2025-12-02 12:40:35,667 - INFO - main.py:462 - Workbook filename does not match custom prefixes. Will use STANDARD aggregation results for DAF compounding.
+2025-12-02 12:40:35,667 - INFO - main.py:474 - Loading workbook from: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:40:35,667 - INFO - excel_handler.py:19 - Initialized ExcelHandler for: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:40:35,667 - INFO - excel_handler.py:33 - Attempting to load workbook 'core/invoice_generator/JF25057.xlsx' with data_only=True
+2025-12-02 12:40:35,789 - INFO - excel_handler.py:46 - No sheet name specified. Successfully loaded active sheet: 'Sheet1'
+2025-12-02 12:40:35,790 - INFO - excel_handler.py:48 - Sheet dimensions: Max Row=53, Max Col=26
+2025-12-02 12:40:35,790 - INFO - main.py:479 - Successfully loaded worksheet: 'Sheet1' from 'JF25057.xlsx'
+2025-12-02 12:40:35,790 - INFO - main.py:483 - Searching for the primary header row using smart detection...
+2025-12-02 12:40:35,790 - INFO - sheet_parser.py:83 - [find_and_map_smart_headers_v12] Starting best-fit header search...
+2025-12-02 12:40:35,790 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 1 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,791 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 2 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,791 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 3 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,792 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 4 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,792 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 5 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,793 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 6 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,793 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 7 | Score: 1 | Mapping: {'col_item': 'H'}
+2025-12-02 12:40:35,793 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 8 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,795 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 9 | Score: 121 | Mapping: {'col_unit_price': 'O', 'col_amount': 'P', 'col_dc': 'A', 'col_po': 'B', 'col_line_no': 'C', 'col_direction': 'D', 'col_production_date': 'E', 'col_production_order_no': 'F', 'col_reference_code': 'G', 'col_item': 'H', 'col_level': 'I', 'col_qty_pcs': 'J', 'col_qty_sf': 'K', 'col_pallet_count': 'L', 'col_net': 'M', 'col_gross': 'N', 'col_cbm': 'R'}
+2025-12-02 12:40:35,796 - INFO - sheet_parser.py:187 - [find_and_map_smart_headers_v12] Found new best candidate row at 9 with score 121.
+2025-12-02 12:40:35,796 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 10 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,797 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 11 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:40:35,798 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 12 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,799 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 13 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:40:35,800 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 14 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,801 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 15 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:40:35,802 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 16 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,803 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 17 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,804 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 18 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:40:35,805 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 19 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,807 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 20 | Score: 0 | Mapping: {}
+2025-12-02 12:40:35,807 - INFO - sheet_parser.py:190 - [find_and_map_smart_headers_v12] SUCCESS: Confirmed header row at 9 with final score 121.
+2025-12-02 12:40:35,807 - INFO - main.py:492 - Smart detection successful. Found and validated primary header on row 9.
+2025-12-02 12:40:35,807 - DEBUG - main.py:493 - Validated Column Mapping:
+{'col_amount': 'P',
+ 'col_cbm': 'R',
+ 'col_dc': 'A',
+ 'col_direction': 'D',
+ 'col_gross': 'N',
+ 'col_item': 'H',
+ 'col_level': 'I',
+ 'col_line_no': 'C',
+ 'col_net': 'M',
+ 'col_pallet_count': 'L',
+ 'col_po': 'B',
+ 'col_production_date': 'E',
+ 'col_production_order_no': 'F',
+ 'col_qty_pcs': 'J',
+ 'col_qty_sf': 'K',
+ 'col_reference_code': 'G',
+ 'col_unit_price': 'O'}
+2025-12-02 12:40:35,808 - INFO - sheet_parser.py:271 - [find_all_header_rows] Searching for additional headers using pattern '^(批次号|订单号|物料代码|总张数|净重|毛重|po|item|pcs|net|gross|TTX编号)$' in rows 10-53
+2025-12-02 12:40:35,810 - INFO - main.py:507 - Found a total of 1 table(s) to process at rows: [9]
+2025-12-02 12:40:35,810 - WARNING - main.py:513 - Column 'col_desc' not found during mapping. Aggregation keys will use None for description.
+2025-12-02 12:40:35,810 - INFO - main.py:516 - Extracting data for all tables...
+2025-12-02 12:40:35,810 - INFO - sheet_parser.py:216 - [extract_multiple_tables] Starting extraction for 1 tables: [9]
+2025-12-02 12:40:35,811 - INFO - sheet_parser.py:234 - [extract_multiple_tables] Table 1: Extracting Data Rows 10 to 53
+2025-12-02 12:40:35,819 - INFO - sheet_parser.py:241 - [extract_multiple_tables] Stopping extraction for Table 1 at row 53: Empty cell in stop column 'col_item'.
+2025-12-02 12:40:35,819 - INFO - sheet_parser.py:251 - [extract_multiple_tables] Successfully stored 43 rows for Table Index 1.
+2025-12-02 12:40:35,822 - DEBUG - main.py:521 - --- Raw Extracted Data (1 Table(s)) ---
+{1: {'col_amount': [11839.36,
+                    1621.737,
+                    6871.8,
+                    103.5,
+                    6757.625,
+                    44.296,
+                    9687.75,
+                    7418.75,
+                    224.983,
+                    471.471,
+                    15130.955,
+                    13878.259,
+                    372.504,
+                    16316.305,
+                    2571.983,
+                    323,
+                    1405.357,
+                    6095.125,
+                    1058.358,
+                    13836,
+                    8295.875,
+                    1225.937,
+                    6771.625,
+                    615.737,
+                    12052.75,
+                    6517.375,
+                    1328.428,
+                    2130.75,
+                    620.37,
+                    755.144,
+                    7808.25,
+                    322.389,
+                    13604.75,
+                    12594.375,
+                    1126.836,
+                    13307.875,
+                    11463.25,
+                    1089.885,
+                    5396.25,
+                    90.513,
+                    3368.625,
+                    258.544,
+                    498.094],
+     'col_cbm': ['2.2*1.8*0.63',
+                 None,
+                 '2.2*1.8*0.45',
+                 None,
+                 '2.2*1.8*0.46',
+                 None,
+                 '2.2*1.8*0.54',
+                 '2.2*1.8*0.49',
+                 None,
+                 '2.2*1.8*0.42',
+                 '2.2*1.8*0.7',
+                 '2.2*1.8*0.65',
+                 None,
+                 '2.2*1.8*0.76',
+                 '2.2*1.8*0.27',
+                 None,
+                 '2.2*1.8*0.38',
+                 '2.2*1.8*0.42',
+                 None,
+                 '2.2*1.8*0.67',
+                 '2.2*1.8*0.6',
+                 None,
+                 '2.2*1.8*0.49',
+                 None,
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.4',
+                 None,
+                 None,
+                 '2.2*1.8*0.47',
+                 None,
+                 '2.2*1.8*0.7',
+                 '2.2*1.8*0.69',
+                 None,
+                 '2.2*1.8*0.65',
+                 '2.2*1.8*0.63',
+                 None,
+                 '2.2*1.8*0.4',
+                 None,
+                 '2.2*1.8*0.37',
+                 None,
+                 None],
+     'col_dc': ['CLF-251002',
+                'CLF-251002',
+                'CLF-250816',
+                'CLF-250816',
+                'CLF-250221',
+                'CLF-250221',
+                'CLF-251022',
+                'CLF-251022',
+                'CLF-251022',
+                'CLF-250219',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+              
+... (output truncated)
+2025-12-02 12:40:35,822 - INFO - main.py:527 - --- Starting Data Processing Loop for 1 Extracted Table(s) ---
+2025-12-02 12:40:35,823 - INFO - main.py:534 - --- Processing Table Index 1 ---
+2025-12-02 12:40:35,823 - INFO - main.py:541 - Table 1: Calculating CBM values...
+2025-12-02 12:40:35,823 - INFO - data_processor.py:306 - [process_cbm_column] Processing 'col_cbm' column for volume calculations (List length: 43)...
+2025-12-02 12:40:35,823 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.63'. for CBM at row index 0
+2025-12-02 12:40:35,823 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.4948 from '2.2*1.8*0.63' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.63')]). for CBM at row index 0
+2025-12-02 12:40:35,823 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 1
+2025-12-02 12:40:35,823 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.45'. for CBM at row index 2
+2025-12-02 12:40:35,823 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.7820 from '2.2*1.8*0.45' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.45')]). for CBM at row index 2
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 3
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.46'. for CBM at row index 4
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.8216 from '2.2*1.8*0.46' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.46')]). for CBM at row index 4
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 5
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.54'. for CBM at row index 6
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.1384 from '2.2*1.8*0.54' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.54')]). for CBM at row index 6
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.49'. for CBM at row index 7
+2025-12-02 12:40:35,824 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.9404 from '2.2*1.8*0.49' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.49')]). for CBM at row index 7
+2025-12-02 12:40:35,825 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 8
+2025-12-02 12:40:35,826 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.42'. for CBM at row index 9
+2025-12-02 12:40:35,826 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.6632 from '2.2*1.8*0.42' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.42')]). for CBM at row index 9
+2025-12-02 12:40:35,874 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.7'. for CBM at row index 10
+2025-12-02 12:40:35,875 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7720 from '2.2*1.8*0.7' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.7')]). for CBM at row index 10
+2025-12-02 12:40:35,875 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.65'. for CBM at row index 11
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.5740 from '2.2*1.8*0.65' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.65')]). for CBM at row index 11
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 12
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.76'. for CBM at row index 13
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 3.0096 from '2.2*1.8*0.76' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.76')]). for CBM at row index 13
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.27'. for CBM at row index 14
+2025-12-02 12:40:35,876 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.0692 from '2.2*1.8*0.27' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.27')]). for CBM at row index 14
+2025-12-02 12:40:35,877 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 15
+2025-12-02 12:40:35,880 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.38'. for CBM at row index 16
+2025-12-02 12:40:35,882 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5048 from '2.2*1.8*0.38' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.38')]). for CBM at row index 16
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.42'. for CBM at row index 17
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.6632 from '2.2*1.8*0.42' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.42')]). for CBM at row index 17
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 18
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.67'. for CBM at row index 19
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.6532 from '2.2*1.8*0.67' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.67')]). for CBM at row index 19
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 20
+2025-12-02 12:40:35,883 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 20
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 21
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.49'. for CBM at row index 22
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.9404 from '2.2*1.8*0.49' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.49')]). for CBM at row index 22
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 23
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 24
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 24
+2025-12-02 12:40:35,884 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 25
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 25
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 26
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 26
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.4'. for CBM at row index 27
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5840 from '2.2*1.8*0.4' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.4')]). for CBM at row index 27
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 28
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 29
+2025-12-02 12:40:35,885 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.47'. for CBM at row index 30
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.8612 from '2.2*1.8*0.47' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.47')]). for CBM at row index 30
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 31
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.7'. for CBM at row index 32
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7720 from '2.2*1.8*0.7' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.7')]). for CBM at row index 32
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.69'. for CBM at row index 33
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7324 from '2.2*1.8*0.69' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.69')]). for CBM at row index 33
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 34
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.65'. for CBM at row index 35
+2025-12-02 12:40:35,886 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.5740 from '2.2*1.8*0.65' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.65')]). for CBM at row index 35
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.63'. for CBM at row index 36
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.4948 from '2.2*1.8*0.63' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.63')]). for CBM at row index 36
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 37
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.4'. for CBM at row index 38
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5840 from '2.2*1.8*0.4' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.4')]). for CBM at row index 38
+2025-12-02 12:40:35,887 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 39
+2025-12-02 12:40:35,888 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.37'. for CBM at row index 40
+2025-12-02 12:40:35,888 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.4652 from '2.2*1.8*0.37' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.37')]). for CBM at row index 40
+2025-12-02 12:40:35,888 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 41
+2025-12-02 12:40:35,888 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 42
+2025-12-02 12:40:35,888 - INFO - data_processor.py:318 - [process_cbm_column] Finished processing 'col_cbm' column. List now contains calculated values (Decimals or Nones).
+2025-12-02 12:40:35,888 - INFO - main.py:549 - Table 1: Distributing values...
+2025-12-02 12:40:35,888 - DEBUG - data_processor.py:333 - [distribute_values] Starting value distribution process.
+2025-12-02 12:40:35,888 - INFO - data_processor.py:404 - [distribute_values] Starting value distribution for columns: ['col_net', 'col_gross', 'col_cbm'] based on 'col_qty_pcs' (43 rows).
+2025-12-02 12:40:35,890 - DEBUG - data_processor.py:411 - [distribute_values] Pre-converted basis values (first 10): [Decimal('181'), Decimal('35'), Decimal('193'), Decimal('4'), Decimal('104'), Decimal('1'), Decimal('150'), Decimal('113'), Decimal('5'), Decimal('12')]
+2025-12-02 12:40:35,891 - INFO - data_processor.py:415 - [distribute_values] Processing column for distribution: 'col_net'
+2025-12-02 12:40:35,892 - DEBUG - data_processor.py:430 - [distribute_values] Pre-converted values for 'col_net' (first 10): [Decimal('797'), None, Decimal('484.5'), None, Decimal('443'), None, Decimal('601.5'), Decimal('473'), None, Decimal('42')]
+2025-12-02 12:40:35,893 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 0: Found distributable value: 797
+2025-12-02 12:40:35,894 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 0: Lookahead index 1 is part of block (Original val empty/zero, Basis=35).
+2025-12-02 12:40:35,899 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 0: Lookahead stopped at index 2. Found non-empty/zero value 484.5 in original data.
+2025-12-02 12:40:35,900 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 0: Lookahead finished. Indices in distribution block (excluding start row 0): [1]
+2025-12-02 12:40:35,900 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 0: Identified distribution block indices: [0, 1]
+2025-12-02 12:40:35,900 - ERROR - main.py:560 - Unexpected distribution error Table 1: cannot access local variable 'total_basis_in_in_block' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\core\data_parser\main.py", line 551, in run_invoice_automation
+    data_after_distribution = data_processor.distribute_values(data_after_cbm, cfg.COLUMNS_TO_DISTRIBUTE, cfg.DISTRIBUTION_BASIS_COLUMN)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\core\data_parser\data_processor.py", line 483, in distribute_values
+    total_basis_in_in_block += basis_val
+    ^^^^^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'total_basis_in_in_block' where it is not associated with a value
+2025-12-02 12:40:35,903 - INFO - main.py:574 - Table 1: Updating global STANDARD aggregation...
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:610 - [aggregate_standard] Updating global STANDARD aggregation (SQFT & Amount by PO/Item/Price/Desc) with new table data.
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:611 - [aggregate_standard] Size of global map BEFORE processing this table: 0
+2025-12-02 12:40:35,904 - INFO - data_processor.py:629 - [aggregate_standard] 'col_desc' column not found or is invalid. Will use None for description keys.
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:641 - [aggregate_standard] Input data contains lists. Number of rows based on 'col_po' list: 43
+2025-12-02 12:40:35,904 - INFO - data_processor.py:659 - [aggregate_standard] Processing 43 rows for STANDARD aggregation (SQFT & Amount by PO/Item/Price/Desc).
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 0 --- Processing ---
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 0: Raw values - PO='9000798713', Item='01.10.W653191', Price='1.3', Desc='None', SQFT='9107.2', Amount='11839.36'
+2025-12-02 12:40:35,904 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 0: Generated Key Tuple = ('9000798713', '01.10.W653191', Decimal('1.3'), None)
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 1 --- Processing ---
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 1: Raw values - PO='9000798713', Item='01.10.W653191', Price='1.17', Desc='None', SQFT='1386.1', Amount='1621.737'
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 1: Generated Key Tuple = ('9000798713', '01.10.W653191', Decimal('1.17'), None)
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 2 --- Processing ---
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 2: Raw values - PO='9000761021', Item='01.10.W061010', Price='1', Desc='None', SQFT='6871.8', Amount='6871.8'
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 2: Generated Key Tuple = ('9000761021', '01.10.W061010', Decimal('1'), None)
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 3 --- Processing ---
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 3: Raw values - PO='9000761021', Item='01.10.W061010', Price='0.9', Desc='None', SQFT='115', Amount='103.5'
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 3: Generated Key Tuple = ('9000761021', '01.10.W061010', Decimal('0.9'), None)
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 4 --- Processing ---
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 4: Raw values - PO='9000826870', Item='01.10.U756022', Price='1.25', Desc='None', SQFT='5406.1', Amount='6757.625'
+2025-12-02 12:40:35,905 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 4: Generated Key Tuple = ('9000826870', '01.10.U756022', Decimal('1.25'), None)
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 5 --- Processing ---
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 5: Raw values - PO='9000826870', Item='01.10.U756022', Price='1.13', Desc='None', SQFT='39.2', Amount='44.296'
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 5: Generated Key Tuple = ('9000826870', '01.10.U756022', Decimal('1.13'), None)
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 6 --- Processing ---
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 6: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.25', Desc='None', SQFT='7750.2', Amount='9687.75'
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 6: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.25'), None)
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 7 --- Processing ---
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 7: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.25', Desc='None', SQFT='5935', Amount='7418.75'
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 7: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.25'), None)
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 8 --- Processing ---
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 8: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.13', Desc='None', SQFT='199.1', Amount='224.983'
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 8: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.13'), None)
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 9 --- Processing ---
+2025-12-02 12:40:35,906 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 9: Raw values - PO='9000861854', Item='01.11.S528110', Price='0.91', Desc='None', SQFT='518.1', Amount='471.471'
+2025-12-02 12:40:35,907 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 9: Generated Key Tuple = ('9000861854', '01.11.S528110', Decimal('0.91'), None)
+2025-12-02 12:40:35,907 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 10 --- Processing ---
+2025-12-02 12:40:35,907 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 10: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='10020.5', Amount='15130.955'
+2025-12-02 12:40:35,907 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 10: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 11 --- Processing ---
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 11: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='9190.9', Amount='13878.259'
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 11: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 12 --- Processing ---
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 12: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.36', Desc='None', SQFT='273.9', Amount='372.504'
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 12: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.36'), None)
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 13 --- Processing ---
+2025-12-02 12:40:35,908 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 13: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='10805.5', Amount='16316.305'
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 13: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 14 --- Processing ---
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 14: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='1703.3', Amount='2571.983'
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 14: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 15 --- Processing ---
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 15: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.36', Desc='None', SQFT='237.5', Amount='323'
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 15: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.36'), None)
+2025-12-02 12:40:35,909 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 16 --- Processing ---
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 16: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='930.7', Amount='1405.357'
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 16: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 17 --- Processing ---
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 17: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='4876.1', Amount='6095.125'
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 17: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 18 --- Processing ---
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 18: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='936.6', Amount='1058.358'
+2025-12-02 12:40:35,910 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 18: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,911 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 19 --- Processing ---
+2025-12-02 12:40:35,911 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 19: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='11068.8', Amount='13836'
+2025-12-02 12:40:35,915 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 19: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 20 --- Processing ---
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 20: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='6636.7', Amount='8295.875'
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 20: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 21 --- Processing ---
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 21: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='1084.9', Amount='1225.937'
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 21: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 22 --- Processing ---
+2025-12-02 12:40:35,916 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 22: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='5417.3', Amount='6771.625'
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 22: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 23 --- Processing ---
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 23: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='544.9', Amount='615.737'
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 23: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 24 --- Processing ---
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 24: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='9642.2', Amount='12052.75'
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 24: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,917 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 25 --- Processing ---
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 25: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='5213.9', Amount='6517.375'
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 25: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 26 --- Processing ---
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 26: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='1175.6', Amount='1328.428'
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 26: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 27 --- Processing ---
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 27: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='1704.6', Amount='2130.75'
+2025-12-02 12:40:35,918 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 27: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 28 --- Processing ---
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 28: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='549', Amount='620.37'
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 28: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 29 --- Processing ---
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 29: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.06', Desc='None', SQFT='712.4', Amount='755.144'
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 29: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.06'), None)
+2025-12-02 12:40:35,919 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 30 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 30: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='6246.6', Amount='7808.25'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 30: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 31 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 31: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='285.3', Amount='322.389'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 31: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 32 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 32: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10883.8', Amount='13604.75'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 32: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 33 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 33: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10075.5', Amount='12594.375'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 33: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 34 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 34: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='997.2', Amount='1126.836'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 34: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 35 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 35: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10646.3', Amount='13307.875'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 35: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 36 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 36: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='9170.6', Amount='11463.25'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 36: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 37 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 37: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='964.5', Amount='1089.885'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 37: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 38 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 38: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='4317', Amount='5396.25'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 38: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 39 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 39: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='80.1', Amount='90.513'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 39: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 40 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 40: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='2694.9', Amount='3368.625'
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 40: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 41 --- Processing ---
+2025-12-02 12:40:35,920 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 41: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='228.8', Amount='258.544'
+2025-12-02 12:40:35,939 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 41: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:40:35,939 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 42 --- Processing ---
+2025-12-02 12:40:35,939 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 42: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.06', Desc='None', SQFT='469.9', Amount='498.094'
+2025-12-02 12:40:35,939 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 42: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.06'), None)
+2025-12-02 12:40:35,939 - INFO - data_processor.py:728 - [aggregate_standard] Finished processing 43 rows.
+2025-12-02 12:40:35,939 - INFO - data_processor.py:729 - [aggregate_standard] SQFT values successfully converted/defaulted for 43 rows.
+2025-12-02 12:40:35,939 - INFO - data_processor.py:730 - [aggregate_standard] Amount values successfully converted/defaulted for 43 rows.
+2025-12-02 12:40:35,939 - INFO - data_processor.py:731 - [aggregate_standard] Global standard aggregation map size: 17
+2025-12-02 12:40:35,939 - DEBUG - main.py:576 - Table 1: STANDARD aggregation map updated. Size: 17
+2025-12-02 12:40:35,940 - INFO - main.py:582 - Table 1: Updating global CUSTOM aggregation...
+2025-12-02 12:40:35,940 - DEBUG - data_processor.py:763 - [aggregate_custom] Updating global CUSTOM aggregation (SQFT & Amount by PO/Item/Desc) with new table data.
+2025-12-02 12:40:35,940 - DEBUG - data_processor.py:764 - [aggregate_custom] Size of global custom map BEFORE processing this table: 0
+2025-12-02 12:40:35,940 - INFO - data_processor.py:782 - [aggregate_custom] 'col_desc' column not found or is invalid. Will use None for description keys.
+2025-12-02 12:40:35,940 - DEBUG - data_processor.py:804 - [aggregate_custom] Determined number of rows: 43
+2025-12-02 12:40:35,940 - INFO - data_processor.py:822 - [aggregate_custom] Processing 43 rows from this table to update global CUSTOM aggregation (by PO/Item/Desc).
+2025-12-02 12:40:35,941 - INFO - data_processor.py:892 - [aggregate_custom] Finished processing 43 rows for this table.
+2025-12-02 12:40:35,941 - INFO - data_processor.py:893 - [aggregate_custom] SQFT values successfully converted/defaulted for 43 rows.
+2025-12-02 12:40:35,941 - INFO - data_processor.py:894 - [aggregate_custom] Amount values successfully converted/defaulted for 43 rows.
+2025-12-02 12:40:35,941 - INFO - data_processor.py:895 - [aggregate_custom] Global custom aggregation map now contains 8 unique (PO, Item, None, Description) keys.
+2025-12-02 12:40:35,941 - DEBUG - main.py:584 - Table 1: CUSTOM aggregation map updated. Size: 8
+2025-12-02 12:40:35,941 - INFO - main.py:590 - --- Finished Processing All Steps for Table Index 1 ---
+2025-12-02 12:40:35,941 - INFO - main.py:595 - --- All Table Processing Loops Completed ---
+2025-12-02 12:40:35,941 - INFO - main.py:596 - --- Performing Final DAF Compounding (Using 'STANDARD' aggregation results as input) ---
+2025-12-02 12:40:35,941 - INFO - main.py:85 - [perform_DAF_compounding] Starting DAF Compounding. Checking for descriptions to determine split type.
+2025-12-02 12:40:35,942 - INFO - main.py:237 - [perform_DAF_compounding] No description data found. Performing PO count split aggregation.
+2025-12-02 12:40:35,942 - INFO - main.py:238 - [perform_DAF_compounding]   - Totals calculated per group of 5 POs.
+2025-12-02 12:40:35,942 - INFO - main.py:239 - [perform_DAF_compounding]   - String formatting uses chunk size 2 and separator '/'.
+2025-12-02 12:40:35,942 - DEBUG - main.py:243 - [perform_DAF_compounding] Pass 1: Aggregating SQFT/Amount/Items per PO.
+2025-12-02 12:40:35,942 - DEBUG - main.py:283 - [perform_DAF_compounding] Pass 2: Creating 2 output chunks based on conceptual PO groups of 5.
+2025-12-02 12:40:35,942 - DEBUG - main.py:324 - [perform_DAF_compounding] Created output chunk 1: 5 POs contributed totals, SQFT=93870.20000000000038, Amount=115499.43700000000083
+2025-12-02 12:40:35,942 - DEBUG - main.py:324 - [perform_DAF_compounding] Created output chunk 2: 3 POs contributed totals, SQFT=83243.39999999999953, Amount=111773.30800000000033
+2025-12-02 12:40:35,943 - INFO - main.py:326 - [perform_DAF_compounding] PO count split DAF Compounding complete (2 chunks created).
+2025-12-02 12:40:35,943 - INFO - main.py:604 - --- DAF Compounding Finished ---
+2025-12-02 12:40:35,943 - INFO - main.py:611 - Final processed data structure contains 1 table(s).
+2025-12-02 12:40:35,943 - INFO - main.py:612 - Primary aggregation mode used for DAF Compounding: STANDARD
+2025-12-02 12:40:35,945 - DEBUG - main.py:636 - --- Full Global STANDARD Aggregation Results ---
+{('9000761021', '01.10.W061010', Decimal('0.9'), None): {'amount_sum': Decimal('103.5'),
+                                                         'sqft_sum': Decimal('115')},
+ ('9000761021', '01.10.W061010', Decimal('1'), None): {'amount_sum': Decimal('6871.80000000000018'),
+                                                       'sqft_sum': Decimal('6871.80000000000018')},
+ ('9000798713', '01.10.W653191', Decimal('1.17'), None): {'amount_sum': Decimal('1621.73700000000008'),
+                                                          'sqft_sum': Decimal('1386.09999999999991')},
+ ('9000798713', '01.10.W653191', Decimal('1.3'), None): {'amount_sum': Decimal('11839.36000000000058'),
+                                                         'sqft_sum': Decimal('9107.20000000000073')},
+ ('9000813140', '01.10.U756071', Decimal('1.13'), None): {'amount_sum': Decimal('224.983'),
+                                                          'sqft_sum': Decimal('199.09999999999999')},
+ ('9000813140', '01.10.U756071', Decimal('1.25'), None): {'amount_sum': Decimal('17106.50'),
+                                                          'sqft_sum': Decimal('13685.19999999999982')},
+ ('9000826870', '01.10.U756022', Decimal('1.13'), None): {'amount_sum': Decimal('44.296'),
+                                                          'sqft_sum': Decimal('39.2')},
+ ('9000826870', '01.10.U756022', Decimal('1.25'), None): {'amount_sum': Decimal('6757.625'),
+                                                          'sqft_sum': Decimal('5406.10000000000036')},
+ ('9000832482', '01.10.W783010', Decimal('1.36'), None): {'amount_sum': Decimal('695.50400000000002'),
+                                                          'sqft_sum': Decimal('511.39999999999998')},
+ ('9000832482', '01.10.W783010', Decimal('1.51'), None): {'amount_sum': Decimal('49302.85900000000037'),
+                                                          'sqft_sum': Decimal('32650.89999999999964')},
+ ('9000861854', '01.11.S528110', Decimal('0.91'), None): {'amount_sum': Decimal('471.471'),
+                                                          'sqft_sum': Decimal('518.10000000000002')},
+ (9000832127, '01.10.U528073', Decimal('1.06'), None): {'amount_sum': Decimal('498.09399999999999'),
+                                                        'sqft_sum': Decimal('469.89999999999998')},
+ (9000832127, '01.10.U528073', Decimal('1.13'), None): {'amount_sum': Decimal('2888.16700000000000'),
+                                                        'sqft_sum': Decimal('2555.90000000000006')},
+ (9000832127, '01.10.U528073', Decimal('1.25'), None): {'amount_sum': Decimal('67543.375'),
+                                                        'sqft_sum': Decimal('54034.69999999999935')},
+ (9000837343, '01.10.U528073', Decimal('1.06'), None): {'amount_sum': Decimal('755.14400000000001'),
+                                                        'sqft_sum': Decimal('712.39999999999998')},
+ (9000837343, '01.10.U528073', Decimal
+... (output truncated)
+2025-12-02 12:40:35,945 - DEBUG - main.py:640 - --- Full Global CUSTOM Aggregation Results ---
+{('9000761021', '01.10.W061010', None, None): {'amount_sum': Decimal('6975.30000000000018'),
+                                               'sqft_sum': Decimal('6986.80000000000018')},
+ ('9000798713', '01.10.W653191', None, None): {'amount_sum': Decimal('13461.09700000000066'),
+                                               'sqft_sum': Decimal('10493.30000000000064')},
+ ('9000813140', '01.10.U756071', None, None): {'amount_sum': Decimal('17331.483'),
+                                               'sqft_sum': Decimal('13884.29999999999981')},
+ ('9000826870', '01.10.U756022', None, None): {'amount_sum': Decimal('6801.921'),
+                                               'sqft_sum': Decimal('5445.30000000000036')},
+ ('9000832482', '01.10.W783010', None, None): {'amount_sum': Decimal('49998.36300000000039'),
+                                               'sqft_sum': Decimal('33162.29999999999962')},
+ ('9000861854', '01.11.S528110', None, None): {'amount_sum': Decimal('471.471'),
+                                               'sqft_sum': Decimal('518.10000000000002')},
+ (9000832127, '01.10.U528073', None, None): {'amount_sum': Decimal('70929.63599999999999'),
+                                             'sqft_sum': Decimal('57060.49999999999939')},
+ (9000837343, '01.10.U528073', None, None): {'amount_sum': Decimal('61303.47399999999994'),
+                                             'sqft_sum': Decimal('49562.99999999999989')}}
+2025-12-02 12:40:35,945 - INFO - main.py:644 - --- Final DAF Compounded Result (Workbook: 'JF25057.xlsx', Based on 'STANDARD' Input) ---
+2025-12-02 12:40:35,945 - INFO - main.py:647 - DAF result is split into BUFFALO (1) and NON-BUFFALO (2) groups.
+2025-12-02 12:40:35,945 - INFO - main.py:649 - --- DAF Group 1 --- 
+2025-12-02 12:40:35,945 - INFO - main.py:657 -   Combined POs:
+9000761021/9000798713
+9000813140/9000826870
+9000832127
+2025-12-02 12:40:35,945 - INFO - main.py:658 -   Combined Items:
+01.10.U528073/01.10.U756022
+01.10.U756071/01.10.W061010
+01.10.W653191
+2025-12-02 12:40:35,945 - INFO - main.py:659 -   Combined Descriptions:
+
+2025-12-02 12:40:35,945 - INFO - main.py:660 -   Total SQFT: 93870.20000000000038 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:40:35,945 - INFO - main.py:661 -   Total Amount: 115499.43700000000083 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:40:35,945 - INFO - main.py:649 - --- DAF Group 2 --- 
+2025-12-02 12:40:35,945 - INFO - main.py:657 -   Combined POs:
+9000832482/9000837343
+9000861854
+2025-12-02 12:40:35,945 - INFO - main.py:658 -   Combined Items:
+01.10.U528073/01.10.W783010
+01.11.S528110
+2025-12-02 12:40:35,945 - INFO - main.py:659 -   Combined Descriptions:
+
+2025-12-02 12:40:35,945 - INFO - main.py:660 -   Total SQFT: 83243.39999999999953 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:40:35,945 - INFO - main.py:661 -   Total Amount: 111773.30800000000033 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:40:35,945 - INFO - main.py:664 - ------------------------------
+2025-12-02 12:40:35,945 - INFO - main.py:675 - --- Calculating Footer Data ---
+2025-12-02 12:40:35,945 - INFO - main.py:681 - Table 1 Footer: {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.6'), 'col_net': Decimal('15128.5'), 'col_gross': Decimal('16233.5'), 'col_cbm': Decimal('55.5984'), 'col_amount': Decimal('227272.745'), 'col_pallet_count': 25}
+2025-12-02 12:40:35,945 - INFO - main.py:695 - Grand Total Footer: {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.6'), 'col_net': Decimal('15128.5'), 'col_gross': Decimal('16233.5'), 'col_cbm': Decimal('55.5984'), 'col_amount': Decimal('227272.745'), 'col_pallet_count': 25}
+2025-12-02 12:40:35,945 - INFO - main.py:698 - --- Calculating Add-on Data ---
+2025-12-02 12:40:35,949 - INFO - main.py:702 - Leather Summary: {'BUFFALO': {'col_qty_pcs': 0, 'col_qty_sf': Decimal('0'), 'col_net': Decimal('0'), 'col_gross': Decimal('0'), 'col_pallet_count': 0}, 'COW': {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.59999999999991'), 'col_net': Decimal('15128.5'), 'col_gross': Decimal('16233.5'), 'col_pallet_count': 25}}
+2025-12-02 12:40:35,949 - INFO - main.py:706 - Normal Aggregate Per PO: 17 unique PO+price combinations
+2025-12-02 12:40:35,949 - INFO - main.py:709 - --- Preparing Data for JSON Output ---
+2025-12-02 12:40:35,953 - INFO - main.py:752 - --- Generated JSON Output ---
+2025-12-02 12:40:35,953 - INFO - main.py:757 - JSON output is large (35567 chars). Logging preview:
+2025-12-02 12:40:35,953 - INFO - main.py:758 - {
+    "metadata": {
+        "workbook_filename": "JF25057.xlsx",
+        "worksheet_name": "Sheet1",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-12-02T12:40:35.949742"
+    },
+    "processed_tables_data": {
+        "1": {
+            "col_unit_price": [
+                1.3,
+                1.17,
+                1,
+                0.9,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                0.91,
+                1.51,
+                1.51,
+                1.36,
+                1.51,
+                1.51,
+                1.36,
+                1.51,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.06,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.06
+            ],
+            "col_amount": [
+                11839.36,
+                1621.737,
+                6871.8,
+                103.5,
+                6757.625,
+                44.296,
+                9687.75,
+                7418.75,
+                224.983,
+                471.471,
+                15130.955,
+                13878.259,
+                372.504,
+                16316.305,
+                2571.983,
+                323,
+                1405.357,
+                6095.125,
+                1058.358,
+                13836,
+                8295.875,
+                1225.937,
+                6771.625,
+                615.737,
+                12052.75,
+                6517.375,
+                1328.428,
+                2130.75,
+                620.37,
+                755.144,
+                7808.25,
+                322.389,
+                13604.75,
+                12594.375,
+                1126.836,
+                13307.875,
+                11463.25,
+                1089.885,
+                5396.25,
+                90.513,
+                3368.625,
+                258.544,
+                498.094
+            ],
+            "col_dc": [
+                "CLF-251002",
+                "CLF-251002",
+                "CLF-250816",
+                "CLF-250816",
+                "CLF-250221",
+                "CLF-250221",
+                "CLF-251022",
+                "CLF-251022",
+                "CLF-251022",
+                "CLF-250219",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251116",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251007",
+                "CLF-251007",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117"
+            ],
+            "col_po": [
+                "9000798713",
+                "9000798713",
+                "9000761021",
+                "9000761021",
+                "9000826870",
+                "9000826870",
+                "9000813140",
+                "9000813140",
+                "9000813140",
+                "9000861854",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9
+... (JSON output truncated in log)
+2025-12-02 12:40:35,955 - INFO - main.py:765 - Determined output JSON path: C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output\JF25057.json
+2025-12-02 12:40:35,955 - INFO - main.py:769 - Successfully saved JSON output to 'C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output\JF25057.json'
+2025-12-02 12:40:35,955 - INFO - main.py:785 - \U0001f4c1 Processed file: JF25057.xlsx
+2025-12-02 12:40:35,955 - INFO - excel_handler.py:79 - Closed workbook object reference for: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:40:35,955 - INFO - main.py:807 - --- Automation Run Complete ---

@@ -1,0 +1,1350 @@
+<frozen runpy>:128: RuntimeWarning: 'core.data_parser.main' found in sys.modules after import of package 'core.data_parser', but prior to execution of 'core.data_parser.main'; this may result in unpredictable behaviour
+2025-12-02 12:48:12,238 - INFO - main.py:371 - --- Starting Invoice Automation ---
+2025-12-02 12:48:12,238 - INFO - main.py:382 - Using input Excel path from command line: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:48:12,239 - INFO - main.py:413 - Processing workbook: JF25057.xlsx
+2025-12-02 12:48:12,240 - INFO - main.py:419 - Using output directory from command line: C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output
+2025-12-02 12:48:12,240 - INFO - main.py:448 - Checking workbook filename 'JF25057.xlsx' to determine PRIMARY aggregation mode for DAF compounding.
+2025-12-02 12:48:12,240 - WARNING - main.py:452 - cfg.CUSTOM_AGGREGATION_WORKBOOK_PREFIXES is not a list. Using empty list.
+2025-12-02 12:48:12,241 - INFO - main.py:462 - Workbook filename does not match custom prefixes. Will use STANDARD aggregation results for DAF compounding.
+2025-12-02 12:48:12,241 - INFO - main.py:474 - Loading workbook from: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:48:12,241 - INFO - excel_handler.py:19 - Initialized ExcelHandler for: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:48:12,241 - INFO - excel_handler.py:33 - Attempting to load workbook 'core/invoice_generator/JF25057.xlsx' with data_only=True
+2025-12-02 12:48:12,331 - INFO - excel_handler.py:46 - No sheet name specified. Successfully loaded active sheet: 'Sheet1'
+2025-12-02 12:48:12,331 - INFO - excel_handler.py:48 - Sheet dimensions: Max Row=53, Max Col=26
+2025-12-02 12:48:12,331 - INFO - main.py:479 - Successfully loaded worksheet: 'Sheet1' from 'JF25057.xlsx'
+2025-12-02 12:48:12,331 - INFO - main.py:483 - Searching for the primary header row using smart detection...
+2025-12-02 12:48:12,331 - INFO - sheet_parser.py:83 - [find_and_map_smart_headers_v12] Starting best-fit header search...
+2025-12-02 12:48:12,332 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 1 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,332 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 2 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,332 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 3 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,333 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 4 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,334 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 5 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,334 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 6 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,335 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 7 | Score: 1 | Mapping: {'col_item': 'H'}
+2025-12-02 12:48:12,335 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 8 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,337 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 9 | Score: 121 | Mapping: {'col_unit_price': 'O', 'col_amount': 'P', 'col_dc': 'A', 'col_po': 'B', 'col_line_no': 'C', 'col_direction': 'D', 'col_production_date': 'E', 'col_production_order_no': 'F', 'col_reference_code': 'G', 'col_item': 'H', 'col_level': 'I', 'col_qty_pcs': 'J', 'col_qty_sf': 'K', 'col_pallet_count': 'L', 'col_net': 'M', 'col_gross': 'N', 'col_cbm': 'R'}
+2025-12-02 12:48:12,337 - INFO - sheet_parser.py:187 - [find_and_map_smart_headers_v12] Found new best candidate row at 9 with score 121.
+2025-12-02 12:48:12,338 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 10 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,339 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 11 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:48:12,340 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 12 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,341 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 13 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:48:12,342 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 14 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,343 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 15 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:48:12,344 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 16 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,346 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 17 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,347 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 18 | Score: 4 | Mapping: {'col_cbm': 'R'}
+2025-12-02 12:48:12,349 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 19 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,350 - INFO - sheet_parser.py:182 - [find_and_map_smart_headers_v12] Evaluated Row 20 | Score: 0 | Mapping: {}
+2025-12-02 12:48:12,350 - INFO - sheet_parser.py:190 - [find_and_map_smart_headers_v12] SUCCESS: Confirmed header row at 9 with final score 121.
+2025-12-02 12:48:12,351 - INFO - main.py:492 - Smart detection successful. Found and validated primary header on row 9.
+2025-12-02 12:48:12,352 - DEBUG - main.py:493 - Validated Column Mapping:
+{'col_amount': 'P',
+ 'col_cbm': 'R',
+ 'col_dc': 'A',
+ 'col_direction': 'D',
+ 'col_gross': 'N',
+ 'col_item': 'H',
+ 'col_level': 'I',
+ 'col_line_no': 'C',
+ 'col_net': 'M',
+ 'col_pallet_count': 'L',
+ 'col_po': 'B',
+ 'col_production_date': 'E',
+ 'col_production_order_no': 'F',
+ 'col_qty_pcs': 'J',
+ 'col_qty_sf': 'K',
+ 'col_reference_code': 'G',
+ 'col_unit_price': 'O'}
+2025-12-02 12:48:12,354 - INFO - sheet_parser.py:271 - [find_all_header_rows] Searching for additional headers using pattern '^(批次号|订单号|物料代码|总张数|净重|毛重|po|item|pcs|net|gross|TTX编号)$' in rows 10-53
+2025-12-02 12:48:12,357 - INFO - main.py:507 - Found a total of 1 table(s) to process at rows: [9]
+2025-12-02 12:48:12,357 - WARNING - main.py:513 - Column 'col_desc' not found during mapping. Aggregation keys will use None for description.
+2025-12-02 12:48:12,357 - INFO - main.py:516 - Extracting data for all tables...
+2025-12-02 12:48:12,357 - INFO - sheet_parser.py:216 - [extract_multiple_tables] Starting extraction for 1 tables: [9]
+2025-12-02 12:48:12,358 - INFO - sheet_parser.py:234 - [extract_multiple_tables] Table 1: Extracting Data Rows 10 to 53
+2025-12-02 12:48:12,360 - INFO - sheet_parser.py:241 - [extract_multiple_tables] Stopping extraction for Table 1 at row 53: Empty cell in stop column 'col_item'.
+2025-12-02 12:48:12,360 - INFO - sheet_parser.py:251 - [extract_multiple_tables] Successfully stored 43 rows for Table Index 1.
+2025-12-02 12:48:12,364 - DEBUG - main.py:521 - --- Raw Extracted Data (1 Table(s)) ---
+{1: {'col_amount': [11839.36,
+                    1621.737,
+                    6871.8,
+                    103.5,
+                    6757.625,
+                    44.296,
+                    9687.75,
+                    7418.75,
+                    224.983,
+                    471.471,
+                    15130.955,
+                    13878.259,
+                    372.504,
+                    16316.305,
+                    2571.983,
+                    323,
+                    1405.357,
+                    6095.125,
+                    1058.358,
+                    13836,
+                    8295.875,
+                    1225.937,
+                    6771.625,
+                    615.737,
+                    12052.75,
+                    6517.375,
+                    1328.428,
+                    2130.75,
+                    620.37,
+                    755.144,
+                    7808.25,
+                    322.389,
+                    13604.75,
+                    12594.375,
+                    1126.836,
+                    13307.875,
+                    11463.25,
+                    1089.885,
+                    5396.25,
+                    90.513,
+                    3368.625,
+                    258.544,
+                    498.094],
+     'col_cbm': ['2.2*1.8*0.63',
+                 None,
+                 '2.2*1.8*0.45',
+                 None,
+                 '2.2*1.8*0.46',
+                 None,
+                 '2.2*1.8*0.54',
+                 '2.2*1.8*0.49',
+                 None,
+                 '2.2*1.8*0.42',
+                 '2.2*1.8*0.7',
+                 '2.2*1.8*0.65',
+                 None,
+                 '2.2*1.8*0.76',
+                 '2.2*1.8*0.27',
+                 None,
+                 '2.2*1.8*0.38',
+                 '2.2*1.8*0.42',
+                 None,
+                 '2.2*1.8*0.67',
+                 '2.2*1.8*0.6',
+                 None,
+                 '2.2*1.8*0.49',
+                 None,
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.6',
+                 '2.2*1.8*0.4',
+                 None,
+                 None,
+                 '2.2*1.8*0.47',
+                 None,
+                 '2.2*1.8*0.7',
+                 '2.2*1.8*0.69',
+                 None,
+                 '2.2*1.8*0.65',
+                 '2.2*1.8*0.63',
+                 None,
+                 '2.2*1.8*0.4',
+                 None,
+                 '2.2*1.8*0.37',
+                 None,
+                 None],
+     'col_dc': ['CLF-251002',
+                'CLF-251002',
+                'CLF-250816',
+                'CLF-250816',
+                'CLF-250221',
+                'CLF-250221',
+                'CLF-251022',
+                'CLF-251022',
+                'CLF-251022',
+                'CLF-250219',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+                'CLF-251115',
+              
+... (output truncated)
+2025-12-02 12:48:12,365 - INFO - main.py:527 - --- Starting Data Processing Loop for 1 Extracted Table(s) ---
+2025-12-02 12:48:12,365 - INFO - main.py:534 - --- Processing Table Index 1 ---
+2025-12-02 12:48:12,365 - INFO - main.py:541 - Table 1: Calculating CBM values...
+2025-12-02 12:48:12,365 - INFO - data_processor.py:306 - [process_cbm_column] Processing 'col_cbm' column for volume calculations (List length: 43)...
+2025-12-02 12:48:12,365 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.63'. for CBM at row index 0
+2025-12-02 12:48:12,365 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.4948 from '2.2*1.8*0.63' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.63')]). for CBM at row index 0
+2025-12-02 12:48:12,365 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 1
+2025-12-02 12:48:12,365 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.45'. for CBM at row index 2
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.7820 from '2.2*1.8*0.45' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.45')]). for CBM at row index 2
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 3
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.46'. for CBM at row index 4
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.8216 from '2.2*1.8*0.46' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.46')]). for CBM at row index 4
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 5
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.54'. for CBM at row index 6
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.1384 from '2.2*1.8*0.54' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.54')]). for CBM at row index 6
+2025-12-02 12:48:12,366 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.49'. for CBM at row index 7
+2025-12-02 12:48:12,367 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.9404 from '2.2*1.8*0.49' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.49')]). for CBM at row index 7
+2025-12-02 12:48:12,367 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 8
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.42'. for CBM at row index 9
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.6632 from '2.2*1.8*0.42' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.42')]). for CBM at row index 9
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.7'. for CBM at row index 10
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7720 from '2.2*1.8*0.7' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.7')]). for CBM at row index 10
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.65'. for CBM at row index 11
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.5740 from '2.2*1.8*0.65' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.65')]). for CBM at row index 11
+2025-12-02 12:48:12,368 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 12
+2025-12-02 12:48:12,369 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.76'. for CBM at row index 13
+2025-12-02 12:48:12,370 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 3.0096 from '2.2*1.8*0.76' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.76')]). for CBM at row index 13
+2025-12-02 12:48:12,370 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.27'. for CBM at row index 14
+2025-12-02 12:48:12,370 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.0692 from '2.2*1.8*0.27' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.27')]). for CBM at row index 14
+2025-12-02 12:48:12,370 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 15
+2025-12-02 12:48:12,370 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.38'. for CBM at row index 16
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5048 from '2.2*1.8*0.38' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.38')]). for CBM at row index 16
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.42'. for CBM at row index 17
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.6632 from '2.2*1.8*0.42' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.42')]). for CBM at row index 17
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 18
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.67'. for CBM at row index 19
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.6532 from '2.2*1.8*0.67' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.67')]). for CBM at row index 19
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 20
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 20
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 21
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.49'. for CBM at row index 22
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.9404 from '2.2*1.8*0.49' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.49')]). for CBM at row index 22
+2025-12-02 12:48:12,371 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 23
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 24
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 24
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 25
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 25
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.6'. for CBM at row index 26
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.3760 from '2.2*1.8*0.6' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.6')]). for CBM at row index 26
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.4'. for CBM at row index 27
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5840 from '2.2*1.8*0.4' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.4')]). for CBM at row index 27
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 28
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 29
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.47'. for CBM at row index 30
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.8612 from '2.2*1.8*0.47' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.47')]). for CBM at row index 30
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 31
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.7'. for CBM at row index 32
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7720 from '2.2*1.8*0.7' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.7')]). for CBM at row index 32
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.69'. for CBM at row index 33
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.7324 from '2.2*1.8*0.69' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.69')]). for CBM at row index 33
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 34
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.65'. for CBM at row index 35
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.5740 from '2.2*1.8*0.65' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.65')]). for CBM at row index 35
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.63'. for CBM at row index 36
+2025-12-02 12:48:12,372 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 2.4948 from '2.2*1.8*0.63' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.63')]). for CBM at row index 36
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 37
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.4'. for CBM at row index 38
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.5840 from '2.2*1.8*0.4' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.4')]). for CBM at row index 38
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 39
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:242 - [_calculate_single_cbm] Attempting to parse CBM string: '2.2*1.8*0.37'. for CBM at row index 40
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:277 - [_calculate_single_cbm] Calculated CBM volume: 1.4652 from '2.2*1.8*0.37' (Dims: [Decimal('2.2'), Decimal('1.8'), Decimal('0.37')]). for CBM at row index 40
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 41
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:216 - [_calculate_single_cbm] Input CBM value is None. for CBM at row index 42
+2025-12-02 12:48:12,373 - INFO - data_processor.py:318 - [process_cbm_column] Finished processing 'col_cbm' column. List now contains calculated values (Decimals or Nones).
+2025-12-02 12:48:12,373 - INFO - main.py:549 - Table 1: Distributing values...
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:333 - [distribute_values] Starting value distribution process.
+2025-12-02 12:48:12,373 - INFO - data_processor.py:404 - [distribute_values] Starting value distribution for columns: ['col_net', 'col_gross', 'col_cbm'] based on 'col_qty_pcs' (43 rows).
+2025-12-02 12:48:12,373 - DEBUG - data_processor.py:411 - [distribute_values] Pre-converted basis values (first 10): [Decimal('181'), Decimal('35'), Decimal('193'), Decimal('4'), Decimal('104'), Decimal('1'), Decimal('150'), Decimal('113'), Decimal('5'), Decimal('12')]
+2025-12-02 12:48:12,373 - INFO - data_processor.py:415 - [distribute_values] Processing column for distribution: 'col_net'
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:430 - [distribute_values] Pre-converted values for 'col_net' (first 10): [Decimal('797'), None, Decimal('484.5'), None, Decimal('443'), None, Decimal('601.5'), Decimal('473'), None, Decimal('42')]
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 0: Found distributable value: 797
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 0: Lookahead index 1 is part of block (Original val empty/zero, Basis=35).
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 0: Lookahead stopped at index 2. Found non-empty/zero value 484.5 in original data.
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 0: Lookahead finished. Indices in distribution block (excluding start row 0): [1]
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 0: Identified distribution block indices: [0, 1]
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 0: Block Calculation - Total POSITIVE basis: 216. Indices with positive basis: [0, 1]
+2025-12-02 12:48:12,374 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 0: Distributing 797 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,376 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 0:   Index 0: Basis=181, Prop=0.837963, Dist Val=667.8565
+2025-12-02 12:48:12,376 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 0:   Index 1: REMAINDER row, assigned=129.1435 (ensures exact sum)
+2025-12-02 12:48:12,377 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 0: Distribution Check PASSED for block. Original: 797, Sum: 797.0000
+2025-12-02 12:48:12,377 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 0: End of block processing. Moving main index i to 2
+2025-12-02 12:48:12,377 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 2: Found distributable value: 484.5
+2025-12-02 12:48:12,380 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 2: Lookahead index 3 is part of block (Original val empty/zero, Basis=4).
+2025-12-02 12:48:12,380 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 2: Lookahead stopped at index 4. Found non-empty/zero value 443 in original data.
+2025-12-02 12:48:12,380 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 2: Lookahead finished. Indices in distribution block (excluding start row 2): [3]
+2025-12-02 12:48:12,380 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 2: Identified distribution block indices: [2, 3]
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 2: Block Calculation - Total POSITIVE basis: 197. Indices with positive basis: [2, 3]
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 2: Distributing 484.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 2:   Index 2: Basis=193, Prop=0.979695, Dist Val=474.6624
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 2:   Index 3: REMAINDER row, assigned=9.8376 (ensures exact sum)
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 2: Distribution Check PASSED for block. Original: 484.5, Sum: 484.5000
+2025-12-02 12:48:12,381 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 2: End of block processing. Moving main index i to 4
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 4: Found distributable value: 443
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 4: Lookahead index 5 is part of block (Original val empty/zero, Basis=1).
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 4: Lookahead stopped at index 6. Found non-empty/zero value 601.5 in original data.
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 4: Lookahead finished. Indices in distribution block (excluding start row 4): [5]
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 4: Identified distribution block indices: [4, 5]
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 4: Block Calculation - Total POSITIVE basis: 105. Indices with positive basis: [4, 5]
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 4: Distributing 443 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,382 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 4:   Index 4: Basis=104, Prop=0.990476, Dist Val=438.7810
+2025-12-02 12:48:12,383 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 4:   Index 5: REMAINDER row, assigned=4.2190 (ensures exact sum)
+2025-12-02 12:48:12,384 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 4: Distribution Check PASSED for block. Original: 443, Sum: 443.0000
+2025-12-02 12:48:12,384 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 4: End of block processing. Moving main index i to 6
+2025-12-02 12:48:12,385 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 6: Found distributable value: 601.5
+2025-12-02 12:48:12,385 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 6: Lookahead stopped at index 7. Found non-empty/zero value 473 in original data.
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 6: Lookahead finished. Indices in distribution block (excluding start row 6): []
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 6: Value 601.5 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 7: Found distributable value: 473
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 7: Lookahead index 8 is part of block (Original val empty/zero, Basis=5).
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 7: Lookahead stopped at index 9. Found non-empty/zero value 42 in original data.
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 7: Lookahead finished. Indices in distribution block (excluding start row 7): [8]
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 7: Identified distribution block indices: [7, 8]
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 7: Block Calculation - Total POSITIVE basis: 118. Indices with positive basis: [7, 8]
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 7: Distributing 473 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 7:   Index 7: Basis=113, Prop=0.957627, Dist Val=452.9576
+2025-12-02 12:48:12,386 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 7:   Index 8: REMAINDER row, assigned=20.0424 (ensures exact sum)
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 7: Distribution Check PASSED for block. Original: 473, Sum: 473.0000
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 7: End of block processing. Moving main index i to 9
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 9: Found distributable value: 42
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 9: Lookahead stopped at index 10. Found non-empty/zero value 1056 in original data.
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 9: Lookahead finished. Indices in distribution block (excluding start row 9): []
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 9: Value 42 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 10: Found distributable value: 1056
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 10: Lookahead stopped at index 11. Found non-empty/zero value 991.5 in original data.
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 10: Lookahead finished. Indices in distribution block (excluding start row 10): []
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 10: Value 1056 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 11: Found distributable value: 991.5
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 11: Lookahead index 12 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 11: Lookahead stopped at index 13. Found non-empty/zero value 1143 in original data.
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 11: Lookahead finished. Indices in distribution block (excluding start row 11): [12]
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 11: Identified distribution block indices: [11, 12]
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 11: Block Calculation - Total POSITIVE basis: 175. Indices with positive basis: [11, 12]
+2025-12-02 12:48:12,387 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 11: Distributing 991.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 11:   Index 11: Basis=168, Prop=0.960000, Dist Val=951.8400
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 11:   Index 12: REMAINDER row, assigned=39.6600 (ensures exact sum)
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 11: Distribution Check PASSED for block. Original: 991.5, Sum: 991.5000
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 11: End of block processing. Moving main index i to 13
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 13: Found distributable value: 1143
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 13: Lookahead stopped at index 14. Found non-empty/zero value 204.5 in original data.
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 13: Lookahead finished. Indices in distribution block (excluding start row 13): []
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 13: Value 1143 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 14: Found distributable value: 204.5
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 14: Lookahead index 15 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 14: Lookahead stopped at index 16. Found non-empty/zero value 90 in original data.
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 14: Lookahead finished. Indices in distribution block (excluding start row 14): [15]
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 14: Identified distribution block indices: [14, 15]
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 14: Block Calculation - Total POSITIVE basis: 38. Indices with positive basis: [14, 15]
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 14: Distributing 204.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 14:   Index 14: Basis=32, Prop=0.842105, Dist Val=172.2105
+2025-12-02 12:48:12,388 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 14:   Index 15: REMAINDER row, assigned=32.2895 (ensures exact sum)
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 14: Distribution Check PASSED for block. Original: 204.5, Sum: 204.5000
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 14: End of block processing. Moving main index i to 16
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 16: Found distributable value: 90
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 16: Lookahead stopped at index 17. Found non-empty/zero value 477 in original data.
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 16: Lookahead finished. Indices in distribution block (excluding start row 16): []
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 16: Value 90 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 17: Found distributable value: 477
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 17: Lookahead index 18 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 17: Lookahead stopped at index 19. Found non-empty/zero value 918 in original data.
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 17: Lookahead finished. Indices in distribution block (excluding start row 17): [18]
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 17: Identified distribution block indices: [17, 18]
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 17: Block Calculation - Total POSITIVE basis: 124. Indices with positive basis: [17, 18]
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 17: Distributing 477 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 17:   Index 17: Basis=100, Prop=0.806452, Dist Val=384.6774
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 17:   Index 18: REMAINDER row, assigned=92.3226 (ensures exact sum)
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 17: Distribution Check PASSED for block. Original: 477, Sum: 477.0000
+2025-12-02 12:48:12,389 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 17: End of block processing. Moving main index i to 19
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 19: Found distributable value: 918
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 19: Lookahead stopped at index 20. Found non-empty/zero value 635.5 in original data.
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 19: Lookahead finished. Indices in distribution block (excluding start row 19): []
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 19: Value 918 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 20: Found distributable value: 635.5
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 20: Lookahead index 21 is part of block (Original val empty/zero, Basis=28).
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 20: Lookahead stopped at index 22. Found non-empty/zero value 491 in original data.
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 20: Lookahead finished. Indices in distribution block (excluding start row 20): [21]
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 20: Identified distribution block indices: [20, 21]
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 20: Block Calculation - Total POSITIVE basis: 157. Indices with positive basis: [20, 21]
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 20: Distributing 635.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 20:   Index 20: Basis=129, Prop=0.821656, Dist Val=522.1624
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 20:   Index 21: REMAINDER row, assigned=113.3376 (ensures exact sum)
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 20: Distribution Check PASSED for block. Original: 635.5, Sum: 635.5000
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 20: End of block processing. Moving main index i to 22
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 22: Found distributable value: 491
+2025-12-02 12:48:12,390 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 22: Lookahead index 23 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 22: Lookahead stopped at index 24. Found non-empty/zero value 809 in original data.
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 22: Lookahead finished. Indices in distribution block (excluding start row 22): [23]
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 22: Identified distribution block indices: [22, 23]
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 22: Block Calculation - Total POSITIVE basis: 121. Indices with positive basis: [22, 23]
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 22: Distributing 491 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 22:   Index 22: Basis=107, Prop=0.884298, Dist Val=434.1901
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 22:   Index 23: REMAINDER row, assigned=56.8099 (ensures exact sum)
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 22: Distribution Check PASSED for block. Original: 491, Sum: 491.0000
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 22: End of block processing. Moving main index i to 24
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 24: Found distributable value: 809
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 24: Lookahead stopped at index 25. Found non-empty/zero value 540 in original data.
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 24: Lookahead finished. Indices in distribution block (excluding start row 24): []
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 24: Value 809 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 25: Found distributable value: 540
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 25: Lookahead index 26 is part of block (Original val empty/zero, Basis=30).
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 25: Lookahead stopped at index 27. Found non-empty/zero value 238.5 in original data.
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 25: Lookahead finished. Indices in distribution block (excluding start row 25): [26]
+2025-12-02 12:48:12,391 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 25: Identified distribution block indices: [25, 26]
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 25: Block Calculation - Total POSITIVE basis: 135. Indices with positive basis: [25, 26]
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 25: Distributing 540 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 25:   Index 25: Basis=105, Prop=0.777778, Dist Val=420.0000
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 25:   Index 26: REMAINDER row, assigned=120.0000 (ensures exact sum)
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 25: Distribution Check PASSED for block. Original: 540, Sum: 540.0000
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 25: End of block processing. Moving main index i to 27
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 27: Found distributable value: 238.5
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 27: Lookahead index 28 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 27: Lookahead index 29 is part of block (Original val empty/zero, Basis=15).
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 27: Lookahead stopped at index 30. Found non-empty/zero value 544 in original data.
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 27: Lookahead finished. Indices in distribution block (excluding start row 27): [28, 29]
+2025-12-02 12:48:12,392 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 27: Identified distribution block indices: [27, 28, 29]
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 27: Block Calculation - Total POSITIVE basis: 63. Indices with positive basis: [27, 28, 29]
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 27: Distributing 238.5 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 27:   Index 27: Basis=34, Prop=0.539683, Dist Val=128.7143
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 27:   Index 28: Basis=14, Prop=0.222222, Dist Val=53.0000
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 27:   Index 29: REMAINDER row, assigned=56.7857 (ensures exact sum)
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 27: Distribution Check PASSED for block. Original: 238.5, Sum: 238.5000
+2025-12-02 12:48:12,394 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 27: End of block processing. Moving main index i to 30
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 30: Found distributable value: 544
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 30: Lookahead index 31 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 30: Lookahead stopped at index 32. Found non-empty/zero value 894 in original data.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 30: Lookahead finished. Indices in distribution block (excluding start row 30): [31]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 30: Identified distribution block indices: [30, 31]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 30: Block Calculation - Total POSITIVE basis: 129. Indices with positive basis: [30, 31]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 30: Distributing 544 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 30:   Index 30: Basis=122, Prop=0.945736, Dist Val=514.4806
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 30:   Index 31: REMAINDER row, assigned=29.5194 (ensures exact sum)
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 30: Distribution Check PASSED for block. Original: 544, Sum: 544.0000
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 30: End of block processing. Moving main index i to 32
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 32: Found distributable value: 894
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 32: Lookahead stopped at index 33. Found non-empty/zero value 908 in original data.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 32: Lookahead finished. Indices in distribution block (excluding start row 32): []
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 32: Value 894 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 33: Found distributable value: 908
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 33: Lookahead index 34 is part of block (Original val empty/zero, Basis=25).
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 33: Lookahead stopped at index 35. Found non-empty/zero value 872.5 in original data.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 33: Lookahead finished. Indices in distribution block (excluding start row 33): [34]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 33: Identified distribution block indices: [33, 34]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 33: Block Calculation - Total POSITIVE basis: 230. Indices with positive basis: [33, 34]
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 33: Distributing 908 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 33:   Index 33: Basis=205, Prop=0.891304, Dist Val=809.3043
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 33:   Index 34: REMAINDER row, assigned=98.6957 (ensures exact sum)
+2025-12-02 12:48:12,395 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 33: Distribution Check PASSED for block. Original: 908, Sum: 908.0000
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 33: End of block processing. Moving main index i to 35
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 35: Found distributable value: 872.5
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 35: Lookahead stopped at index 36. Found non-empty/zero value 832 in original data.
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 35: Lookahead finished. Indices in distribution block (excluding start row 35): []
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_net', Row index 35: Value 872.5 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 36: Found distributable value: 832
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 36: Lookahead index 37 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 36: Lookahead stopped at index 38. Found non-empty/zero value 361 in original data.
+2025-12-02 12:48:12,397 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 36: Lookahead finished. Indices in distribution block (excluding start row 36): [37]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 36: Identified distribution block indices: [36, 37]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 36: Block Calculation - Total POSITIVE basis: 208. Indices with positive basis: [36, 37]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 36: Distributing 832 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 36:   Index 36: Basis=184, Prop=0.884615, Dist Val=736.0000
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 36:   Index 37: REMAINDER row, assigned=96.0000 (ensures exact sum)
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 36: Distribution Check PASSED for block. Original: 832, Sum: 832.0000
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 36: End of block processing. Moving main index i to 38
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 38: Found distributable value: 361
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 38: Lookahead index 39 is part of block (Original val empty/zero, Basis=2).
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_net', Row index 38: Lookahead stopped at index 40. Found non-empty/zero value 282 in original data.
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 38: Lookahead finished. Indices in distribution block (excluding start row 38): [39]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 38: Identified distribution block indices: [38, 39]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 38: Block Calculation - Total POSITIVE basis: 90. Indices with positive basis: [38, 39]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 38: Distributing 361 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 38:   Index 38: Basis=88, Prop=0.977778, Dist Val=352.9778
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 38:   Index 39: REMAINDER row, assigned=8.0222 (ensures exact sum)
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 38: Distribution Check PASSED for block. Original: 361, Sum: 361.0000
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 38: End of block processing. Moving main index i to 40
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_net', Row index 40: Found distributable value: 282
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 40: Lookahead index 41 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_net', Row index 40: Lookahead index 42 is part of block (Original val empty/zero, Basis=10).
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_net', Row index 40: Lookahead finished. Indices in distribution block (excluding start row 40): [41, 42]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_net', Row index 40: Identified distribution block indices: [40, 41, 42]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_net', Row index 40: Block Calculation - Total POSITIVE basis: 71. Indices with positive basis: [40, 41, 42]
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_net', Row index 40: Distributing 282 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 40:   Index 40: Basis=55, Prop=0.774648, Dist Val=218.4507
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_net', Row index 40:   Index 41: Basis=6, Prop=0.084507, Dist Val=23.8310
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_net', Row index 40:   Index 42: REMAINDER row, assigned=39.7183 (ensures exact sum)
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_net', Row index 40: Distribution Check PASSED for block. Original: 282, Sum: 282.0000
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_net', Row index 40: End of block processing. Moving main index i to 43
+2025-12-02 12:48:12,398 - DEBUG - data_processor.py:577 - [distribute_values] Finished processing column 'col_net'. Final values (first 10): [Decimal('667.8565'), Decimal('129.1435'), Decimal('474.6624'), Decimal('9.8376'), Decimal('438.7810'), Decimal('4.2190'), Decimal('601.5'), Decimal('452.9576'), Decimal('20.0424'), Decimal('42')]
+2025-12-02 12:48:12,398 - INFO - data_processor.py:578 - [distribute_values] Completed distribution processing for column: 'col_net'.
+2025-12-02 12:48:12,398 - INFO - data_processor.py:415 - [distribute_values] Processing column for distribution: 'col_gross'
+2025-12-02 12:48:12,400 - DEBUG - data_processor.py:430 - [distribute_values] Pre-converted values for 'col_gross' (first 10): [Decimal('842'), None, Decimal('529.5'), None, Decimal('488'), None, Decimal('646.5'), Decimal('518'), None, Decimal('87')]
+2025-12-02 12:48:12,400 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 0: Found distributable value: 842
+2025-12-02 12:48:12,400 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 0: Lookahead index 1 is part of block (Original val empty/zero, Basis=35).
+2025-12-02 12:48:12,400 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 0: Lookahead stopped at index 2. Found non-empty/zero value 529.5 in original data.
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 0: Lookahead finished. Indices in distribution block (excluding start row 0): [1]
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 0: Identified distribution block indices: [0, 1]
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 0: Block Calculation - Total POSITIVE basis: 216. Indices with positive basis: [0, 1]
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 0: Distributing 842 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 0:   Index 0: Basis=181, Prop=0.837963, Dist Val=705.5648
+2025-12-02 12:48:12,401 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 0:   Index 1: REMAINDER row, assigned=136.4352 (ensures exact sum)
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 0: Distribution Check PASSED for block. Original: 842, Sum: 842.0000
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 0: End of block processing. Moving main index i to 2
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 2: Found distributable value: 529.5
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 2: Lookahead index 3 is part of block (Original val empty/zero, Basis=4).
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 2: Lookahead stopped at index 4. Found non-empty/zero value 488 in original data.
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 2: Lookahead finished. Indices in distribution block (excluding start row 2): [3]
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 2: Identified distribution block indices: [2, 3]
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 2: Block Calculation - Total POSITIVE basis: 197. Indices with positive basis: [2, 3]
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 2: Distributing 529.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 2:   Index 2: Basis=193, Prop=0.979695, Dist Val=518.7487
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 2:   Index 3: REMAINDER row, assigned=10.7513 (ensures exact sum)
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 2: Distribution Check PASSED for block. Original: 529.5, Sum: 529.5000
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 2: End of block processing. Moving main index i to 4
+2025-12-02 12:48:12,402 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 4: Found distributable value: 488
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 4: Lookahead index 5 is part of block (Original val empty/zero, Basis=1).
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 4: Lookahead stopped at index 6. Found non-empty/zero value 646.5 in original data.
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 4: Lookahead finished. Indices in distribution block (excluding start row 4): [5]
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 4: Identified distribution block indices: [4, 5]
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 4: Block Calculation - Total POSITIVE basis: 105. Indices with positive basis: [4, 5]
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 4: Distributing 488 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 4:   Index 4: Basis=104, Prop=0.990476, Dist Val=483.3524
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 4:   Index 5: REMAINDER row, assigned=4.6476 (ensures exact sum)
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 4: Distribution Check PASSED for block. Original: 488, Sum: 488.0000
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 4: End of block processing. Moving main index i to 6
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 6: Found distributable value: 646.5
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 6: Lookahead stopped at index 7. Found non-empty/zero value 518 in original data.
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 6: Lookahead finished. Indices in distribution block (excluding start row 6): []
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 6: Value 646.5 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 7: Found distributable value: 518
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 7: Lookahead index 8 is part of block (Original val empty/zero, Basis=5).
+2025-12-02 12:48:12,403 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 7: Lookahead stopped at index 9. Found non-empty/zero value 87 in original data.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 7: Lookahead finished. Indices in distribution block (excluding start row 7): [8]
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 7: Identified distribution block indices: [7, 8]
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 7: Block Calculation - Total POSITIVE basis: 118. Indices with positive basis: [7, 8]
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 7: Distributing 518 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 7:   Index 7: Basis=113, Prop=0.957627, Dist Val=496.0508
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 7:   Index 8: REMAINDER row, assigned=21.9492 (ensures exact sum)
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 7: Distribution Check PASSED for block. Original: 518, Sum: 518.0000
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 7: End of block processing. Moving main index i to 9
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 9: Found distributable value: 87
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 9: Lookahead stopped at index 10. Found non-empty/zero value 1101 in original data.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 9: Lookahead finished. Indices in distribution block (excluding start row 9): []
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 9: Value 87 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 10: Found distributable value: 1101
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 10: Lookahead stopped at index 11. Found non-empty/zero value 1036.5 in original data.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 10: Lookahead finished. Indices in distribution block (excluding start row 10): []
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 10: Value 1101 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,404 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 11: Found distributable value: 1036.5
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 11: Lookahead index 12 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 11: Lookahead stopped at index 13. Found non-empty/zero value 1188 in original data.
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 11: Lookahead finished. Indices in distribution block (excluding start row 11): [12]
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 11: Identified distribution block indices: [11, 12]
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 11: Block Calculation - Total POSITIVE basis: 175. Indices with positive basis: [11, 12]
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 11: Distributing 1036.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 11:   Index 11: Basis=168, Prop=0.960000, Dist Val=995.0400
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 11:   Index 12: REMAINDER row, assigned=41.4600 (ensures exact sum)
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 11: Distribution Check PASSED for block. Original: 1036.5, Sum: 1036.5000
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 11: End of block processing. Moving main index i to 13
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 13: Found distributable value: 1188
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 13: Lookahead stopped at index 14. Found non-empty/zero value 249.5 in original data.
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 13: Lookahead finished. Indices in distribution block (excluding start row 13): []
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 13: Value 1188 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,405 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 14: Found distributable value: 249.5
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 14: Lookahead index 15 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 14: Lookahead stopped at index 16. Found non-empty/zero value 135 in original data.
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 14: Lookahead finished. Indices in distribution block (excluding start row 14): [15]
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 14: Identified distribution block indices: [14, 15]
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 14: Block Calculation - Total POSITIVE basis: 38. Indices with positive basis: [14, 15]
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 14: Distributing 249.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 14:   Index 14: Basis=32, Prop=0.842105, Dist Val=210.1053
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 14:   Index 15: REMAINDER row, assigned=39.3947 (ensures exact sum)
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 14: Distribution Check PASSED for block. Original: 249.5, Sum: 249.5000
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 14: End of block processing. Moving main index i to 16
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 16: Found distributable value: 135
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 16: Lookahead stopped at index 17. Found non-empty/zero value 522 in original data.
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 16: Lookahead finished. Indices in distribution block (excluding start row 16): []
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 16: Value 135 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 17: Found distributable value: 522
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 17: Lookahead index 18 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,406 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 17: Lookahead stopped at index 19. Found non-empty/zero value 963 in original data.
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 17: Lookahead finished. Indices in distribution block (excluding start row 17): [18]
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 17: Identified distribution block indices: [17, 18]
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 17: Block Calculation - Total POSITIVE basis: 124. Indices with positive basis: [17, 18]
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 17: Distributing 522 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 17:   Index 17: Basis=100, Prop=0.806452, Dist Val=420.9677
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 17:   Index 18: REMAINDER row, assigned=101.0323 (ensures exact sum)
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 17: Distribution Check PASSED for block. Original: 522, Sum: 522.0000
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 17: End of block processing. Moving main index i to 19
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 19: Found distributable value: 963
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 19: Lookahead stopped at index 20. Found non-empty/zero value 680.5 in original data.
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 19: Lookahead finished. Indices in distribution block (excluding start row 19): []
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 19: Value 963 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 20: Found distributable value: 680.5
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 20: Lookahead index 21 is part of block (Original val empty/zero, Basis=28).
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 20: Lookahead stopped at index 22. Found non-empty/zero value 536 in original data.
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 20: Lookahead finished. Indices in distribution block (excluding start row 20): [21]
+2025-12-02 12:48:12,407 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 20: Identified distribution block indices: [20, 21]
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 20: Block Calculation - Total POSITIVE basis: 157. Indices with positive basis: [20, 21]
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 20: Distributing 680.5 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 20:   Index 20: Basis=129, Prop=0.821656, Dist Val=559.1369
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 20:   Index 21: REMAINDER row, assigned=121.3631 (ensures exact sum)
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 20: Distribution Check PASSED for block. Original: 680.5, Sum: 680.5000
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 20: End of block processing. Moving main index i to 22
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 22: Found distributable value: 536
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 22: Lookahead index 23 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 22: Lookahead stopped at index 24. Found non-empty/zero value 844 in original data.
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 22: Lookahead finished. Indices in distribution block (excluding start row 22): [23]
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 22: Identified distribution block indices: [22, 23]
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 22: Block Calculation - Total POSITIVE basis: 121. Indices with positive basis: [22, 23]
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 22: Distributing 536 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 22:   Index 22: Basis=107, Prop=0.884298, Dist Val=473.9835
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 22:   Index 23: REMAINDER row, assigned=62.0165 (ensures exact sum)
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 22: Distribution Check PASSED for block. Original: 536, Sum: 536.0000
+2025-12-02 12:48:12,408 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 22: End of block processing. Moving main index i to 24
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 24: Found distributable value: 844
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 24: Lookahead stopped at index 25. Found non-empty/zero value 575 in original data.
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 24: Lookahead finished. Indices in distribution block (excluding start row 24): []
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 24: Value 844 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 25: Found distributable value: 575
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 25: Lookahead index 26 is part of block (Original val empty/zero, Basis=30).
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 25: Lookahead stopped at index 27. Found non-empty/zero value 283.5 in original data.
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 25: Lookahead finished. Indices in distribution block (excluding start row 25): [26]
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 25: Identified distribution block indices: [25, 26]
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 25: Block Calculation - Total POSITIVE basis: 135. Indices with positive basis: [25, 26]
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 25: Distributing 575 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,409 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 25:   Index 25: Basis=105, Prop=0.777778, Dist Val=447.2222
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 25:   Index 26: REMAINDER row, assigned=127.7778 (ensures exact sum)
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 25: Distribution Check PASSED for block. Original: 575, Sum: 575.0000
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 25: End of block processing. Moving main index i to 27
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 27: Found distributable value: 283.5
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 27: Lookahead index 28 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 27: Lookahead index 29 is part of block (Original val empty/zero, Basis=15).
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 27: Lookahead stopped at index 30. Found non-empty/zero value 589 in original data.
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 27: Lookahead finished. Indices in distribution block (excluding start row 27): [28, 29]
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 27: Identified distribution block indices: [27, 28, 29]
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 27: Block Calculation - Total POSITIVE basis: 63. Indices with positive basis: [27, 28, 29]
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 27: Distributing 283.5 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 27:   Index 27: Basis=34, Prop=0.539683, Dist Val=153.0000
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 27:   Index 28: Basis=14, Prop=0.222222, Dist Val=63.0000
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 27:   Index 29: REMAINDER row, assigned=67.5000 (ensures exact sum)
+2025-12-02 12:48:12,410 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 27: Distribution Check PASSED for block. Original: 283.5, Sum: 283.5000
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 27: End of block processing. Moving main index i to 30
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 30: Found distributable value: 589
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 30: Lookahead index 31 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 30: Lookahead stopped at index 32. Found non-empty/zero value 939 in original data.
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 30: Lookahead finished. Indices in distribution block (excluding start row 30): [31]
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 30: Identified distribution block indices: [30, 31]
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 30: Block Calculation - Total POSITIVE basis: 129. Indices with positive basis: [30, 31]
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 30: Distributing 589 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 30:   Index 30: Basis=122, Prop=0.945736, Dist Val=557.0388
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 30:   Index 31: REMAINDER row, assigned=31.9612 (ensures exact sum)
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 30: Distribution Check PASSED for block. Original: 589, Sum: 589.0000
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 30: End of block processing. Moving main index i to 32
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 32: Found distributable value: 939
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 32: Lookahead stopped at index 33. Found non-empty/zero value 953 in original data.
+2025-12-02 12:48:12,411 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 32: Lookahead finished. Indices in distribution block (excluding start row 32): []
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 32: Value 939 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 33: Found distributable value: 953
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 33: Lookahead index 34 is part of block (Original val empty/zero, Basis=25).
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 33: Lookahead stopped at index 35. Found non-empty/zero value 917.5 in original data.
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 33: Lookahead finished. Indices in distribution block (excluding start row 33): [34]
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 33: Identified distribution block indices: [33, 34]
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 33: Block Calculation - Total POSITIVE basis: 230. Indices with positive basis: [33, 34]
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 33: Distributing 953 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 33:   Index 33: Basis=205, Prop=0.891304, Dist Val=849.4130
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 33:   Index 34: REMAINDER row, assigned=103.5870 (ensures exact sum)
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 33: Distribution Check PASSED for block. Original: 953, Sum: 953.0000
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 33: End of block processing. Moving main index i to 35
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 35: Found distributable value: 917.5
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 35: Lookahead stopped at index 36. Found non-empty/zero value 877 in original data.
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 35: Lookahead finished. Indices in distribution block (excluding start row 35): []
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_gross', Row index 35: Value 917.5 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 36: Found distributable value: 877
+2025-12-02 12:48:12,412 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 36: Lookahead index 37 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 36: Lookahead stopped at index 38. Found non-empty/zero value 406 in original data.
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 36: Lookahead finished. Indices in distribution block (excluding start row 36): [37]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 36: Identified distribution block indices: [36, 37]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 36: Block Calculation - Total POSITIVE basis: 208. Indices with positive basis: [36, 37]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 36: Distributing 877 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 36:   Index 36: Basis=184, Prop=0.884615, Dist Val=775.8077
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 36:   Index 37: REMAINDER row, assigned=101.1923 (ensures exact sum)
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 36: Distribution Check PASSED for block. Original: 877, Sum: 877.0000
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 36: End of block processing. Moving main index i to 38
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 38: Found distributable value: 406
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 38: Lookahead index 39 is part of block (Original val empty/zero, Basis=2).
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_gross', Row index 38: Lookahead stopped at index 40. Found non-empty/zero value 327 in original data.
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 38: Lookahead finished. Indices in distribution block (excluding start row 38): [39]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 38: Identified distribution block indices: [38, 39]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 38: Block Calculation - Total POSITIVE basis: 90. Indices with positive basis: [38, 39]
+2025-12-02 12:48:12,413 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 38: Distributing 406 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 38:   Index 38: Basis=88, Prop=0.977778, Dist Val=396.9778
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 38:   Index 39: REMAINDER row, assigned=9.0222 (ensures exact sum)
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 38: Distribution Check PASSED for block. Original: 406, Sum: 406.0000
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 38: End of block processing. Moving main index i to 40
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_gross', Row index 40: Found distributable value: 327
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 40: Lookahead index 41 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_gross', Row index 40: Lookahead index 42 is part of block (Original val empty/zero, Basis=10).
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_gross', Row index 40: Lookahead finished. Indices in distribution block (excluding start row 40): [41, 42]
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_gross', Row index 40: Identified distribution block indices: [40, 41, 42]
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_gross', Row index 40: Block Calculation - Total POSITIVE basis: 71. Indices with positive basis: [40, 41, 42]
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_gross', Row index 40: Distributing 327 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 40:   Index 40: Basis=55, Prop=0.774648, Dist Val=253.3099
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_gross', Row index 40:   Index 41: Basis=6, Prop=0.084507, Dist Val=27.6338
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_gross', Row index 40:   Index 42: REMAINDER row, assigned=46.0563 (ensures exact sum)
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_gross', Row index 40: Distribution Check PASSED for block. Original: 327, Sum: 327.0000
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_gross', Row index 40: End of block processing. Moving main index i to 43
+2025-12-02 12:48:12,414 - DEBUG - data_processor.py:577 - [distribute_values] Finished processing column 'col_gross'. Final values (first 10): [Decimal('705.5648'), Decimal('136.4352'), Decimal('518.7487'), Decimal('10.7513'), Decimal('483.3524'), Decimal('4.6476'), Decimal('646.5'), Decimal('496.0508'), Decimal('21.9492'), Decimal('87')]
+2025-12-02 12:48:12,415 - INFO - data_processor.py:578 - [distribute_values] Completed distribution processing for column: 'col_gross'.
+2025-12-02 12:48:12,415 - INFO - data_processor.py:415 - [distribute_values] Processing column for distribution: 'col_cbm'
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:430 - [distribute_values] Pre-converted values for 'col_cbm' (first 10): [Decimal('2.4948'), None, Decimal('1.7820'), None, Decimal('1.8216'), None, Decimal('2.1384'), Decimal('1.9404'), None, Decimal('1.6632')]
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 0: Found distributable value: 2.4948
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 0: Lookahead index 1 is part of block (Original val empty/zero, Basis=35).
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 0: Lookahead stopped at index 2. Found non-empty/zero value 1.7820 in original data.
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 0: Lookahead finished. Indices in distribution block (excluding start row 0): [1]
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 0: Identified distribution block indices: [0, 1]
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 0: Block Calculation - Total POSITIVE basis: 216. Indices with positive basis: [0, 1]
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 0: Distributing 2.4948 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 0:   Index 0: Basis=181, Prop=0.837963, Dist Val=2.0906
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 0:   Index 1: REMAINDER row, assigned=0.4042 (ensures exact sum)
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 0: Distribution Check PASSED for block. Original: 2.4948, Sum: 2.4948
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 0: End of block processing. Moving main index i to 2
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 2: Found distributable value: 1.7820
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 2: Lookahead index 3 is part of block (Original val empty/zero, Basis=4).
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 2: Lookahead stopped at index 4. Found non-empty/zero value 1.8216 in original data.
+2025-12-02 12:48:12,415 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 2: Lookahead finished. Indices in distribution block (excluding start row 2): [3]
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 2: Identified distribution block indices: [2, 3]
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 2: Block Calculation - Total POSITIVE basis: 197. Indices with positive basis: [2, 3]
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 2: Distributing 1.7820 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 2:   Index 2: Basis=193, Prop=0.979695, Dist Val=1.7458
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 2:   Index 3: REMAINDER row, assigned=0.0362 (ensures exact sum)
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 2: Distribution Check PASSED for block. Original: 1.7820, Sum: 1.7820
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 2: End of block processing. Moving main index i to 4
+2025-12-02 12:48:12,416 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 4: Found distributable value: 1.8216
+2025-12-02 12:48:12,417 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 4: Lookahead index 5 is part of block (Original val empty/zero, Basis=1).
+2025-12-02 12:48:12,417 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 4: Lookahead stopped at index 6. Found non-empty/zero value 2.1384 in original data.
+2025-12-02 12:48:12,417 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 4: Lookahead finished. Indices in distribution block (excluding start row 4): [5]
+2025-12-02 12:48:12,417 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 4: Identified distribution block indices: [4, 5]
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 4: Block Calculation - Total POSITIVE basis: 105. Indices with positive basis: [4, 5]
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 4: Distributing 1.8216 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 4:   Index 4: Basis=104, Prop=0.990476, Dist Val=1.8043
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 4:   Index 5: REMAINDER row, assigned=0.0173 (ensures exact sum)
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 4: Distribution Check PASSED for block. Original: 1.8216, Sum: 1.8216
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 4: End of block processing. Moving main index i to 6
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 6: Found distributable value: 2.1384
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 6: Lookahead stopped at index 7. Found non-empty/zero value 1.9404 in original data.
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 6: Lookahead finished. Indices in distribution block (excluding start row 6): []
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 6: Value 2.1384 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 7: Found distributable value: 1.9404
+2025-12-02 12:48:12,418 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 7: Lookahead index 8 is part of block (Original val empty/zero, Basis=5).
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 7: Lookahead stopped at index 9. Found non-empty/zero value 1.6632 in original data.
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 7: Lookahead finished. Indices in distribution block (excluding start row 7): [8]
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 7: Identified distribution block indices: [7, 8]
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 7: Block Calculation - Total POSITIVE basis: 118. Indices with positive basis: [7, 8]
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 7: Distributing 1.9404 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 7:   Index 7: Basis=113, Prop=0.957627, Dist Val=1.8582
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 7:   Index 8: REMAINDER row, assigned=0.0822 (ensures exact sum)
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 7: Distribution Check PASSED for block. Original: 1.9404, Sum: 1.9404
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 7: End of block processing. Moving main index i to 9
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 9: Found distributable value: 1.6632
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 9: Lookahead stopped at index 10. Found non-empty/zero value 2.7720 in original data.
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 9: Lookahead finished. Indices in distribution block (excluding start row 9): []
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 9: Value 1.6632 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 10: Found distributable value: 2.7720
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 10: Lookahead stopped at index 11. Found non-empty/zero value 2.5740 in original data.
+2025-12-02 12:48:12,419 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 10: Lookahead finished. Indices in distribution block (excluding start row 10): []
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 10: Value 2.7720 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 11: Found distributable value: 2.5740
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 11: Lookahead index 12 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 11: Lookahead stopped at index 13. Found non-empty/zero value 3.0096 in original data.
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 11: Lookahead finished. Indices in distribution block (excluding start row 11): [12]
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 11: Identified distribution block indices: [11, 12]
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 11: Block Calculation - Total POSITIVE basis: 175. Indices with positive basis: [11, 12]
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 11: Distributing 2.5740 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 11:   Index 11: Basis=168, Prop=0.960000, Dist Val=2.4710
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 11:   Index 12: REMAINDER row, assigned=0.1030 (ensures exact sum)
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 11: Distribution Check PASSED for block. Original: 2.5740, Sum: 2.5740
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 11: End of block processing. Moving main index i to 13
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 13: Found distributable value: 3.0096
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 13: Lookahead stopped at index 14. Found non-empty/zero value 1.0692 in original data.
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 13: Lookahead finished. Indices in distribution block (excluding start row 13): []
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 13: Value 3.0096 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,420 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 14: Found distributable value: 1.0692
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 14: Lookahead index 15 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 14: Lookahead stopped at index 16. Found non-empty/zero value 1.5048 in original data.
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 14: Lookahead finished. Indices in distribution block (excluding start row 14): [15]
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 14: Identified distribution block indices: [14, 15]
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 14: Block Calculation - Total POSITIVE basis: 38. Indices with positive basis: [14, 15]
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 14: Distributing 1.0692 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 14:   Index 14: Basis=32, Prop=0.842105, Dist Val=0.9004
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 14:   Index 15: REMAINDER row, assigned=0.1688 (ensures exact sum)
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 14: Distribution Check PASSED for block. Original: 1.0692, Sum: 1.0692
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 14: End of block processing. Moving main index i to 16
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 16: Found distributable value: 1.5048
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 16: Lookahead stopped at index 17. Found non-empty/zero value 1.6632 in original data.
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 16: Lookahead finished. Indices in distribution block (excluding start row 16): []
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 16: Value 1.5048 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 17: Found distributable value: 1.6632
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 17: Lookahead index 18 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 17: Lookahead stopped at index 19. Found non-empty/zero value 2.6532 in original data.
+2025-12-02 12:48:12,421 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 17: Lookahead finished. Indices in distribution block (excluding start row 17): [18]
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 17: Identified distribution block indices: [17, 18]
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 17: Block Calculation - Total POSITIVE basis: 124. Indices with positive basis: [17, 18]
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 17: Distributing 1.6632 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 17:   Index 17: Basis=100, Prop=0.806452, Dist Val=1.3413
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 17:   Index 18: REMAINDER row, assigned=0.3219 (ensures exact sum)
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 17: Distribution Check PASSED for block. Original: 1.6632, Sum: 1.6632
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 17: End of block processing. Moving main index i to 19
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 19: Found distributable value: 2.6532
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 19: Lookahead stopped at index 20. Found non-empty/zero value 2.3760 in original data.
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 19: Lookahead finished. Indices in distribution block (excluding start row 19): []
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 19: Value 2.6532 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 20: Found distributable value: 2.3760
+2025-12-02 12:48:12,422 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 20: Lookahead index 21 is part of block (Original val empty/zero, Basis=28).
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 20: Lookahead stopped at index 22. Found non-empty/zero value 1.9404 in original data.
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 20: Lookahead finished. Indices in distribution block (excluding start row 20): [21]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 20: Identified distribution block indices: [20, 21]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 20: Block Calculation - Total POSITIVE basis: 157. Indices with positive basis: [20, 21]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 20: Distributing 2.3760 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 20:   Index 20: Basis=129, Prop=0.821656, Dist Val=1.9523
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 20:   Index 21: REMAINDER row, assigned=0.4237 (ensures exact sum)
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 20: Distribution Check PASSED for block. Original: 2.3760, Sum: 2.3760
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 20: End of block processing. Moving main index i to 22
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 22: Found distributable value: 1.9404
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 22: Lookahead index 23 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 22: Lookahead stopped at index 24. Found non-empty/zero value 2.3760 in original data.
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 22: Lookahead finished. Indices in distribution block (excluding start row 22): [23]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 22: Identified distribution block indices: [22, 23]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 22: Block Calculation - Total POSITIVE basis: 121. Indices with positive basis: [22, 23]
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 22: Distributing 1.9404 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,423 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 22:   Index 22: Basis=107, Prop=0.884298, Dist Val=1.7159
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 22:   Index 23: REMAINDER row, assigned=0.2245 (ensures exact sum)
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 22: Distribution Check PASSED for block. Original: 1.9404, Sum: 1.9404
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 22: End of block processing. Moving main index i to 24
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 24: Found distributable value: 2.3760
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 24: Lookahead stopped at index 25. Found non-empty/zero value 2.3760 in original data.
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 24: Lookahead finished. Indices in distribution block (excluding start row 24): []
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 24: Value 2.3760 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 25: Found distributable value: 2.3760
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 25: Lookahead stopped at index 26. Found non-empty/zero value 2.3760 in original data.
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 25: Lookahead finished. Indices in distribution block (excluding start row 25): []
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 25: Value 2.3760 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 26: Found distributable value: 2.3760
+2025-12-02 12:48:12,424 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 26: Lookahead stopped at index 27. Found non-empty/zero value 1.5840 in original data.
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 26: Lookahead finished. Indices in distribution block (excluding start row 26): []
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 26: Value 2.3760 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 27: Found distributable value: 1.5840
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 27: Lookahead index 28 is part of block (Original val empty/zero, Basis=14).
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 27: Lookahead index 29 is part of block (Original val empty/zero, Basis=15).
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 27: Lookahead stopped at index 30. Found non-empty/zero value 1.8612 in original data.
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 27: Lookahead finished. Indices in distribution block (excluding start row 27): [28, 29]
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 27: Identified distribution block indices: [27, 28, 29]
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 27: Block Calculation - Total POSITIVE basis: 63. Indices with positive basis: [27, 28, 29]
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 27: Distributing 1.5840 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,425 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 27:   Index 27: Basis=34, Prop=0.539683, Dist Val=0.8549
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 27:   Index 28: Basis=14, Prop=0.222222, Dist Val=0.3520
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 27:   Index 29: REMAINDER row, assigned=0.3771 (ensures exact sum)
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 27: Distribution Check PASSED for block. Original: 1.5840, Sum: 1.5840
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 27: End of block processing. Moving main index i to 30
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 30: Found distributable value: 1.8612
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 30: Lookahead index 31 is part of block (Original val empty/zero, Basis=7).
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 30: Lookahead stopped at index 32. Found non-empty/zero value 2.7720 in original data.
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 30: Lookahead finished. Indices in distribution block (excluding start row 30): [31]
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 30: Identified distribution block indices: [30, 31]
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 30: Block Calculation - Total POSITIVE basis: 129. Indices with positive basis: [30, 31]
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 30: Distributing 1.8612 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 30:   Index 30: Basis=122, Prop=0.945736, Dist Val=1.7602
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 30:   Index 31: REMAINDER row, assigned=0.1010 (ensures exact sum)
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 30: Distribution Check PASSED for block. Original: 1.8612, Sum: 1.8612
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 30: End of block processing. Moving main index i to 32
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 32: Found distributable value: 2.7720
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 32: Lookahead stopped at index 33. Found non-empty/zero value 2.7324 in original data.
+2025-12-02 12:48:12,426 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 32: Lookahead finished. Indices in distribution block (excluding start row 32): []
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 32: Value 2.7720 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 33: Found distributable value: 2.7324
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 33: Lookahead index 34 is part of block (Original val empty/zero, Basis=25).
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 33: Lookahead stopped at index 35. Found non-empty/zero value 2.5740 in original data.
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 33: Lookahead finished. Indices in distribution block (excluding start row 33): [34]
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 33: Identified distribution block indices: [33, 34]
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 33: Block Calculation - Total POSITIVE basis: 230. Indices with positive basis: [33, 34]
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 33: Distributing 2.7324 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 33:   Index 33: Basis=205, Prop=0.891304, Dist Val=2.4354
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 33:   Index 34: REMAINDER row, assigned=0.2970 (ensures exact sum)
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 33: Distribution Check PASSED for block. Original: 2.7324, Sum: 2.7324
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 33: End of block processing. Moving main index i to 35
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 35: Found distributable value: 2.5740
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 35: Lookahead stopped at index 36. Found non-empty/zero value 2.4948 in original data.
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 35: Lookahead finished. Indices in distribution block (excluding start row 35): []
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:557 - [distribute_values] Col 'col_cbm', Row index 35: Value 2.5740 found, but no empty/zero rows followed. Keeping value as is.
+2025-12-02 12:48:12,427 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 36: Found distributable value: 2.4948
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 36: Lookahead index 37 is part of block (Original val empty/zero, Basis=24).
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 36: Lookahead stopped at index 38. Found non-empty/zero value 1.5840 in original data.
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 36: Lookahead finished. Indices in distribution block (excluding start row 36): [37]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 36: Identified distribution block indices: [36, 37]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 36: Block Calculation - Total POSITIVE basis: 208. Indices with positive basis: [36, 37]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 36: Distributing 2.4948 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 36:   Index 36: Basis=184, Prop=0.884615, Dist Val=2.2069
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 36:   Index 37: REMAINDER row, assigned=0.2879 (ensures exact sum)
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 36: Distribution Check PASSED for block. Original: 2.4948, Sum: 2.4948
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 36: End of block processing. Moving main index i to 38
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 38: Found distributable value: 1.5840
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 38: Lookahead index 39 is part of block (Original val empty/zero, Basis=2).
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:454 - [distribute_values] Col 'col_cbm', Row index 38: Lookahead stopped at index 40. Found non-empty/zero value 1.4652 in original data.
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 38: Lookahead finished. Indices in distribution block (excluding start row 38): [39]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 38: Identified distribution block indices: [38, 39]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 38: Block Calculation - Total POSITIVE basis: 90. Indices with positive basis: [38, 39]
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 38: Distributing 1.5840 across 2 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,428 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 38:   Index 38: Basis=88, Prop=0.977778, Dist Val=1.5488
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 38:   Index 39: REMAINDER row, assigned=0.0352 (ensures exact sum)
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 38: Distribution Check PASSED for block. Original: 1.5840, Sum: 1.5840
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 38: End of block processing. Moving main index i to 40
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:443 - [distribute_values] Col 'col_cbm', Row index 40: Found distributable value: 1.4652
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 40: Lookahead index 41 is part of block (Original val empty/zero, Basis=6).
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:462 - [distribute_values] Col 'col_cbm', Row index 40: Lookahead index 42 is part of block (Original val empty/zero, Basis=10).
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:469 - [distribute_values] Col 'col_cbm', Row index 40: Lookahead finished. Indices in distribution block (excluding start row 40): [41, 42]
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:474 - [distribute_values] Col 'col_cbm', Row index 40: Identified distribution block indices: [40, 41, 42]
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:489 - [distribute_values] Col 'col_cbm', Row index 40: Block Calculation - Total POSITIVE basis: 71. Indices with positive basis: [40, 41, 42]
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:496 - [distribute_values] Col 'col_cbm', Row index 40: Distributing 1.4652 across 3 rows with positive basis using precision 0.0001.
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 40:   Index 40: Basis=55, Prop=0.774648, Dist Val=1.1350
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:517 - [distribute_values] Col 'col_cbm', Row index 40:   Index 41: Basis=6, Prop=0.084507, Dist Val=0.1238
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:524 - [distribute_values] Col 'col_cbm', Row index 40:   Index 42: REMAINDER row, assigned=0.2064 (ensures exact sum)
+2025-12-02 12:48:12,429 - DEBUG - data_processor.py:542 - [distribute_values] Col 'col_cbm', Row index 40: Distribution Check PASSED for block. Original: 1.4652, Sum: 1.4652
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:553 - [distribute_values] Col 'col_cbm', Row index 40: End of block processing. Moving main index i to 43
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:577 - [distribute_values] Finished processing column 'col_cbm'. Final values (first 10): [Decimal('2.0906'), Decimal('0.4042'), Decimal('1.7458'), Decimal('0.0362'), Decimal('1.8043'), Decimal('0.0173'), Decimal('2.1384'), Decimal('1.8582'), Decimal('0.0822'), Decimal('1.6632')]
+2025-12-02 12:48:12,430 - INFO - data_processor.py:578 - [distribute_values] Completed distribution processing for column: 'col_cbm'.
+2025-12-02 12:48:12,430 - INFO - data_processor.py:581 - [distribute_values] Value distribution processing COMPLETED for all requested columns.
+2025-12-02 12:48:12,430 - INFO - main.py:574 - Table 1: Updating global STANDARD aggregation...
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:610 - [aggregate_standard] Updating global STANDARD aggregation (SQFT & Amount by PO/Item/Price/Desc) with new table data.
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:611 - [aggregate_standard] Size of global map BEFORE processing this table: 0
+2025-12-02 12:48:12,430 - INFO - data_processor.py:629 - [aggregate_standard] 'col_desc' column not found or is invalid. Will use None for description keys.
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:641 - [aggregate_standard] Input data contains lists. Number of rows based on 'col_po' list: 43
+2025-12-02 12:48:12,430 - INFO - data_processor.py:659 - [aggregate_standard] Processing 43 rows for STANDARD aggregation (SQFT & Amount by PO/Item/Price/Desc).
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 0 --- Processing ---
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 0: Raw values - PO='9000798713', Item='01.10.W653191', Price='1.3', Desc='None', SQFT='9107.2', Amount='11839.36'
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 0: Generated Key Tuple = ('9000798713', '01.10.W653191', Decimal('1.3'), None)
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 1 --- Processing ---
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 1: Raw values - PO='9000798713', Item='01.10.W653191', Price='1.17', Desc='None', SQFT='1386.1', Amount='1621.737'
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 1: Generated Key Tuple = ('9000798713', '01.10.W653191', Decimal('1.17'), None)
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 2 --- Processing ---
+2025-12-02 12:48:12,430 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 2: Raw values - PO='9000761021', Item='01.10.W061010', Price='1', Desc='None', SQFT='6871.8', Amount='6871.8'
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 2: Generated Key Tuple = ('9000761021', '01.10.W061010', Decimal('1'), None)
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 3 --- Processing ---
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 3: Raw values - PO='9000761021', Item='01.10.W061010', Price='0.9', Desc='None', SQFT='115', Amount='103.5'
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 3: Generated Key Tuple = ('9000761021', '01.10.W061010', Decimal('0.9'), None)
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 4 --- Processing ---
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 4: Raw values - PO='9000826870', Item='01.10.U756022', Price='1.25', Desc='None', SQFT='5406.1', Amount='6757.625'
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 4: Generated Key Tuple = ('9000826870', '01.10.U756022', Decimal('1.25'), None)
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 5 --- Processing ---
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 5: Raw values - PO='9000826870', Item='01.10.U756022', Price='1.13', Desc='None', SQFT='39.2', Amount='44.296'
+2025-12-02 12:48:12,431 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 5: Generated Key Tuple = ('9000826870', '01.10.U756022', Decimal('1.13'), None)
+2025-12-02 12:48:12,436 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 6 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 6: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.25', Desc='None', SQFT='7750.2', Amount='9687.75'
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 6: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.25'), None)
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 7 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 7: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.25', Desc='None', SQFT='5935', Amount='7418.75'
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 7: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.25'), None)
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 8 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 8: Raw values - PO='9000813140', Item='01.10.U756071', Price='1.13', Desc='None', SQFT='199.1', Amount='224.983'
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 8: Generated Key Tuple = ('9000813140', '01.10.U756071', Decimal('1.13'), None)
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 9 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 9: Raw values - PO='9000861854', Item='01.11.S528110', Price='0.91', Desc='None', SQFT='518.1', Amount='471.471'
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 9: Generated Key Tuple = ('9000861854', '01.11.S528110', Decimal('0.91'), None)
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 10 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 10: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='10020.5', Amount='15130.955'
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 10: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 11 --- Processing ---
+2025-12-02 12:48:12,437 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 11: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='9190.9', Amount='13878.259'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 11: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 12 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 12: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.36', Desc='None', SQFT='273.9', Amount='372.504'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 12: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.36'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 13 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 13: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='10805.5', Amount='16316.305'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 13: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 14 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 14: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='1703.3', Amount='2571.983'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 14: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 15 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 15: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.36', Desc='None', SQFT='237.5', Amount='323'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 15: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.36'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 16 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 16: Raw values - PO='9000832482', Item='01.10.W783010', Price='1.51', Desc='None', SQFT='930.7', Amount='1405.357'
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 16: Generated Key Tuple = ('9000832482', '01.10.W783010', Decimal('1.51'), None)
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 17 --- Processing ---
+2025-12-02 12:48:12,438 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 17: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='4876.1', Amount='6095.125'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 17: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 18 --- Processing ---
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 18: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='936.6', Amount='1058.358'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 18: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 19 --- Processing ---
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 19: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='11068.8', Amount='13836'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 19: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 20 --- Processing ---
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 20: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='6636.7', Amount='8295.875'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 20: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 21 --- Processing ---
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 21: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='1084.9', Amount='1225.937'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 21: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 22 --- Processing ---
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 22: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='5417.3', Amount='6771.625'
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 22: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,439 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 23 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 23: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='544.9', Amount='615.737'
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 23: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 24 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 24: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='9642.2', Amount='12052.75'
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 24: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 25 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 25: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='5213.9', Amount='6517.375'
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 25: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 26 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 26: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='1175.6', Amount='1328.428'
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 26: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 27 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 27: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='1704.6', Amount='2130.75'
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 27: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 28 --- Processing ---
+2025-12-02 12:48:12,440 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 28: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='549', Amount='620.37'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 28: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 29 --- Processing ---
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 29: Raw values - PO='9000837343', Item='01.10.U528073', Price='1.06', Desc='None', SQFT='712.4', Amount='755.144'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 29: Generated Key Tuple = (9000837343, '01.10.U528073', Decimal('1.06'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 30 --- Processing ---
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 30: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='6246.6', Amount='7808.25'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 30: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 31 --- Processing ---
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 31: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='285.3', Amount='322.389'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 31: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 32 --- Processing ---
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 32: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10883.8', Amount='13604.75'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 32: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 33 --- Processing ---
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 33: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10075.5', Amount='12594.375'
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 33: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,441 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 34 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 34: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='997.2', Amount='1126.836'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 34: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 35 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 35: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='10646.3', Amount='13307.875'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 35: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 36 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 36: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='9170.6', Amount='11463.25'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 36: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 37 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 37: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='964.5', Amount='1089.885'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 37: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 38 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 38: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='4317', Amount='5396.25'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 38: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 39 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 39: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='80.1', Amount='90.513'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 39: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 40 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 40: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.25', Desc='None', SQFT='2694.9', Amount='3368.625'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 40: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.25'), None)
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 41 --- Processing ---
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 41: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.13', Desc='None', SQFT='228.8', Amount='258.544'
+2025-12-02 12:48:12,442 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 41: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.13'), None)
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:669 - [aggregate_standard] Table Row index 42 --- Processing ---
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:677 - [aggregate_standard] Table Row index 42: Raw values - PO='9000832127', Item='01.10.U528073', Price='1.06', Desc='None', SQFT='469.9', Amount='498.094'
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:694 - [aggregate_standard] Table Row index 42: Generated Key Tuple = (9000832127, '01.10.U528073', Decimal('1.06'), None)
+2025-12-02 12:48:12,443 - INFO - data_processor.py:728 - [aggregate_standard] Finished processing 43 rows.
+2025-12-02 12:48:12,443 - INFO - data_processor.py:729 - [aggregate_standard] SQFT values successfully converted/defaulted for 43 rows.
+2025-12-02 12:48:12,443 - INFO - data_processor.py:730 - [aggregate_standard] Amount values successfully converted/defaulted for 43 rows.
+2025-12-02 12:48:12,443 - INFO - data_processor.py:731 - [aggregate_standard] Global standard aggregation map size: 17
+2025-12-02 12:48:12,443 - DEBUG - main.py:576 - Table 1: STANDARD aggregation map updated. Size: 17
+2025-12-02 12:48:12,443 - INFO - main.py:582 - Table 1: Updating global CUSTOM aggregation...
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:763 - [aggregate_custom] Updating global CUSTOM aggregation (SQFT & Amount by PO/Item/Desc) with new table data.
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:764 - [aggregate_custom] Size of global custom map BEFORE processing this table: 0
+2025-12-02 12:48:12,443 - INFO - data_processor.py:782 - [aggregate_custom] 'col_desc' column not found or is invalid. Will use None for description keys.
+2025-12-02 12:48:12,443 - DEBUG - data_processor.py:804 - [aggregate_custom] Determined number of rows: 43
+2025-12-02 12:48:12,443 - INFO - data_processor.py:822 - [aggregate_custom] Processing 43 rows from this table to update global CUSTOM aggregation (by PO/Item/Desc).
+2025-12-02 12:48:12,444 - INFO - data_processor.py:892 - [aggregate_custom] Finished processing 43 rows for this table.
+2025-12-02 12:48:12,444 - INFO - data_processor.py:893 - [aggregate_custom] SQFT values successfully converted/defaulted for 43 rows.
+2025-12-02 12:48:12,444 - INFO - data_processor.py:894 - [aggregate_custom] Amount values successfully converted/defaulted for 43 rows.
+2025-12-02 12:48:12,444 - INFO - data_processor.py:895 - [aggregate_custom] Global custom aggregation map now contains 8 unique (PO, Item, None, Description) keys.
+2025-12-02 12:48:12,444 - DEBUG - main.py:584 - Table 1: CUSTOM aggregation map updated. Size: 8
+2025-12-02 12:48:12,444 - INFO - main.py:590 - --- Finished Processing All Steps for Table Index 1 ---
+2025-12-02 12:48:12,444 - INFO - main.py:595 - --- All Table Processing Loops Completed ---
+2025-12-02 12:48:12,444 - INFO - main.py:596 - --- Performing Final DAF Compounding (Using 'STANDARD' aggregation results as input) ---
+2025-12-02 12:48:12,444 - INFO - main.py:85 - [perform_DAF_compounding] Starting DAF Compounding. Checking for descriptions to determine split type.
+2025-12-02 12:48:12,444 - INFO - main.py:237 - [perform_DAF_compounding] No description data found. Performing PO count split aggregation.
+2025-12-02 12:48:12,444 - INFO - main.py:238 - [perform_DAF_compounding]   - Totals calculated per group of 5 POs.
+2025-12-02 12:48:12,444 - INFO - main.py:239 - [perform_DAF_compounding]   - String formatting uses chunk size 2 and separator '/'.
+2025-12-02 12:48:12,444 - DEBUG - main.py:243 - [perform_DAF_compounding] Pass 1: Aggregating SQFT/Amount/Items per PO.
+2025-12-02 12:48:12,444 - DEBUG - main.py:283 - [perform_DAF_compounding] Pass 2: Creating 2 output chunks based on conceptual PO groups of 5.
+2025-12-02 12:48:12,444 - DEBUG - main.py:324 - [perform_DAF_compounding] Created output chunk 1: 5 POs contributed totals, SQFT=93870.20000000000038, Amount=115499.43700000000083
+2025-12-02 12:48:12,445 - DEBUG - main.py:324 - [perform_DAF_compounding] Created output chunk 2: 3 POs contributed totals, SQFT=83243.39999999999953, Amount=111773.30800000000033
+2025-12-02 12:48:12,445 - INFO - main.py:326 - [perform_DAF_compounding] PO count split DAF Compounding complete (2 chunks created).
+2025-12-02 12:48:12,445 - INFO - main.py:604 - --- DAF Compounding Finished ---
+2025-12-02 12:48:12,445 - INFO - main.py:611 - Final processed data structure contains 1 table(s).
+2025-12-02 12:48:12,445 - INFO - main.py:612 - Primary aggregation mode used for DAF Compounding: STANDARD
+2025-12-02 12:48:12,445 - DEBUG - main.py:636 - --- Full Global STANDARD Aggregation Results ---
+{(9000837343, '01.10.U528073', Decimal('1.06'), None): {'amount_sum': Decimal('755.14400000000001'),
+                                                        'sqft_sum': Decimal('712.39999999999998')},
+ ('9000761021', '01.10.W061010', Decimal('0.9'), None): {'amount_sum': Decimal('103.5'),
+                                                         'sqft_sum': Decimal('115')},
+ ('9000761021', '01.10.W061010', Decimal('1'), None): {'amount_sum': Decimal('6871.80000000000018'),
+                                                       'sqft_sum': Decimal('6871.80000000000018')},
+ ('9000798713', '01.10.W653191', Decimal('1.17'), None): {'amount_sum': Decimal('1621.73700000000008'),
+                                                          'sqft_sum': Decimal('1386.09999999999991')},
+ ('9000798713', '01.10.W653191', Decimal('1.3'), None): {'amount_sum': Decimal('11839.36000000000058'),
+                                                         'sqft_sum': Decimal('9107.20000000000073')},
+ ('9000813140', '01.10.U756071', Decimal('1.13'), None): {'amount_sum': Decimal('224.983'),
+                                                          'sqft_sum': Decimal('199.09999999999999')},
+ (9000832127, '01.10.U528073', Decimal('1.06'), None): {'amount_sum': Decimal('498.09399999999999'),
+                                                        'sqft_sum': Decimal('469.89999999999998')},
+ (9000832127, '01.10.U528073', Decimal('1.13'), None): {'amount_sum': Decimal('2888.16700000000000'),
+                                                        'sqft_sum': Decimal('2555.90000000000006')},
+ (9000832127, '01.10.U528073', Decimal('1.25'), None): {'amount_sum': Decimal('67543.375'),
+                                                        'sqft_sum': Decimal('54034.69999999999935')},
+ (9000837343, '01.10.U528073', Decimal('1.13'), None): {'amount_sum': Decimal('4848.82999999999993'),
+                                                        'sqft_sum': Decimal('4291.00000000000000')},
+ (9000837343, '01.10.U528073', Decimal('1.25'), None): {'amount_sum': Decimal('55699.500'),
+                                                        'sqft_sum': Decimal('44559.59999999999991')},
+ ('9000813140', '01.10.U756071', Decimal('1.25'), None): {'amount_sum': Decimal('17106.50'),
+                                                          'sqft_sum': Decimal('13685.19999999999982')},
+ ('9000826870', '01.10.U756022', Decimal('1.13'), None): {'amount_sum': Decimal('44.296'),
+                                                          'sqft_sum': Decimal('39.2')},
+ ('9000826870', '01.10.U756022', Decimal('1.25'), None): {'amount_sum': Decimal('6757.625'),
+                                                          'sqft_sum': Decimal('5406.10000000000036')},
+ ('9000832482', '01.10.W783010', Decimal('1.36'), None): {'amount_sum': Decimal('695.50400000000002'),
+                                                          'sqft_sum': Decimal('511.39999999999998')},
+ ('9000832482', '01.10.W783010', Decimal('1.
+... (output truncated)
+2025-12-02 12:48:12,445 - DEBUG - main.py:640 - --- Full Global CUSTOM Aggregation Results ---
+{('9000761021', '01.10.W061010', None, None): {'amount_sum': Decimal('6975.30000000000018'),
+                                               'sqft_sum': Decimal('6986.80000000000018')},
+ ('9000798713', '01.10.W653191', None, None): {'amount_sum': Decimal('13461.09700000000066'),
+                                               'sqft_sum': Decimal('10493.30000000000064')},
+ ('9000813140', '01.10.U756071', None, None): {'amount_sum': Decimal('17331.483'),
+                                               'sqft_sum': Decimal('13884.29999999999981')},
+ ('9000826870', '01.10.U756022', None, None): {'amount_sum': Decimal('6801.921'),
+                                               'sqft_sum': Decimal('5445.30000000000036')},
+ ('9000832482', '01.10.W783010', None, None): {'amount_sum': Decimal('49998.36300000000039'),
+                                               'sqft_sum': Decimal('33162.29999999999962')},
+ ('9000861854', '01.11.S528110', None, None): {'amount_sum': Decimal('471.471'),
+                                               'sqft_sum': Decimal('518.10000000000002')},
+ (9000832127, '01.10.U528073', None, None): {'amount_sum': Decimal('70929.63599999999999'),
+                                             'sqft_sum': Decimal('57060.49999999999939')},
+ (9000837343, '01.10.U528073', None, None): {'amount_sum': Decimal('61303.47399999999994'),
+                                             'sqft_sum': Decimal('49562.99999999999989')}}
+2025-12-02 12:48:12,446 - INFO - main.py:644 - --- Final DAF Compounded Result (Workbook: 'JF25057.xlsx', Based on 'STANDARD' Input) ---
+2025-12-02 12:48:12,446 - INFO - main.py:647 - DAF result is split into BUFFALO (1) and NON-BUFFALO (2) groups.
+2025-12-02 12:48:12,446 - INFO - main.py:649 - --- DAF Group 1 --- 
+2025-12-02 12:48:12,446 - INFO - main.py:657 -   Combined POs:
+9000761021/9000798713
+9000813140/9000826870
+9000832127
+2025-12-02 12:48:12,446 - INFO - main.py:658 -   Combined Items:
+01.10.U528073/01.10.U756022
+01.10.U756071/01.10.W061010
+01.10.W653191
+2025-12-02 12:48:12,446 - INFO - main.py:659 -   Combined Descriptions:
+
+2025-12-02 12:48:12,446 - INFO - main.py:660 -   Total SQFT: 93870.20000000000038 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:48:12,446 - INFO - main.py:661 -   Total Amount: 115499.43700000000083 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:48:12,446 - INFO - main.py:649 - --- DAF Group 2 --- 
+2025-12-02 12:48:12,446 - INFO - main.py:657 -   Combined POs:
+9000832482/9000837343
+9000861854
+2025-12-02 12:48:12,446 - INFO - main.py:658 -   Combined Items:
+01.10.U528073/01.10.W783010
+01.11.S528110
+2025-12-02 12:48:12,446 - INFO - main.py:659 -   Combined Descriptions:
+
+2025-12-02 12:48:12,446 - INFO - main.py:660 -   Total SQFT: 83243.39999999999953 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:48:12,446 - INFO - main.py:661 -   Total Amount: 111773.30800000000033 (Type: <class 'decimal.Decimal'>)
+2025-12-02 12:48:12,446 - INFO - main.py:664 - ------------------------------
+2025-12-02 12:48:12,446 - INFO - main.py:675 - --- Calculating Footer Data ---
+2025-12-02 12:48:12,447 - INFO - main.py:681 - Table 1 Footer: {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.6'), 'col_net': Decimal('15128.5000'), 'col_gross': Decimal('16233.5000'), 'col_cbm': Decimal('55.5984'), 'col_amount': Decimal('227272.745'), 'col_pallet_count': 25}
+2025-12-02 12:48:12,447 - INFO - main.py:695 - Grand Total Footer: {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.6'), 'col_net': Decimal('15128.5000'), 'col_gross': Decimal('16233.5000'), 'col_cbm': Decimal('55.5984'), 'col_amount': Decimal('227272.745'), 'col_pallet_count': 25}
+2025-12-02 12:48:12,447 - INFO - main.py:698 - --- Calculating Add-on Data ---
+2025-12-02 12:48:12,448 - INFO - main.py:702 - Leather Summary: {'BUFFALO': {'col_qty_pcs': 0, 'col_qty_sf': Decimal('0'), 'col_net': Decimal('0'), 'col_gross': Decimal('0'), 'col_pallet_count': 0}, 'COW': {'col_qty_pcs': 3586, 'col_qty_sf': Decimal('177113.59999999999991'), 'col_net': Decimal('15128.5000'), 'col_gross': Decimal('16233.5000'), 'col_pallet_count': 25}}
+2025-12-02 12:48:12,448 - INFO - main.py:706 - Normal Aggregate Per PO: 17 unique PO+price combinations
+2025-12-02 12:48:12,448 - INFO - main.py:709 - --- Preparing Data for JSON Output ---
+2025-12-02 12:48:12,454 - INFO - main.py:752 - --- Generated JSON Output ---
+2025-12-02 12:48:12,454 - INFO - main.py:757 - JSON output is large (36277 chars). Logging preview:
+2025-12-02 12:48:12,454 - INFO - main.py:758 - {
+    "metadata": {
+        "workbook_filename": "JF25057.xlsx",
+        "worksheet_name": "Sheet1",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-12-02T12:48:12.451620"
+    },
+    "processed_tables_data": {
+        "1": {
+            "col_unit_price": [
+                1.3,
+                1.17,
+                1,
+                0.9,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                0.91,
+                1.51,
+                1.51,
+                1.36,
+                1.51,
+                1.51,
+                1.36,
+                1.51,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.06,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.25,
+                1.13,
+                1.06
+            ],
+            "col_amount": [
+                11839.36,
+                1621.737,
+                6871.8,
+                103.5,
+                6757.625,
+                44.296,
+                9687.75,
+                7418.75,
+                224.983,
+                471.471,
+                15130.955,
+                13878.259,
+                372.504,
+                16316.305,
+                2571.983,
+                323,
+                1405.357,
+                6095.125,
+                1058.358,
+                13836,
+                8295.875,
+                1225.937,
+                6771.625,
+                615.737,
+                12052.75,
+                6517.375,
+                1328.428,
+                2130.75,
+                620.37,
+                755.144,
+                7808.25,
+                322.389,
+                13604.75,
+                12594.375,
+                1126.836,
+                13307.875,
+                11463.25,
+                1089.885,
+                5396.25,
+                90.513,
+                3368.625,
+                258.544,
+                498.094
+            ],
+            "col_dc": [
+                "CLF-251002",
+                "CLF-251002",
+                "CLF-250816",
+                "CLF-250816",
+                "CLF-250221",
+                "CLF-250221",
+                "CLF-251022",
+                "CLF-251022",
+                "CLF-251022",
+                "CLF-250219",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251115",
+                "CLF-251116",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251119",
+                "CLF-251007",
+                "CLF-251007",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117",
+                "CLF-251117"
+            ],
+            "col_po": [
+                "9000798713",
+                "9000798713",
+                "9000761021",
+                "9000761021",
+                "9000826870",
+                "9000826870",
+                "9000813140",
+                "9000813140",
+                "9000813140",
+                "9000861854",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                "9000832482",
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000837343,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9000832127,
+                9
+... (JSON output truncated in log)
+2025-12-02 12:48:12,454 - INFO - main.py:765 - Determined output JSON path: C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output\JF25057.json
+2025-12-02 12:48:12,456 - INFO - main.py:769 - Successfully saved JSON output to 'C:\Users\JPZ031127\Desktop\main_stream_lit_giyo\GENERATE_INVOICE_STREAMLIT_WEB\scripts\output\JF25057.json'
+2025-12-02 12:48:12,456 - INFO - main.py:785 - \U0001f4c1 Processed file: JF25057.xlsx
+2025-12-02 12:48:12,456 - INFO - excel_handler.py:79 - Closed workbook object reference for: core/invoice_generator/JF25057.xlsx
+2025-12-02 12:48:12,456 - INFO - main.py:807 - --- Automation Run Complete ---
