@@ -203,13 +203,20 @@ def prepare_data_rows(
 
     # --- Handler for DAF Aggregation (Uses new fallback logic) ---
     if data_source_type == 'DAF_aggregation':
-        DAF_data = data_source or {}
+        DAF_data = data_source or []
+        
+        # STRICT MODE: Only support List[Dict] (new structure)
+        if not isinstance(DAF_data, list):
+            logger.warning(f"DAF_aggregation data source is not a list! Got {type(DAF_data)}. Attempting to treat as empty list.")
+            DAF_data = []
+
         num_data_rows_from_source = len(DAF_data)
+        iterator = DAF_data
+
         id_to_data_key_map = {"col_po": "col_po", "col_item": "col_item", "col_desc": "col_desc", "col_qty_sf": "col_qty_sf", "col_amount": "col_amount"}
         price_col_idx = column_id_map.get("col_unit_price")
         
-        for row_key in sorted(DAF_data.keys()):
-            row_value_dict = DAF_data.get(row_key, {})
+        for row_value_dict in iterator:
             row_dict = {}
             for col_id, data_key in id_to_data_key_map.items():
                 target_col_idx = column_id_map.get(col_id)
@@ -219,6 +226,54 @@ def prepare_data_rows(
                 val = row_value_dict.get(data_key)
                 row_dict[target_col_idx] = val
 
+            # Apply static values
+            for col_idx, static_val in static_value_map.items():
+                if col_idx not in row_dict:
+                    row_dict[col_idx] = static_val
+            
+            data_rows_prepared.append(row_dict)
+
+    # --- Handler for Processed Tables (Column-Oriented) ---
+    elif data_source_type in ['processed_tables', 'processed_tables_multi']:
+        # Data source is a dict of lists: {'col_po': ['A', 'B'], 'col_qty': [1, 2]}
+        if not isinstance(data_source, dict):
+            logger.error(f"Data source for {data_source_type} must be a dict, got {type(data_source)}")
+            return [], [], False, 0
+            
+        # Determine number of rows from the first list found
+        # (Assuming all lists are same length, which they should be from pandas/data processing)
+        num_data_rows_from_source = 0
+        for key, val in data_source.items():
+            if isinstance(val, list):
+                num_data_rows_from_source = len(val)
+                break
+        
+        # Iterate through rows
+        for i in range(num_data_rows_from_source):
+            row_dict = {}
+            
+            # Iterate through mapping rules
+            # key = Source Key (e.g., "po", "unit")
+            # rule['column'] = Target Column ID (e.g., "col_po", "col_unit")
+            for source_key, rule in dynamic_mapping_rules.items():
+                if not isinstance(rule, dict):
+                    continue
+                    
+                target_id = rule.get("column") or rule.get("id")
+                if not target_id:
+                    continue
+                    
+                target_col_idx = column_id_map.get(target_id)
+                if not target_col_idx:
+                    continue
+                
+                # PRIORITY 1: Try to find data using the Target Column ID (e.g., "col_po")
+                # This supports the new "col only" data structure
+                if target_id in data_source:
+                    column_data = data_source[target_id]
+                    if isinstance(column_data, list) and i < len(column_data):
+                        row_dict[target_col_idx] = column_data[i]
+            
             # Apply static values
             for col_idx, static_val in static_value_map.items():
                 if col_idx not in row_dict:

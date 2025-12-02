@@ -63,3 +63,7 @@ recycle/
 
 
 !*.json
+
+!tests/invoice_gen/src/data/test_data_preparer.py
+
+!tests/**/test_*.py
