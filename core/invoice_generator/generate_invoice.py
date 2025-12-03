@@ -19,11 +19,11 @@ from .config.config_loader import BundledConfigLoader
 from .builders.workbook_builder import WorkbookBuilder
 from .processors.single_table_processor import SingleTableProcessor
 from .processors.multi_table_processor import MultiTableProcessor
+from .processors.placeholder_processor import PlaceholderProcessor
 
 logger = logging.getLogger(__name__)
 
 # --- Helper Functions ---
-
 def derive_paths(input_data_path: str, template_dir: str, config_dir: str) -> Optional[Dict[str, Path]]:
     """
     Derive paths for config and template based on input data filename.
@@ -251,6 +251,20 @@ def run_invoice_generation(
                     cli_args=mock_args, 
                     final_grand_total_pallets=final_grand_total_pallets
                 )
+            elif data_source_indicator == "placeholder":
+                processor = PlaceholderProcessor(
+                    template_workbook=template_workbook,
+                    output_workbook=output_workbook,
+                    template_worksheet=template_worksheet,
+                    output_worksheet=output_worksheet,
+                    sheet_name=sheet_name,
+                    sheet_config=sheet_config,
+                    config_loader=config_loader,
+                    data_source_indicator=data_source_indicator,
+                    invoice_data=invoice_data,
+                    cli_args=mock_args,
+                    final_grand_total_pallets=final_grand_total_pallets
+                )
             else:
                 processor = SingleTableProcessor(
                     template_workbook=template_workbook,
@@ -281,7 +295,6 @@ def run_invoice_generation(
         # Step 8: Save
         logger.info(f"Saving workbook to {output_path}")
         output_workbook.save(output_path)
-
     except Exception as e:
         logger.error(f"Error during generation: {e}")
         traceback.print_exc()
