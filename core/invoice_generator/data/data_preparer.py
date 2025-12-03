@@ -157,7 +157,9 @@ def _apply_fallback(
         return
     
     # Priority 3: Fallback to fallback_on_none if nothing else found
-    row_dict[target_col_idx] = mapping_rule.get("fallback_on_none")
+    val = mapping_rule.get("fallback_on_none")
+    if val is not None:
+        row_dict[target_col_idx] = val
 
 def prepare_data_rows(
     data_source_type: str,
@@ -229,6 +231,11 @@ def prepare_data_rows(
                     column_data = data_source[target_id]
                     if isinstance(column_data, list) and i < len(column_data):
                         row_dict[target_col_idx] = column_data[i]
+
+                # Apply Fallback if value is missing or empty
+                current_val = row_dict.get(target_col_idx)
+                if current_val in [None, ""]:
+                    _apply_fallback(row_dict, target_col_idx, rule, DAF_mode)
             
             # Apply static values
             for col_idx, static_val in static_value_map.items():
@@ -257,6 +264,11 @@ def prepare_data_rows(
                 # Strict Lookup: Use target_id (e.g., "col_po") in the row dictionary
                 if target_id in row_data:
                     row_dict[target_col_idx] = row_data[target_id]
+
+                # Apply Fallback if value is missing or empty
+                current_val = row_dict.get(target_col_idx)
+                if current_val in [None, ""]:
+                    _apply_fallback(row_dict, target_col_idx, rule, DAF_mode)
             
             # Apply static values
             for col_idx, static_val in static_value_map.items():

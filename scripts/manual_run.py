@@ -21,10 +21,9 @@ def main():
     output_dir = project_root / "scripts" / "output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Use database/config/bundled for config
-    config_dir = project_root / "database" / "config" / "bundled"
-    # Use database/template for template
-    template_dir = project_root / "database" / "template"
+    # Use root directory for config and template
+    config_dir = project_root
+    template_dir = project_root
     
     if not input_excel.exists():
         print(f"Error: Input file not found at {input_excel}")
@@ -53,7 +52,7 @@ def main():
             output_path=output_invoice,
             template_dir=template_dir,
             config_dir=config_dir,
-            flags=["--custom"] # Example flag
+            flags=["--custom", "--config", str(config_dir / "JF_bundle_config.json"), "--template", str(template_dir / "JF.xlsx")] 
         )
         print(f"Invoice generated at: {result_path}")
         print("--- Run Passed ---")

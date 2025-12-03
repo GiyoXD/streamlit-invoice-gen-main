@@ -136,7 +136,9 @@ def run_invoice_generation(
     template_dir: Path,
     config_dir: Path,
     daf_mode: bool = False,
-    custom_mode: bool = False
+    custom_mode: bool = False,
+    explicit_config_path: Optional[Path] = None,
+    explicit_template_path: Optional[Path] = None
 ) -> Path:
     """
     Library entry point for invoice generation. 
@@ -157,6 +159,14 @@ def run_invoice_generation(
     paths = derive_paths(str(input_data_path), str(template_dir), str(config_dir))
     if not paths:
         raise FileNotFoundError(f"Could not derive template/config paths for {input_data_path.name}")
+
+    # Override derived paths if explicit paths are provided
+    if explicit_config_path:
+        paths['config'] = str(explicit_config_path.resolve())
+        logger.info(f"Using explicit config path: {paths['config']}")
+    if explicit_template_path:
+        paths['template'] = str(explicit_template_path.resolve())
+        logger.info(f"Using explicit template path: {paths['template']}")
 
     # 2. Load Configuration
     try:
@@ -315,6 +325,8 @@ def main():
     parser.add_argument("-o", "--output", default="result.xlsx", help="Output path")
     parser.add_argument("-t", "--templatedir", default="./TEMPLATE", help="Template dir")
     parser.add_argument("-c", "--configdir", default="./configs", help="Config dir")
+    parser.add_argument("--config", help="Explicit path to config file")
+    parser.add_argument("--template", help="Explicit path to template file")
     parser.add_argument("--DAF", action="store_true", help="DAF mode")
     parser.add_argument("--custom", action="store_true", help="Custom mode")
     parser.add_argument("--debug", action="store_true", help="Debug logging")
@@ -326,13 +338,21 @@ def main():
     logging.basicConfig(level=level, format='%(levelname)s: %(message)s')
     
     try:
+        # If explicit paths are provided, use them directly
+        # We need to modify run_invoice_generation to accept them or handle them here
+        # For now, let's pass them as kwargs if we modify run_invoice_generation, 
+        # or we can hack it by overriding the derivation logic if we pass them.
+        
+        # Better approach: Modify run_invoice_generation to accept optional explicit paths
         run_invoice_generation(
             Path(args.input_data_file),
             Path(args.output),
             Path(args.templatedir),
             Path(args.configdir),
             daf_mode=args.DAF,
-            custom_mode=args.custom
+            custom_mode=args.custom,
+            explicit_config_path=Path(args.config) if args.config else None,
+            explicit_template_path=Path(args.template) if args.template else None
         )
         print(f"Successfully generated: {args.output}")
     except Exception as e:
