@@ -120,8 +120,6 @@ def generate_metadata(output_path: Path, status: str, duration: float,
         "error_message": error_msg,
         "input_metadata": invoice_data.get("metadata", {}),
         "generation_args": vars(args) if args else {},
-        # "replacements_log": replacements, # Can be verbose
-        # "header_info": header_info
     }
     
     try:
@@ -138,7 +136,8 @@ def run_invoice_generation(
     daf_mode: bool = False,
     custom_mode: bool = False,
     explicit_config_path: Optional[Path] = None,
-    explicit_template_path: Optional[Path] = None
+    explicit_template_path: Optional[Path] = None,
+    input_data_dict: Optional[Dict[str, Any]] = None
 ) -> Path:
     """
     Library entry point for invoice generation. 
@@ -157,6 +156,11 @@ def run_invoice_generation(
 
     # 1. Derive Paths
     paths = derive_paths(str(input_data_path), str(template_dir), str(config_dir))
+    
+    # Initialize paths if derivation failed but we have explicit overrides
+    if not paths and (explicit_config_path or explicit_template_path):
+        paths = {'data': input_data_path}
+
     if not paths:
         raise FileNotFoundError(f"Could not derive template/config paths for {input_data_path.name}")
 
@@ -167,6 +171,10 @@ def run_invoice_generation(
     if explicit_template_path:
         paths['template'] = str(explicit_template_path.resolve())
         logger.info(f"Using explicit template path: {paths['template']}")
+        
+    # Final check
+    if 'config' not in paths or 'template' not in paths:
+         raise FileNotFoundError(f"Missing config or template path. Paths: {paths}")
 
     # 2. Load Configuration
     try:
@@ -175,9 +183,20 @@ def run_invoice_generation(
         raise RuntimeError(f"Failed to load configuration: {e}") from e
     
     # 3. Load Data
-    invoice_data = load_data(paths['data'])
+    invoice_data = {}
+    if input_data_dict:
+        logger.info("Using provided input_data_dict (skipping file load)")
+        invoice_data = input_data_dict
+    else:
+        try:
+            invoice_data = load_data(paths['data'])
+            logger.info(f"Loaded data from {paths['data']}")
+        except Exception as e:
+            logger.error(f"Failed to load data: {e}")
+            raise RuntimeError(f"Failed to load input data from {paths['data']}")
+
     if not invoice_data:
-        raise RuntimeError(f"Failed to load input data from {paths['data']}")
+        raise RuntimeError("No invoice data available")
 
     # 4. Prepare Output Directory
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -232,8 +251,6 @@ def run_invoice_generation(
                 continue
 
             # Instantiate Processor
-            # Mock CLI args for compatibility with existing processors if they rely on it
-            # Ideally, refactor processors to take booleans, but this shim works for now.
             mock_args = argparse.Namespace(DAF=daf_mode, custom=custom_mode)
 
             processor = None
@@ -351,17 +368,11 @@ def main():
     logging.basicConfig(level=level, format='%(levelname)s: %(message)s')
     
     try:
-        # If explicit paths are provided, use them directly
-        # We need to modify run_invoice_generation to accept them or handle them here
-        # For now, let's pass them as kwargs if we modify run_invoice_generation, 
-        # or we can hack it by overriding the derivation logic if we pass them.
-        
-        # Better approach: Modify run_invoice_generation to accept optional explicit paths
         run_invoice_generation(
-            Path(args.input_data_file),
-            Path(args.output),
-            Path(args.templatedir),
-            Path(args.configdir),
+            input_data_path=Path(args.input_data_file),
+            output_path=Path(args.output),
+            template_dir=Path(args.templatedir),
+            config_dir=Path(args.configdir),
             daf_mode=args.DAF,
             custom_mode=args.custom,
             explicit_config_path=Path(args.config) if args.config else None,

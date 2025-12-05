@@ -10,7 +10,9 @@ from config import TARGET_HEADERS_MAP
 
 # Load existing headers from JSON (adjust path as needed)
 # Load existing headers from JSON (adjust path as needed)
-HEADERS_FILE = "data/config_manger_mapper/mapping_config.json"
+from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+HEADERS_FILE = PROJECT_ROOT / "database" / "config" / "mapper" / "mapping_config.json"
 if os.path.exists(HEADERS_FILE):
     with open(HEADERS_FILE, "r", encoding="utf-8") as f:
         config = json.load(f)

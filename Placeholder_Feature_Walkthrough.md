@@ -75,3 +75,43 @@ To use this new feature, ensure your bundle config has:
 >
 > *Note: The old names (`sheets`, `data_sources`) still work for backward compatibility.*
 And your Excel template uses `{{KEY}}` placeholders matching your JSON data keys.
+
+## Bulk Generator Feature
+
+The **Bulk Generator** allows you to automate the creation of hundreds of invoices from a single data list (Excel or CSV).
+
+### How it Works
+1.  **Input Data**: You provide an Excel or CSV file where each row represents an invoice.
+    *   **Headers**: Column headers must match the placeholders in your template (e.g., `INVOICE_NUM`, `CUSTOMER`).
+2.  **Template**: A standard Excel template with `{{KEY}}` placeholders.
+3.  **Config**: A bundle configuration file defining how to process the sheet (usually `placeholder` type).
+4.  **Process**: The system iterates through each row, injects the data into the template, and saves a unique invoice file.
+
+### Usage
+1.  Navigate to **Bulk Generate** page in the sidebar.
+2.  **Upload Data List**: Upload your Excel or CSV list of data.
+3.  **Select Assets**:
+    *   **Select Template**: Choose an existing template from the database OR upload a new one.
+    *   **Select Config**: Choose an existing configuration from the database OR upload a new one.
+5.  Click **Generate All Invoices**.
+6.  Download the resulting **ZIP file** containing all generated invoices.
+
+### Example Data Format
+| INVOICE_NUM | DATE       | CUSTOMER | AMOUNT |
+| :--- | :--- | :--- | :--- |
+| INV-001     | 2023-10-01 | Alice    | 100.00 |
+| INV-002     | 2023-10-02 | Bob      | 250.50 |
+
+### Configuration Example
+Ensure your bundle config uses the `placeholder` type:
+```json
+{
+    "processing": {
+        "processing_order": ["Sheet1"],
+        "sheet_processing_types": {
+            "Sheet1": "placeholder"
+        }
+    },
+    ...
+}
+```

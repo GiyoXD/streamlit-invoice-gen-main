@@ -35,16 +35,20 @@ try:
     DATA_PARSER_DIR = PROJECT_ROOT / "core" / "data_parser"
     INVOICE_GEN_DIR = PROJECT_ROOT / "core" / "invoice_generator"
     DATA_DIR = PROJECT_ROOT / "data"
-    JSON_OUTPUT_DIR = DATA_DIR / "invoices_to_process"
-    TEMP_UPLOAD_DIR = DATA_DIR / "temp_uploads"
-    TEMPLATE_DIR = DATA_DIR / "template"
-    CONFIG_DIR = DATA_DIR / "config_bundled"
-    DATA_DIRECTORY = DATA_DIR / 'Invoice Record'
+    DATABASE_DIR = PROJECT_ROOT / "database"
+    
+    # Align with database structure
+    JSON_OUTPUT_DIR = DATABASE_DIR / "invoice" / "invoices_to_process"
+    TEMP_UPLOAD_DIR = DATABASE_DIR / "temp_uploads"
+    TEMPLATE_DIR = DATABASE_DIR / "template"
+    CONFIG_DIR = DATABASE_DIR / "config" / "bundled"
+    
+    DATA_DIRECTORY = DATABASE_DIR / "invoice"
     DATABASE_FILE = DATA_DIRECTORY / 'master_invoice_data.db'
     TABLE_NAME = 'invoices'
 
     # Create necessary directories
-    for dir_path in [JSON_OUTPUT_DIR, TEMP_UPLOAD_DIR, DATA_DIRECTORY, CONFIG_DIR]:
+    for dir_path in [JSON_OUTPUT_DIR, TEMP_UPLOAD_DIR, DATA_DIRECTORY, CONFIG_DIR, TEMPLATE_DIR]:
         dir_path.mkdir(parents=True, exist_ok=True)
 
 except Exception as e:
