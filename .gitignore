@@ -45,7 +45,7 @@ temp_uploads/
 
 # --- JSON Files ---
 # Ignore all .json files
-*.json
+
 # But keep configuration files
 !*_config.json
 !**/config/*.json

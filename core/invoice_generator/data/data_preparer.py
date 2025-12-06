@@ -173,14 +173,14 @@ def prepare_data_rows(
     DAF_mode: bool,
 ) -> Tuple[List[Dict[int, Any]], List[int], bool, int]:
     """
-    Corrected version with typo fix and improved fallback flexibility.
-    
-    Validates that description field has fallback values defined.
+    Prepares data rows by applying mapping rules to the data source.
+    Supports both Column-Oriented (Dict of Lists) and Row-Oriented (List of Dicts) sources.
+    Uses robust lookup strategies to find data even if keys don't match column IDs exactly.
     """
+    
     # Validate description field has fallback - CRITICAL for proper invoice generation
     desc_mapping = None
     for field_name, mapping_rule in dynamic_mapping_rules.items():
-        # Find description field (can be named 'description', 'desc', etc.)
         if 'desc' in field_name.lower() and isinstance(mapping_rule, dict):
             desc_mapping = mapping_rule
             break
@@ -188,33 +188,82 @@ def prepare_data_rows(
     if desc_mapping:
         has_fallback = any(key in desc_mapping for key in ['fallback_on_none', 'fallback_on_DAF', 'fallback'])
         if not has_fallback:
-            logger.error(f"❌ CRITICAL: Description field '{field_name}' is missing fallback configuration!")
-            logger.error(f"   Description mapping: {desc_mapping}")
-            logger.error(f"   REQUIRED: At least one of 'fallback_on_none', 'fallback_on_DAF', or 'fallback' must be defined")
-            logger.error(f"   This can cause empty description cells when source data is None/missing")
-            logger.warning(f"warning!!  Add fallback to config: \"fallback_on_none\": \"LEATHER\", \"fallback_on_DAF\": \"LEATHER\"")
-    else:
-        logger.warning(f"warning!!  No description field found in dynamic_mapping_rules - this may cause issues")
+            logger.warning(f"Description field missing fallback configuration. Recommended: 'fallback_on_none': 'LEATHER'.")
     
     data_rows_prepared = []
     pallet_counts_for_rows = []
     num_data_rows_from_source = 0
     dynamic_desc_used = False
     
-    NUMERIC_IDS = {"col_pcs", "col_sqft", "col_unit_price", "col_amount", "col_net", "col_gross", "col_cbm"}
+    def get_value_from_row_or_cols(source_container: Any, rule: Dict, rule_key: str, row_idx: int = None) -> Any:
+        """
+        Helper to extract value from source using multiple lookup strategies.
+        Args:
+            source_container: Either a row dict (row-oriented) or the main data dict (col-oriented)
+            rule: The mapping rule dict
+            rule_key: The key from the mapping_rules dict (e.g. 'po')
+            row_idx: Index of the row (required for column-oriented source)
+        """
+        possible_keys = []
+        
+        # 1. Configured source value/key has highest priority
+        if 'source_value' in rule: possible_keys.append(rule['source_value'])
+        if 'source_key' in rule: possible_keys.append(rule['source_key'])
+        
+        # 2. Target Column ID (strict mapping)
+        target_id = rule.get("column") or rule.get("id")
+        if target_id: possible_keys.append(target_id)
+        
+        # 3. Rule Key (the name in the mappings dict, often 'po', 'item')
+        if rule_key: possible_keys.append(rule_key)
+
+        found_value = None
+        found = False
+
+        # Try all possible keys
+        for key in possible_keys:
+            if key is None: continue
+            
+            # Case A: Column-Oriented (source_container is dict of lists)
+            # We need to look up column 'key', then index 'row_idx'
+            if row_idx is not None and isinstance(source_container, dict):
+                if key in source_container:
+                    col_data = source_container[key]
+                    if isinstance(col_data, list) and row_idx < len(col_data):
+                        found_value = col_data[row_idx]
+                        found = True
+                        break
+            
+            # Case B: Row-Oriented (source_container is the row dict/object)
+            elif row_idx is None:
+                # Direct lookup in the row object
+                if isinstance(source_container, dict) and key in source_container:
+                    found_value = source_container[key]
+                    found = True
+                    break
+                # Handle tuple keys if the key is an integer index (e.g. source_key: 0)
+                elif isinstance(source_container, tuple) and isinstance(key, int):
+                     if 0 <= key < len(source_container):
+                         found_value = source_container[key]
+                         found = True
+                         break
+        
+        if not found:
+            return None
+        return found_value
 
     # --- Generic Handler for ANY Data Source Type ---
-    # Supports both Column-Oriented (Dict of Lists) and Row-Oriented (List of Dicts)
     
-    # Path A: Column-Oriented (Dict of Lists) - e.g., processed_tables, DAF_aggregation (new)
+    # Path A: Column-Oriented (Dict of Lists) - e.g., processed_tables
     if isinstance(data_source, dict):
         # Determine number of rows from the first list found
         num_data_rows_from_source = 0
-        for key, val in data_source.items():
+        for val in data_source.values():
             if isinstance(val, list):
-                num_data_rows_from_source = len(val)
-                break
+                num_data_rows_from_source = max(num_data_rows_from_source, len(val))
         
+        logger.debug(f"Preparing {num_data_rows_from_source} rows from Column-Oriented source")
+
         for i in range(num_data_rows_from_source):
             row_dict = {}
             for source_key, rule in dynamic_mapping_rules.items():
@@ -222,17 +271,16 @@ def prepare_data_rows(
                 
                 target_id = rule.get("column") or rule.get("id")
                 if not target_id: continue
-                
                 target_col_idx = column_id_map.get(target_id)
                 if not target_col_idx: continue
                 
-                # Strict Lookup: Use target_id (e.g., "col_po")
-                if target_id in data_source:
-                    column_data = data_source[target_id]
-                    if isinstance(column_data, list) and i < len(column_data):
-                        row_dict[target_col_idx] = column_data[i]
-
-                # Apply Fallback if value is missing or empty
+                # Fetch value using smart lookup (passing main dict and row index)
+                val = get_value_from_row_or_cols(data_source, rule, source_key, row_idx=i)
+                
+                if val is not None:
+                    row_dict[target_col_idx] = val
+                
+                # Apply Fallback
                 current_val = row_dict.get(target_col_idx)
                 if current_val in [None, ""]:
                     _apply_fallback(row_dict, target_col_idx, rule, DAF_mode)
@@ -247,25 +295,25 @@ def prepare_data_rows(
     # Path B: Row-Oriented (List of Dicts) - e.g., standard_aggregation_results
     elif isinstance(data_source, list):
         num_data_rows_from_source = len(data_source)
+        logger.debug(f"Preparing {num_data_rows_from_source} rows from Row-Oriented source")
         
         for row_data in data_source:
-            if not isinstance(row_data, dict): continue
-            
             row_dict = {}
             for source_key, rule in dynamic_mapping_rules.items():
                 if not isinstance(rule, dict): continue
                 
                 target_id = rule.get("column") or rule.get("id")
                 if not target_id: continue
-                
                 target_col_idx = column_id_map.get(target_id)
                 if not target_col_idx: continue
                 
-                # Strict Lookup: Use target_id (e.g., "col_po") in the row dictionary
-                if target_id in row_data:
-                    row_dict[target_col_idx] = row_data[target_id]
+                # Fetch value using smart lookup (passing row object, no row index)
+                val = get_value_from_row_or_cols(row_data, rule, source_key, row_idx=None)
+                
+                if val is not None:
+                    row_dict[target_col_idx] = val
 
-                # Apply Fallback if value is missing or empty
+                # Apply Fallback
                 current_val = row_dict.get(target_col_idx)
                 if current_val in [None, ""]:
                     _apply_fallback(row_dict, target_col_idx, rule, DAF_mode)
@@ -280,6 +328,7 @@ def prepare_data_rows(
     else:
         logger.warning(f"Unknown data_source format: {type(data_source)}. Expected dict or list.")
     
+    # Pad with empty rows if static labels demand it
     if num_static_labels > len(data_rows_prepared):
         data_rows_prepared.extend([{}] * (num_static_labels - len(data_rows_prepared)))
     
