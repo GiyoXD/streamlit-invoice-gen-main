@@ -27,18 +27,21 @@ def build_replacement_rules(args: Optional[Any] = None) -> List[Dict[str, Any]]:
     rules.extend([
         {
             "find": "JFINV",
-            "data_path": ["processed_tables_data", "1", "inv_no", 0],
+            "data_path": ["invoice_info", "inv_no"],
+            "fallback_path": ["processed_tables_data", "1", "col_inv_no", 0],
             "match_mode": "exact"
         },
         {
             "find": "JFTIME",
-            "data_path": ["processed_tables_data", "1", "inv_date", 0],
+            "data_path": ["invoice_info", "inv_date"],
+            "fallback_path": ["processed_tables_data", "1", "col_inv_date", 0],
             "is_date": True,
             "match_mode": "exact"
         },
         {
             "find": "JFREF",
-            "data_path": ["processed_tables_data", "1", "inv_ref", 0],
+            "data_path": ["invoice_info", "inv_ref"],
+            "fallback_path": ["processed_tables_data", "1", "col_inv_ref", 0],
             "match_mode": "exact"
         },
         {

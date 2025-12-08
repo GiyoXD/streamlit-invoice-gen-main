@@ -16,10 +16,10 @@ def run_invoice_header_replacement_task(workbook: openpyxl.Workbook, invoice_dat
     """Defines and runs the data-driven header replacement task."""
     logger.info("\n--- Running Invoice Header Replacement Task (within A1:N14) ---")
     header_rules = [
-        {"find": "JFINV", "data_path": ["processed_tables_data", "1", "inv_no", 0], "match_mode": "exact"},
+        {"find": "JFINV", "data_path": ["invoice_info", "inv_no"], "fallback_path": ["processed_tables_data", "1", "col_inv_no", 0], "match_mode": "exact"},
         # This rule will now correctly handle any date format coming from your data
-        {"find": "JFTIME", "data_path": ["processed_tables_data", "1", "inv_date", 0], "is_date": True, "match_mode": "exact"},
-        {"find": "JFREF", "data_path": ["processed_tables_data", "1", "inv_ref", 0], "match_mode": "exact"},
+        {"find": "JFTIME", "data_path": ["invoice_info", "inv_date"], "fallback_path": ["processed_tables_data", "1", "col_inv_date", 0], "is_date": True, "match_mode": "exact"},
+        {"find": "JFREF", "data_path": ["invoice_info", "inv_ref"], "fallback_path": ["processed_tables_data", "1", "col_inv_ref", 0], "match_mode": "exact"},
         {"find": "[[CUSTOMER_NAME]]", "data_path": ["customer_info", "name"], "match_mode": "exact"},
         {"find": "[[CUSTOMER_ADDRESS]]", "data_path": ["customer_info", "address"], "match_mode": "exact"}
     ]

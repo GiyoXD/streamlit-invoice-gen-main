@@ -120,6 +120,11 @@ def find_and_replace(
                         if "data_path" in rule:
                             if not invoice_data: continue
                             replacement_content = _get_nested_data(invoice_data, rule["data_path"])
+                            
+                            # Fallback Logic
+                            if replacement_content is None and "fallback_path" in rule:
+                                logger.warning(f"Data not found at primary path {rule['data_path']} for '{text_to_find}', using fallback.")
+                                replacement_content = _get_nested_data(invoice_data, rule["fallback_path"])
                         elif "replace" in rule:
                             replacement_content = rule["replace"]
 

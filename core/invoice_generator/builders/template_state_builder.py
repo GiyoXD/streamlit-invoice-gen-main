@@ -1115,7 +1115,7 @@ class TemplateStateBuilder:
         return text, False, None
     
     def _resolve_data_path(self, data: dict, path: list) -> Any:
-        """Resolve nested data path like ["processed_tables_data", "1", "inv_no", 0]"""
+        """Resolve nested data path like ["processed_tables_data", "1", "col_inv_no", 0]"""
         current = data
         try:
             for key in path:

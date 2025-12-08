@@ -193,7 +193,7 @@ class BuilderConfigResolver:
         Adapt invoice_data to provide normalized data paths for text replacements.
         
         This ensures all sheets can use the same replacement rule paths like:
-        ["processed_tables_data", "1", "inv_no", 0]
+        ["processed_tables_data", "1", "col_inv_no", 0]
         
         For sheets using 'aggregation' or 'DAF_aggregation', we create a synthetic
         processed_tables_data structure pointing to the first row of actual processed_tables.
@@ -220,6 +220,20 @@ class BuilderConfigResolver:
         # Copy the invoice_data (shallow copy to avoid modifying original)
         adapted_data = dict(self.invoice_data)
         
+        # Transformation logic for aggregation-based sheets (Invoice, Contract)
+        # They need metadata (inv_no, inv_date, inv_ref) to be available in a predictable location
+        # for text replacement rules.
+        
+        # 1. Preferred: Check 'invoice_info' (New Standard)
+        # If invoice_info exists, we don't need to synthesize processed_tables_data if text rules use invoice_info.
+        # However, to be safe for legacy rules that might still look at processed_tables_data['1'], 
+        # we can synthesize it OR just return as is if we trust rules are updated.
+        # Given we updated text_replacement_rules to fallback, we can just return adapted_data 
+        if 'invoice_info' in self.invoice_data:
+             logger.debug(f"Sheet {self.sheet_name} will use top-level 'invoice_info' for metadata.")
+             return adapted_data
+
+        # 2. Legacy Fallback: processed_tables_data['1']
         # Check if processed_tables_data exists with metadata fields
         if 'processed_tables_data' not in self.invoice_data:
             logger.warning(f"No processed_tables_data found for sheet {self.sheet_name}, text replacements for JFINV/JFREF/JFTIME will not work")
@@ -232,9 +246,8 @@ class BuilderConfigResolver:
             logger.warning(f"Table key '{source_table_key}' not found in processed_tables_data for sheet {self.sheet_name}")
             return adapted_data
         
-        # The structure is already correct - processed_tables_data['1'] has inv_no, inv_date, inv_ref
-        # No transformation needed, aggregation sheets can access the same metadata
-        logger.debug(f"Sheet {self.sheet_name} (data_source={data_source_type}) will use processed_tables_data['{source_table_key}'] for metadata (inv_no, inv_date, inv_ref)")
+        # The structure is already correct - processed_tables_data['1'] has col_inv_no, col_inv_date, col_inv_ref
+        logger.debug(f"Sheet {self.sheet_name} (data_source={data_source_type}) will use processed_tables_data['{source_table_key}'] for metadata (col_inv_no, col_inv_date, col_inv_ref)")
         
         return adapted_data
     

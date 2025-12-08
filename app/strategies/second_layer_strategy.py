@@ -235,9 +235,9 @@ class SecondLayerLeatherStrategy(InvoiceGenerationStrategy):
     def get_override_ui_config(self) -> Dict[str, Any]:
         """Return UI config for 2nd layer overrides"""
         return {
-            "inv_ref": {"type": "text_input", "label": "Invoice Reference", "default": "auto", "auto_populate_filename": True},
-            "inv_date": {"type": "date_input", "label": "Invoice Date", "default": "today"},
-            "unit_price": {"type": "number_input", "label": "Unit Price", "default": 0.61, "min": 0.0, "step": 0.01}
+            "col_inv_ref": {"type": "text_input", "label": "Invoice Reference", "default": "auto", "auto_populate_filename": True},
+            "col_inv_date": {"type": "date_input", "label": "Invoice Date", "default": "today"},
+            "col_unit_price": {"type": "number_input", "label": "Unit Price", "default": 0.61, "min": 0.0, "step": 0.01}
         }
 
     def _update_and_aggregate_json(self, json_path: Path, po_number: str, **kwargs) -> Optional[Dict[str, Any]]:
@@ -290,11 +290,16 @@ class SecondLayerLeatherStrategy(InvoiceGenerationStrategy):
             if 'metadata' not in data:
                 data['metadata'] = {}
             
-            data['metadata']['inv_ref'] = inv_ref
-            data['metadata']['inv_date'] = inv_date
-            data['metadata']['unit_price'] = unit_price
+            data['metadata']['col_inv_ref'] = inv_ref
+            data['metadata']['col_inv_date'] = inv_date
+            data['metadata']['col_unit_price'] = unit_price
             data['metadata']['creating_date'] = creating_date_str
-            data['metadata']['po_number'] = po_number
+            data['metadata']['col_po'] = po_number # Using col_po for consistency if needed, but po_number might be separate. Keeping po_number as is but maybe also adding col_po? Let's check po_number usage. po_number is passed as arg.
+            # actually po_number is usually mapped to col_po in data processing.
+            # But here we are writing metadata.
+            # Monitor reads processed_tables_data (col_po).
+            # Metadata is usually for other purposes?
+            # Let's write col_ keys for inv_ref/inv_date/unit_price as requested.
             
             # Write updated data back to JSON
             with open(json_path, 'w', encoding='utf-8') as f:
@@ -320,37 +325,37 @@ class SecondLayerLeatherStrategy(InvoiceGenerationStrategy):
                 if 'metadata' not in data:
                     data['metadata'] = {}
 
-                if overrides.get('inv_no'):
-                    data['metadata']['inv_no'] = overrides['inv_no']
+                if overrides.get('col_inv_no'):
+                    data['metadata']['col_inv_no'] = overrides['col_inv_no']
                     was_modified = True
 
-                if overrides.get('inv_ref') and overrides['inv_ref'] != 'auto':
-                    data['metadata']['inv_ref'] = overrides['inv_ref']
+                if overrides.get('col_inv_ref') and overrides['col_inv_ref'] != 'auto':
+                    data['metadata']['col_inv_ref'] = overrides['col_inv_ref']
                     was_modified = True
 
-                if overrides.get('unit_price') is not None:
+                if overrides.get('col_unit_price') is not None:
                     try:
-                        data['metadata']['unit_price'] = float(overrides['unit_price'])
+                        data['metadata']['col_unit_price'] = float(overrides['col_unit_price'])
                         was_modified = True
                     except (ValueError, TypeError):
                         # If conversion fails, skip this override
                         pass
 
-                if overrides.get('inv_date'):
-                    if overrides['inv_date'] == 'tomorrow':
+                if overrides.get('col_inv_date'):
+                    if overrides['col_inv_date'] == 'tomorrow':
                         tomorrow = datetime.datetime.now(cambodia_tz) + datetime.timedelta(days=1)
-                        data['metadata']['inv_date'] = tomorrow.strftime("%Y-%m-%d")
-                    elif overrides['inv_date'] == 'today':
+                        data['metadata']['col_inv_date'] = tomorrow.strftime("%Y-%m-%d")
+                    elif overrides['col_inv_date'] == 'today':
                         today = datetime.datetime.now(cambodia_tz)
-                        data['metadata']['inv_date'] = today.strftime("%Y-%m-%d")
+                        data['metadata']['col_inv_date'] = today.strftime("%Y-%m-%d")
                     else:
                         # Handle date objects from Streamlit date_input
-                        if hasattr(overrides['inv_date'], 'strftime'):
+                        if hasattr(overrides['col_inv_date'], 'strftime'):
                             # It's a date/datetime object
-                            data['metadata']['inv_date'] = overrides['inv_date'].strftime("%Y-%m-%d")
+                            data['metadata']['col_inv_date'] = overrides['col_inv_date'].strftime("%Y-%m-%d")
                         else:
                             # It's already a string
-                            data['metadata']['inv_date'] = str(overrides['inv_date'])
+                            data['metadata']['col_inv_date'] = str(overrides['col_inv_date'])
                     was_modified = True
 
                 # Handle field-specific overrides in aggregated_summary

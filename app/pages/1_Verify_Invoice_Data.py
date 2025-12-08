@@ -74,6 +74,15 @@ def process_json_file(file_path):
         all_dfs = [pd.DataFrame(table_data) for table_data in processed_tables.values()]
         df = pd.concat(all_dfs, ignore_index=True)
 
+    # Rename col_ keys to database keys if they exist, otherwise verify script expects 'inv_no'
+    # We maintain 'inv_no' for the database, masking the internal 'col_' prefix from the JSON
+    if 'col_inv_no' in df.columns:
+        df.rename(columns={'col_inv_no': 'inv_no', 'col_inv_ref': 'inv_ref', 'col_inv_date': 'inv_date', 
+                           'col_po': 'po', 'col_item': 'item', 'col_desc': 'description', 'col_qty_pcs': 'pcs',
+                           'col_qty_sf': 'sqft', 'col_pallet_count': 'pallet_count', 'col_unit_price': 'unit',
+                           'col_amount': 'amount', 'col_net': 'net', 'col_gross': 'gross', 'col_cbm': 'cbm',
+                           'col_production_order_no': 'production_order_no'}, inplace=True)
+
     df['inv_no'] = df['inv_no'].apply(lambda x: x if isinstance(x, str) and x.strip() and not x.startswith('0') else pd.NA).ffill()
     df['inv_ref'] = df['inv_ref'].apply(lambda x: str(x).strip() if isinstance(x, str) and x.strip() else pd.NA).ffill()
     df['inv_date'] = pd.to_datetime(df['inv_date'], errors='coerce').ffill().dt.strftime('%Y-%m-%d')

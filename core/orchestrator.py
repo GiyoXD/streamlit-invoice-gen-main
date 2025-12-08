@@ -42,7 +42,8 @@ class Orchestrator:
                         output_path: Path, 
                         template_dir: Path, 
                         config_dir: Path, 
-                        flags: List[str] = None) -> Path:
+                        flags: List[str] = None,
+                        input_data_dict: Dict = None) -> Path:
         """
         Directly calls the Invoice Generator library function.
         No more subprocess overhead or serialization issues.
@@ -61,7 +62,8 @@ class Orchestrator:
                 template_dir=template_dir,
                 config_dir=config_dir,
                 daf_mode=daf_mode,
-                custom_mode=custom_mode
+                custom_mode=custom_mode,
+                input_data_dict=input_data_dict
             )
             return result_path
 
