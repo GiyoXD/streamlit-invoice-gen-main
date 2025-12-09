@@ -1,15 +1,526 @@
 {
     "status": "success",
-    "timestamp": "2025-12-01T10:47:18.219346",
-    "duration_seconds": 2.4315476417541504,
     "output_file": "JF25057_invoice.xlsx",
+    "timestamp": "2025-12-09T13:13:44.937529",
+    "duration_seconds": 3.2697789669036865,
     "sheets_processed": [
-        "Invoice",
         "Contract",
+        "Invoice",
         "Packing list"
     ],
     "sheets_failed": [],
     "error_message": null,
+    "error_traceback": null,
+    "config_info": {
+        "daf_mode": false,
+        "custom_mode": true,
+        "input_file": "JF25057.json",
+        "config_dir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB",
+        "generation_args": {
+            "DAF": false,
+            "custom": true,
+            "input_data_file": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\scripts\\output\\JF25057.json",
+            "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB"
+        }
+    },
+    "database_export": {
+        "summary": {
+            "total_pcs": 3586,
+            "total_sqft": 177113.6,
+            "total_pallets": 25,
+            "item_count": 43
+        },
+        "packing_list_items": [
+            {
+                "po": "9000798713",
+                "item": "01.10.W653191",
+                "description": "XPDY-EX-\u6d45\u707094",
+                "pcs": 181,
+                "sqft": 9107.2,
+                "pallet_count": 1,
+                "net": "667.8565",
+                "gross": "705.5648",
+                "cbm": "2.0906"
+            },
+            {
+                "po": "9000798713",
+                "item": "01.10.W653191",
+                "description": "XPDY-EX-\u6d45\u707094",
+                "pcs": 35,
+                "sqft": 1386.1,
+                "pallet_count": null,
+                "net": "129.1435",
+                "gross": "136.4352",
+                "cbm": "0.4042"
+            },
+            {
+                "po": "9000761021",
+                "item": "01.10.W061010",
+                "description": "XDDS-EB-\u9ed1617",
+                "pcs": 193,
+                "sqft": 6871.8,
+                "pallet_count": 1,
+                "net": "474.6624",
+                "gross": "518.7487",
+                "cbm": "1.7458"
+            },
+            {
+                "po": "9000761021",
+                "item": "01.10.W061010",
+                "description": "XDDS-EB-\u9ed1617",
+                "pcs": 4,
+                "sqft": 115,
+                "pallet_count": null,
+                "net": "9.8376",
+                "gross": "10.7513",
+                "cbm": "0.0362"
+            },
+            {
+                "po": "9000826870",
+                "item": "01.10.U756022",
+                "description": "XPDY-FX-\u571f\u9ec4216",
+                "pcs": 104,
+                "sqft": 5406.1,
+                "pallet_count": 1,
+                "net": "438.7810",
+                "gross": "483.3524",
+                "cbm": "1.8043"
+            },
+            {
+                "po": "9000826870",
+                "item": "01.10.U756022",
+                "description": "XPDY-FX-\u571f\u9ec4216",
+                "pcs": 1,
+                "sqft": 39.2,
+                "pallet_count": null,
+                "net": "4.2190",
+                "gross": "4.6476",
+                "cbm": "0.0173"
+            },
+            {
+                "po": "9000813140",
+                "item": "01.10.U756071",
+                "description": "XPDY-EX-\u767d162",
+                "pcs": 150,
+                "sqft": 7750.2,
+                "pallet_count": 1,
+                "net": "601.5",
+                "gross": "646.5",
+                "cbm": "2.1384"
+            },
+            {
+                "po": "9000813140",
+                "item": "01.10.U756071",
+                "description": "XPDY-EX-\u767d162",
+                "pcs": 113,
+                "sqft": 5935,
+                "pallet_count": 1,
+                "net": "452.9576",
+                "gross": "496.0508",
+                "cbm": "1.8582"
+            },
+            {
+                "po": "9000813140",
+                "item": "01.10.U756071",
+                "description": "XPDY-EX-\u767d162",
+                "pcs": 5,
+                "sqft": 199.1,
+                "pallet_count": null,
+                "net": "20.0424",
+                "gross": "21.9492",
+                "cbm": "0.0822"
+            },
+            {
+                "po": "9000861854",
+                "item": "01.11.S528110",
+                "description": "EPAF-\u6df1\u84dd91\u4e8c\u5c42",
+                "pcs": 12,
+                "sqft": 518.1,
+                "pallet_count": 1,
+                "net": "42",
+                "gross": "87",
+                "cbm": "1.6632"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 185,
+                "sqft": 10020.5,
+                "pallet_count": 1,
+                "net": "1056",
+                "gross": "1101",
+                "cbm": "2.7720"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 168,
+                "sqft": 9190.9,
+                "pallet_count": 1,
+                "net": "951.8400",
+                "gross": "995.0400",
+                "cbm": "2.4710"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 7,
+                "sqft": 273.9,
+                "pallet_count": null,
+                "net": "39.6600",
+                "gross": "41.4600",
+                "cbm": "0.1030"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 200,
+                "sqft": 10805.5,
+                "pallet_count": 1,
+                "net": "1143",
+                "gross": "1188",
+                "cbm": "3.0096"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 32,
+                "sqft": 1703.3,
+                "pallet_count": 1,
+                "net": "172.2105",
+                "gross": "210.1053",
+                "cbm": "0.9004"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 6,
+                "sqft": 237.5,
+                "pallet_count": null,
+                "net": "32.2895",
+                "gross": "39.3947",
+                "cbm": "0.1688"
+            },
+            {
+                "po": "9000832482",
+                "item": "01.10.W783010",
+                "description": "UDAY-ET-\u68d5454",
+                "pcs": 17,
+                "sqft": 930.7,
+                "pallet_count": 1,
+                "net": "90",
+                "gross": "135",
+                "cbm": "1.5048"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 100,
+                "sqft": 4876.1,
+                "pallet_count": 1,
+                "net": "384.6774",
+                "gross": "420.9677",
+                "cbm": "1.3413"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 24,
+                "sqft": 936.6,
+                "pallet_count": null,
+                "net": "92.3226",
+                "gross": "101.0323",
+                "cbm": "0.3219"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 220,
+                "sqft": 11068.8,
+                "pallet_count": 1,
+                "net": "918",
+                "gross": "963",
+                "cbm": "2.6532"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 129,
+                "sqft": 6636.7,
+                "pallet_count": 1,
+                "net": "522.1624",
+                "gross": "559.1369",
+                "cbm": "1.9523"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 28,
+                "sqft": 1084.9,
+                "pallet_count": null,
+                "net": "113.3376",
+                "gross": "121.3631",
+                "cbm": "0.4237"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 107,
+                "sqft": 5417.3,
+                "pallet_count": 1,
+                "net": "434.1901",
+                "gross": "473.9835",
+                "cbm": "1.7159"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 14,
+                "sqft": 544.9,
+                "pallet_count": null,
+                "net": "56.8099",
+                "gross": "62.0165",
+                "cbm": "0.2245"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 190,
+                "sqft": 9642.2,
+                "pallet_count": 1,
+                "net": "809",
+                "gross": "844",
+                "cbm": "2.3760"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 105,
+                "sqft": 5213.9,
+                "pallet_count": 1,
+                "net": "420.0000",
+                "gross": "447.2222",
+                "cbm": "2.3760"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 30,
+                "sqft": 1175.6,
+                "pallet_count": null,
+                "net": "120.0000",
+                "gross": "127.7778",
+                "cbm": "2.3760"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 34,
+                "sqft": 1704.6,
+                "pallet_count": 1,
+                "net": "128.7143",
+                "gross": "153.0000",
+                "cbm": "0.8549"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 14,
+                "sqft": 549,
+                "pallet_count": null,
+                "net": "53.0000",
+                "gross": "63.0000",
+                "cbm": "0.3520"
+            },
+            {
+                "po": 9000837343,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 15,
+                "sqft": 712.4,
+                "pallet_count": null,
+                "net": "56.7857",
+                "gross": "67.5000",
+                "cbm": "0.3771"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 122,
+                "sqft": 6246.6,
+                "pallet_count": 1,
+                "net": "514.4806",
+                "gross": "557.0388",
+                "cbm": "1.7602"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 7,
+                "sqft": 285.3,
+                "pallet_count": null,
+                "net": "29.5194",
+                "gross": "31.9612",
+                "cbm": "0.1010"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 220,
+                "sqft": 10883.8,
+                "pallet_count": 1,
+                "net": "894",
+                "gross": "939",
+                "cbm": "2.7720"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 205,
+                "sqft": 10075.5,
+                "pallet_count": 1,
+                "net": "809.3043",
+                "gross": "849.4130",
+                "cbm": "2.4354"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 25,
+                "sqft": 997.2,
+                "pallet_count": null,
+                "net": "98.6957",
+                "gross": "103.5870",
+                "cbm": "0.2970"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 215,
+                "sqft": 10646.3,
+                "pallet_count": 1,
+                "net": "872.5",
+                "gross": "917.5",
+                "cbm": "2.5740"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 184,
+                "sqft": 9170.6,
+                "pallet_count": 1,
+                "net": "736.0000",
+                "gross": "775.8077",
+                "cbm": "2.2069"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 24,
+                "sqft": 964.5,
+                "pallet_count": null,
+                "net": "96.0000",
+                "gross": "101.1923",
+                "cbm": "0.2879"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 88,
+                "sqft": 4317,
+                "pallet_count": 1,
+                "net": "352.9778",
+                "gross": "396.9778",
+                "cbm": "1.5488"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 2,
+                "sqft": 80.1,
+                "pallet_count": null,
+                "net": "8.0222",
+                "gross": "9.0222",
+                "cbm": "0.0352"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 55,
+                "sqft": 2694.9,
+                "pallet_count": 1,
+                "net": "218.4507",
+                "gross": "253.3099",
+                "cbm": "1.1350"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 6,
+                "sqft": 228.8,
+                "pallet_count": null,
+                "net": "23.8310",
+                "gross": "27.6338",
+                "cbm": "0.1238"
+            },
+            {
+                "po": 9000832127,
+                "item": "01.10.U528073",
+                "description": "XPAY-FX-\u7070657",
+                "pcs": 10,
+                "sqft": 469.9,
+                "pallet_count": null,
+                "net": "39.7183",
+                "gross": "46.0563",
+                "cbm": "0.2064"
+            }
+        ]
+    },
+    "invoice_info": {
+        "inv_no": null,
+        "inv_date": null,
+        "inv_ref": null
+    },
+    "header_info": {
+        "consignee_address": [
+            "JASON FURNITURE VIET NAM COMPANY LIMITED",
+            "LOT 37, 38, 39, 40, 41, 44, 50, 51, 54\uff0c55, 56\uff0cB2 CLUSTER, DONG XOAI III INDUSTRIAL ZONE,",
+            "BINH PHUOC WARD,DONG NAI PROVINCE, VIETNAM",
+            "Contact Person : Mr. Thuy   TEl: 0379367084",
+            "EMAlL:jyangbin4720@dingtalk.com jialy@kukahome.com",
+            "dailin@kukahome.com huanggf@kukahome.com zhangzp@kukahome.com"
+        ]
+    },
     "input_metadata": {
         "workbook_filename": "JF25057.xlsx",
         "worksheet_name": "Sheet1",
@@ -17,12 +528,6 @@
         "DAF_chunk_size": 2,
         "DAF_intra_separator": "/",
         "DAF_inter_separator": "\\n",
-        "timestamp": "2025-12-01T10:47:15.784153"
-    },
-    "generation_args": {
-        "DAF": false,
-        "custom": true,
-        "input_data_file": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\scripts\\output\\JF25057.json",
-        "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\database\\config\\bundled"
+        "timestamp": "2025-12-02T14:00:20.286475"
     }
 }

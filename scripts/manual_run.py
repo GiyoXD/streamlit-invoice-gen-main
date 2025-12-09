@@ -52,7 +52,7 @@ def main():
             output_path=output_invoice,
             template_dir=template_dir,
             config_dir=config_dir,
-            flags=["--custom", "--config", str(config_dir / "JF_bundle_config.json"), "--template", str(template_dir / "JF.xlsx")] 
+            flags=["--custom", "--config", str(project_root / "scripts" / "output" / "CT&INV&PL JF25058 FCA_config" / "CT&INV&PL JF25058 FCA_config.json"), "--template", str(project_root / "scripts" / "output" / "CT&INV&PL JF25058 FCA_config" / "CT&INV&PL JF25058 FCA_template.xlsx")] 
         )
         print(f"Invoice generated at: {result_path}")
         print("--- Run Passed ---")

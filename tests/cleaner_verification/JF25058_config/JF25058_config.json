@@ -1,0 +1,234 @@
+{
+  "_meta": {
+    "config_version": "2.1_auto_generated",
+    "customer": "JF25058",
+    "created": "2025-12-09",
+    "description": "Auto-generated config for JF25058",
+    "source_template": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\tests\\refactor_verification\\JF25058.xlsx",
+    "generator": "auto_bundle_generator"
+  },
+  "data_preparation_module_hint": {
+    "priority": [
+      "po"
+    ],
+    "numbers_per_group_by_po": 7
+  },
+  "features": {
+    "_comment": "Feature flags for optional/experimental functionality",
+    "enable_text_replacement": true,
+    "enable_conditional_formatting": false,
+    "enable_data_validation": false,
+    "enable_auto_calculations": true,
+    "enable_print_area": false,
+    "enable_page_breaks": false,
+    "debug_mode": false
+  },
+  "extensions": {
+    "_comment": "Custom extensions - add new features here",
+    "_available_hooks": [
+      "pre_build",
+      "post_build",
+      "pre_style",
+      "post_style"
+    ],
+    "custom": {}
+  },
+  "processing": {
+    "sheets": [
+      "Sheet1"
+    ],
+    "data_sources": {
+      "Sheet1": "aggregation"
+    }
+  },
+  "styling_bundle": {
+    "_comment": "Centralized styling - explicit per sheet",
+    "defaults": {
+      "borders": {
+        "_comment": "Border configuration",
+        "default_border": "full_grid",
+        "default_style": "thin",
+        "exceptions": {
+          "col_static": "side_only"
+        }
+      }
+    },
+    "Sheet1": {
+      "_comment": "ID-driven styling with columns + row_contexts",
+      "columns": {
+        "col_shipping_date": {
+          "format": "@",
+          "alignment": "center",
+          "width": 14.76
+        },
+        "col_po": {
+          "format": "@",
+          "alignment": "center",
+          "width": 17.93
+        },
+        "col_item": {
+          "format": "@",
+          "alignment": "center",
+          "width": 17.79
+        },
+        "col_number": {
+          "format": "@",
+          "alignment": "center",
+          "width": 16.72
+        },
+        "col_delivery": {
+          "format": "@",
+          "alignment": "center",
+          "width": 17.97
+        }
+      },
+      "row_contexts": {
+        "header": {
+          "bold": true,
+          "font_size": 10.0,
+          "font_name": "宋体",
+          "border_style": "thin",
+          "row_height": 21.0
+        },
+        "data": {
+          "bold": false,
+          "font_size": 10.0,
+          "font_name": "宋体",
+          "border_style": "thin",
+          "row_height": 21.0
+        },
+        "footer": {
+          "bold": true,
+          "font_size": 10.0,
+          "font_name": "宋体",
+          "border_style": "thin",
+          "row_height": 21.0,
+          "add_ons": {
+            "weight_summary": {
+              "enabled": true,
+              "label_col_id": "col_po",
+              "value_col_id": "col_item",
+              "mode": [
+                "daf",
+                "standard"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "layout_bundle": {
+    "_comment": "Layout configuration - structure, data flow, content, and footer",
+    "Sheet1": {
+      "_sections": [
+        "structure",
+        "data_flow",
+        "content",
+        "footer"
+      ],
+      "structure": {
+        "header_row": 7,
+        "columns": [
+          {
+            "id": "col_shipping_date",
+            "header": "SHIPPING DATE"
+          },
+          {
+            "id": "col_po",
+            "header": "PO NO"
+          },
+          {
+            "id": "col_po",
+            "header": "PO NO"
+          },
+          {
+            "id": "col_po",
+            "header": "P.O.NO"
+          },
+          {
+            "id": "col_item",
+            "header": "ITEM NO"
+          },
+          {
+            "id": "col_number",
+            "header": "Number"
+          },
+          {
+            "id": "col_delivery",
+            "header": "DELIVERY"
+          }
+        ]
+      },
+      "data_flow": {
+        "mappings": {
+          "shipping_date": {
+            "column": "col_shipping_date"
+          },
+          "po": {
+            "column": "col_po",
+            "source_key": 0
+          },
+          "item": {
+            "column": "col_item",
+            "source_key": 1
+          },
+          "number": {
+            "column": "col_number"
+          },
+          "delivery": {
+            "column": "col_delivery"
+          }
+        }
+      },
+      "content": {
+        "static": {}
+      },
+      "footer": {
+        "total_text_column_id": "col_po",
+        "total_text": "TOTAL OF:",
+        "pallet_count_column_id": "col_item",
+        "sum_column_ids": [],
+        "merge_rules": [],
+        "add_ons": {
+          "before_footer": {
+            "enabled": false,
+            "column_id": "col_po",
+            "text": "HS.CODE: 4107.12.00"
+          },
+          "weight_summary": {
+            "enabled": true,
+            "label_col_id": "col_po",
+            "value_col_id": "col_item",
+            "mode": [
+              "daf",
+              "standard"
+            ]
+          },
+          "leather_summary": {
+            "enabled": false,
+            "mode": [
+              "daf",
+              "standard"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaults": {
+    "footer": {
+      "show_total": true,
+      "show_pallet_count": true,
+      "total_text": "TOTAL:",
+      "merge_total_cells": true,
+      "sum_columns": [
+        "col_qty_pcs",
+        "col_qty_sf",
+        "col_net",
+        "col_gross",
+        "col_cbm"
+      ]
+    }
+  }
+}

@@ -50,9 +50,30 @@ class Orchestrator:
         """
         flags = flags or []
         
+        
         # Convert legacy CLI flags to function arguments
         daf_mode = "--DAF" in flags
         custom_mode = "--custom" in flags
+        
+        explicit_config_path = None
+        explicit_template_path = None
+        
+        # Simple parser for value flags
+        if "--config" in flags:
+            try:
+                idx = flags.index("--config")
+                if idx + 1 < len(flags):
+                    explicit_config_path = Path(flags[idx + 1])
+            except ValueError:
+                pass
+                
+        if "--template" in flags:
+            try:
+                idx = flags.index("--template")
+                if idx + 1 < len(flags):
+                    explicit_template_path = Path(flags[idx + 1])
+            except ValueError:
+                pass
 
         try:
             # CALLING DIRECTLY
@@ -63,6 +84,8 @@ class Orchestrator:
                 config_dir=config_dir,
                 daf_mode=daf_mode,
                 custom_mode=custom_mode,
+                explicit_config_path=explicit_config_path,
+                explicit_template_path=explicit_template_path,
                 input_data_dict=input_data_dict
             )
             return result_path

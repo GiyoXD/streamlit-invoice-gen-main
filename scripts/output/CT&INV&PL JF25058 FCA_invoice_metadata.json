@@ -1,0 +1,203 @@
+{
+    "status": "success",
+    "output_file": "CT&INV&PL JF25058 FCA_invoice.xlsx",
+    "timestamp": "2025-12-09T13:38:06.858323",
+    "duration_seconds": 2.012455701828003,
+    "sheets_processed": [
+        "Contract",
+        "Invoice",
+        "Packing list"
+    ],
+    "sheets_failed": [],
+    "error_message": null,
+    "error_traceback": null,
+    "config_info": {
+        "daf_mode": false,
+        "custom_mode": true,
+        "input_file": "CT&INV&PL JF25058 FCA.json",
+        "config_dir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB",
+        "generation_args": {
+            "DAF": false,
+            "custom": true,
+            "input_data_file": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB\\scripts\\output\\CT&INV&PL JF25058 FCA.json",
+            "configdir": "C:\\Users\\JPZ031127\\Desktop\\main_stream_lit_giyo\\GENERATE_INVOICE_STREAMLIT_WEB"
+        }
+    },
+    "database_export": {
+        "summary": {
+            "total_pcs": 0,
+            "total_sqft": 276669.4,
+            "total_pallets": 0,
+            "item_count": 13
+        },
+        "packing_list_items": [
+            {
+                "po": "9000761021",
+                "item": "01.10.U756061",
+                "description": "LEATHER",
+                "pcs": null,
+                "sqft": 5994.2,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000845799",
+                "item": "01.10.W783010",
+                "description": null,
+                "pcs": null,
+                "sqft": 25340.4,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": 9000845799,
+                "item": "01.10.U528073",
+                "description": null,
+                "pcs": null,
+                "sqft": 4849.8,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": 9000845799,
+                "item": "01.10.U528103",
+                "description": null,
+                "pcs": null,
+                "sqft": 29705.7,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000837343",
+                "item": "01.10.W783010",
+                "description": null,
+                "pcs": null,
+                "sqft": 6619.4,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000827464",
+                "item": "01.10.W782023",
+                "description": null,
+                "pcs": null,
+                "sqft": 12526.7,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000840610",
+                "item": "01.10.W782023",
+                "description": null,
+                "pcs": null,
+                "sqft": 5531.5,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000822669",
+                "item": "01.10.W782011",
+                "description": null,
+                "pcs": null,
+                "sqft": 15433.4,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000804107",
+                "item": "01.10.W782033",
+                "description": null,
+                "pcs": null,
+                "sqft": 18657.4,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000824229",
+                "item": "01.10.U562013-K",
+                "description": null,
+                "pcs": null,
+                "sqft": 6134.9,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "9000852084",
+                "item": "01.10.U562013-K",
+                "description": null,
+                "pcs": null,
+                "sqft": 5443.7,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": 9000846054,
+                "item": "01.10.U528103",
+                "description": null,
+                "pcs": null,
+                "sqft": 2097.6,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            },
+            {
+                "po": "TOTAL:",
+                "item": "21 PALLETS",
+                "description": null,
+                "pcs": null,
+                "sqft": 138334.7,
+                "pallet_count": null,
+                "net": null,
+                "gross": null,
+                "cbm": null
+            }
+        ]
+    },
+    "invoice_info": {
+        "inv_no": null,
+        "inv_date": null,
+        "inv_ref": null
+    },
+    "header_info": {
+        "consignee_address": [
+            "JASON FURNITURE VIET NAM COMPANY LIMITED",
+            "LOT 37, 38, 39, 40, 41, 44, 50, 51, 54\uff0c55, 56\uff0cB2 CLUSTER, DONG XOAI III INDUSTRIAL ZONE,",
+            "BINH PHUOC WARD,DONG NAI PROVINCE, VIETNAM",
+            "Contact Person : Mr. Thuy   TEl: 0379367084",
+            "EMAlL:jyangbin4720@dingtalk.com jialy@kukahome.com",
+            "dailin@kukahome.com huanggf@kukahome.com zhangzp@kukahome.com"
+        ]
+    },
+    "input_metadata": {
+        "workbook_filename": "CT&INV&PL JF25058 FCA.xlsx",
+        "worksheet_name": "Invoice",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-12-09T13:38:04.834246"
+    }
+}

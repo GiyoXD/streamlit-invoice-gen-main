@@ -4,13 +4,13 @@ import os
 # --- File Configuration ---
 INPUT_EXCEL_FILE = "JF.xlsx" # Or specific name for this format, e.g., "JF_Data_2024.xlsx"
 # Specify sheet name, or None to use the active sheet
-SHEET_NAME = None
+SHEET_NAME = "Invoice"
 # OUTPUT_PICKLE_FILE = "invoice_data.pkl" # Example for future use
 
 # --- Sheet Parsing Configuration ---
 # Row/Column range to search for the header
 # Adjusted to a more realistic range to improve performance and avoid matching stray text.
-HEADER_SEARCH_ROW_RANGE = (1, 20)
+HEADER_SEARCH_ROW_RANGE = (1, 50)
 HEADER_SEARCH_COL_RANGE = (1, 30) # Increased range slightly, adjust if many columns
 # A pattern (string or regex) to identify a cell within the header row
 # This pattern helps find *any* header row, the mapping below specifies exact matches

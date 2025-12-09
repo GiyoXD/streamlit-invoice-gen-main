@@ -659,85 +659,34 @@ class LayoutBuilder:
         
         logger.debug(f"Scanning for footer start from row {scan_start_row} to {max_scan_row}")
         
-        # Static keywords: These definitely mark the start of the static footer we want to capture
-        static_keywords = [
-            "REMARKS", "NOTE", "SIGNATURE", "AUTHORIZED", "BUYER", "SELLER", 
-            "BANK", "ACCOUNT", "BENEFICIARY", "SWIFT", "IBAN", "PLEASE", "THANK",
-            "HS.CODE", "ORIGIN"
-        ]
+        # Scan for strict footer markers:
+        # 1. "total" AND ":" (case-insensitive)
+        # 2. Starts with "=SUM" (case-insensitive)
         
-        # Dynamic keywords: These mark the start of the dynamic footer (Totals)
-        # We want to detect them but usually SKIP them because FooterBuilder regenerates them
-        dynamic_keywords = ["TOTAL", "SUBTOTAL", "AMOUNT", "VAT", "TAX", "DUE"]
-        
-        found_dynamic_row = None
-        
-        # 1. Scan for keywords
         for r_idx in range(scan_start_row, max_scan_row):
-            row_text = ""
             for c_idx in range(1, min(20, worksheet.max_column + 1)):
                 cell = worksheet.cell(row=r_idx, column=c_idx)
                 if cell.value:
-                    row_text += str(cell.value).upper() + " "
-            
-            # Check for static keywords (Priority)
-            for keyword in static_keywords:
-                if keyword in row_text:
-                    logger.info(f"Found static footer keyword '{keyword}' at row {r_idx}. Using this as footer start.")
-                    return r_idx
-            
-            # Check for dynamic keywords (Secondary)
-            if found_dynamic_row is None:
-                for keyword in dynamic_keywords:
-                    if keyword in row_text:
-                        logger.info(f"Found dynamic footer keyword '{keyword}' at row {r_idx}. Continuing scan for static content...")
-                        found_dynamic_row = r_idx
-                        break
-        
-        # 2. If we found a dynamic row (Total) but no static row (Remarks),
-        # assume the static footer starts AFTER the dynamic row.
-        if found_dynamic_row is not None:
-            # Look for the next non-empty row after the dynamic row
-            for r_idx in range(found_dynamic_row + 1, max_scan_row):
-                is_empty = True
-                for c_idx in range(1, min(20, worksheet.max_column + 1)):
-                    cell = worksheet.cell(row=r_idx, column=c_idx)
-                    if cell.value:
-                        is_empty = False
-                        break
-                if not is_empty:
-                    logger.info(f"Found content at row {r_idx} after dynamic footer (row {found_dynamic_row}). Using this as footer start.")
-                    return r_idx
-            
-            # If no content found after Total, return Total + 1 (capture nothing)
-            logger.info(f"No static content found after dynamic footer (row {found_dynamic_row}). Starting capture at {found_dynamic_row + 1}.")
-            return found_dynamic_row + 1
+                    val_str = str(cell.value).strip().lower()
+                    
+                    # Check 1: "total" AND ":"
+                    if "total" in val_str and ":" in val_str:
+                         logger.info(f"Found strict footer marker 'total...:' at row {r_idx}. Using this as footer start.")
+                         return r_idx
+                         
+                    if val_str.startswith("=sum"):
+                        logger.info(f"Found strict footer marker '=SUM' at row {r_idx}. Using this as footer start.")
+                        return r_idx
 
-        # 3. Fallback: Look for structural changes (gaps)
-        consecutive_empty_rows = 0
-        gap_threshold = 3
-        found_gap = False
-        
-        for r_idx in range(scan_start_row, max_scan_row):
-            is_empty = True
-            for c_idx in range(1, min(20, worksheet.max_column + 1)):
-                cell = worksheet.cell(row=r_idx, column=c_idx)
-                if cell.value:
-                    is_empty = False
-                    break
-            
-            if is_empty:
-                consecutive_empty_rows += 1
-                if consecutive_empty_rows >= gap_threshold:
-                    found_gap = True
-            else:
-                # Found content
-                if found_gap:
-                    logger.info(f"Found content at row {r_idx} after a gap of {consecutive_empty_rows} empty rows. Assuming footer start.")
-                    return r_idx
-                consecutive_empty_rows = 0
-                
-        # Final Fallback
-        fallback_row = table_header_row + 4
-        logger.warning(f"Could not dynamically detect footer start. Falling back to {fallback_row}")
-        return fallback_row
+                    # Check 3: Signature/Bank markers (Fallback if Total is missing/deleted)
+                    # User requested deleting entire table including footer, so we must detect what comes AFTER the table.
+                    strict_static = ["the buyer", "the seller", "beneficiary", "authorized signature"]
+                    for kw in strict_static:
+                        if kw in val_str:
+                             logger.info(f"Found strict footer marker '{kw}' at row {r_idx}. Using this as footer start.")
+                             return r_idx
+
+        # If loop finishes without finding anything:
+        error_msg = f"Footer not detected! Could not find 'total...:', '=SUM', or signature keywords (scanned rows {scan_start_row}-{max_scan_row}). Please ensure your template has a Total row, SUM formula, or 'The Buyer/Seller' signature."
+        logger.error(error_msg)
+        raise ValueError(error_msg)

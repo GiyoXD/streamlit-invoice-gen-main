@@ -1,0 +1,518 @@
+{
+    "metadata": {
+        "workbook_filename": "CT&INV&PL JF25058 FCA.xlsx",
+        "worksheet_name": "Invoice",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-12-09T13:38:04.834246"
+    },
+    "processed_tables_data": {
+        "1": {
+            "col_po": [
+                "9000761021",
+                "9000845799",
+                9000845799,
+                9000845799,
+                "9000837343",
+                "9000827464",
+                "9000840610",
+                "9000822669",
+                "9000804107",
+                "9000824229",
+                "9000852084",
+                9000846054,
+                "TOTAL:"
+            ],
+            "col_item": [
+                "01.10.U756061",
+                "01.10.W783010",
+                "01.10.U528073",
+                "01.10.U528103",
+                "01.10.W783010",
+                "01.10.W782023",
+                "01.10.W782023",
+                "01.10.W782011",
+                "01.10.W782033",
+                "01.10.U562013-K",
+                "01.10.U562013-K",
+                "01.10.U528103",
+                "21 PALLETS"
+            ],
+            "col_desc": [
+                "LEATHER",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "col_qty_sf": [
+                5994.2,
+                25340.4,
+                4849.8,
+                29705.7,
+                6619.4,
+                12526.7,
+                5531.5,
+                15433.4,
+                18657.4,
+                6134.9,
+                5443.7,
+                2097.6,
+                138334.7
+            ],
+            "col_unit_price": [
+                1.24254479330019,
+                1.51,
+                1.24316095509093,
+                1.26751953328822,
+                1.50650119346164,
+                1.37155531784109,
+                1.37800054234837,
+                1.37964259333653,
+                1.3760778029093,
+                1.52,
+                1.48718224736852,
+                1.27,
+                null
+            ],
+            "col_amount": [
+                7448.062,
+                38264.004,
+                6029.082,
+                37652.555,
+                9972.134,
+                17181.062,
+                7622.41,
+                21292.576,
+                25674.034,
+                9325.048,
+                8095.774,
+                2663.952,
+                191220.693
+            ]
+        }
+    },
+    "footer_data": {
+        "table_totals": {
+            "1": {
+                "col_qty_pcs": 0,
+                "col_qty_sf": "276669.4",
+                "col_net": "0",
+                "col_gross": "0",
+                "col_cbm": "0",
+                "col_amount": "382441.386",
+                "col_pallet_count": 0
+            }
+        },
+        "grand_total": {
+            "col_qty_pcs": 0,
+            "col_qty_sf": "276669.4",
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0",
+            "col_amount": "382441.386",
+            "col_pallet_count": 0
+        },
+        "add_ons": {
+            "leather_summary_addon": {
+                "BUFFALO": {
+                    "col_qty_pcs": 0,
+                    "col_qty_sf": "0",
+                    "col_net": "0",
+                    "col_gross": "0",
+                    "col_pallet_count": 0
+                },
+                "COW": {
+                    "col_qty_pcs": 0,
+                    "col_qty_sf": "276669.40000000001467",
+                    "col_net": "0",
+                    "col_gross": "0",
+                    "col_pallet_count": 0
+                }
+            }
+        }
+    },
+    "standard_aggregation_results": [
+        {
+            "col_po": "9000761021",
+            "col_item": "01.10.U756061",
+            "col_unit_price": "1.24254479330019",
+            "col_desc": "LEATHER",
+            "col_qty_sf": "5994.19999999999982",
+            "col_amount": "7448.0619999999999"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.W783010",
+            "col_unit_price": "1.51",
+            "col_desc": "",
+            "col_qty_sf": "25340.40000000000146",
+            "col_amount": "38264.00400000000081"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528073",
+            "col_unit_price": "1.24316095509093",
+            "col_desc": "",
+            "col_qty_sf": "4849.80000000000018",
+            "col_amount": "6029.08200000000033"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528103",
+            "col_unit_price": "1.26751953328822",
+            "col_desc": "",
+            "col_qty_sf": "29705.70000000000073",
+            "col_amount": "37652.55500000000029"
+        },
+        {
+            "col_po": "9000837343",
+            "col_item": "01.10.W783010",
+            "col_unit_price": "1.50650119346164",
+            "col_desc": "",
+            "col_qty_sf": "6619.39999999999964",
+            "col_amount": "9972.13400000000001"
+        },
+        {
+            "col_po": "9000827464",
+            "col_item": "01.10.W782023",
+            "col_unit_price": "1.37155531784109",
+            "col_desc": "",
+            "col_qty_sf": "12526.70000000000073",
+            "col_amount": "17181.06200000000172"
+        },
+        {
+            "col_po": "9000840610",
+            "col_item": "01.10.W782023",
+            "col_unit_price": "1.37800054234837",
+            "col_desc": "",
+            "col_qty_sf": "5531.5",
+            "col_amount": "7622.40999999999985"
+        },
+        {
+            "col_po": "9000822669",
+            "col_item": "01.10.W782011",
+            "col_unit_price": "1.37964259333653",
+            "col_desc": "",
+            "col_qty_sf": "15433.39999999999964",
+            "col_amount": "21292.57600000000093"
+        },
+        {
+            "col_po": "9000804107",
+            "col_item": "01.10.W782033",
+            "col_unit_price": "1.3760778029093",
+            "col_desc": "",
+            "col_qty_sf": "18657.40000000000146",
+            "col_amount": "25674.03399999999965"
+        },
+        {
+            "col_po": "9000824229",
+            "col_item": "01.10.U562013-K",
+            "col_unit_price": "1.52",
+            "col_desc": "",
+            "col_qty_sf": "6134.89999999999964",
+            "col_amount": "9325.04800000000068"
+        },
+        {
+            "col_po": "9000852084",
+            "col_item": "01.10.U562013-K",
+            "col_unit_price": "1.48718224736852",
+            "col_desc": "",
+            "col_qty_sf": "5443.69999999999982",
+            "col_amount": "8095.77400000000034"
+        },
+        {
+            "col_po": "9000846054",
+            "col_item": "01.10.U528103",
+            "col_unit_price": "1.27",
+            "col_desc": "",
+            "col_qty_sf": "2097.59999999999991",
+            "col_amount": "2663.95200000000023"
+        },
+        {
+            "col_po": "TOTAL:",
+            "col_item": "21 PALLETS",
+            "col_unit_price": "",
+            "col_desc": "",
+            "col_qty_sf": "138334.70000000001164",
+            "col_amount": "191220.6929999999993"
+        }
+    ],
+    "custom_aggregation_results": [
+        {
+            "col_po": "9000761021",
+            "col_item": "01.10.U756061",
+            "col_desc": "LEATHER",
+            "col_qty_sf": "5994.19999999999982",
+            "col_amount": "7448.0619999999999"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.W783010",
+            "col_desc": "",
+            "col_qty_sf": "25340.40000000000146",
+            "col_amount": "38264.00400000000081"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528073",
+            "col_desc": "",
+            "col_qty_sf": "4849.80000000000018",
+            "col_amount": "6029.08200000000033"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528103",
+            "col_desc": "",
+            "col_qty_sf": "29705.70000000000073",
+            "col_amount": "37652.55500000000029"
+        },
+        {
+            "col_po": "9000837343",
+            "col_item": "01.10.W783010",
+            "col_desc": "",
+            "col_qty_sf": "6619.39999999999964",
+            "col_amount": "9972.13400000000001"
+        },
+        {
+            "col_po": "9000827464",
+            "col_item": "01.10.W782023",
+            "col_desc": "",
+            "col_qty_sf": "12526.70000000000073",
+            "col_amount": "17181.06200000000172"
+        },
+        {
+            "col_po": "9000840610",
+            "col_item": "01.10.W782023",
+            "col_desc": "",
+            "col_qty_sf": "5531.5",
+            "col_amount": "7622.40999999999985"
+        },
+        {
+            "col_po": "9000822669",
+            "col_item": "01.10.W782011",
+            "col_desc": "",
+            "col_qty_sf": "15433.39999999999964",
+            "col_amount": "21292.57600000000093"
+        },
+        {
+            "col_po": "9000804107",
+            "col_item": "01.10.W782033",
+            "col_desc": "",
+            "col_qty_sf": "18657.40000000000146",
+            "col_amount": "25674.03399999999965"
+        },
+        {
+            "col_po": "9000824229",
+            "col_item": "01.10.U562013-K",
+            "col_desc": "",
+            "col_qty_sf": "6134.89999999999964",
+            "col_amount": "9325.04800000000068"
+        },
+        {
+            "col_po": "9000852084",
+            "col_item": "01.10.U562013-K",
+            "col_desc": "",
+            "col_qty_sf": "5443.69999999999982",
+            "col_amount": "8095.77400000000034"
+        },
+        {
+            "col_po": "9000846054",
+            "col_item": "01.10.U528103",
+            "col_desc": "",
+            "col_qty_sf": "2097.59999999999991",
+            "col_amount": "2663.95200000000023"
+        },
+        {
+            "col_po": "TOTAL:",
+            "col_item": "21 PALLETS",
+            "col_desc": "",
+            "col_qty_sf": "138334.70000000001164",
+            "col_amount": "191220.6929999999993"
+        }
+    ],
+    "normal_aggregate_per_po_with_pallets": [
+        {
+            "col_po": "9000761021",
+            "col_item": "01.10.U756061",
+            "col_desc": "LEATHER",
+            "col_unit_price": "1.24254479330019",
+            "col_qty_sf": "5994.19999999999982",
+            "col_amount": "7448.0619999999999",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000804107",
+            "col_item": "01.10.W782033",
+            "col_desc": "",
+            "col_unit_price": "1.3760778029093",
+            "col_qty_sf": "18657.40000000000146",
+            "col_amount": "25674.03399999999965",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000822669",
+            "col_item": "01.10.W782011",
+            "col_desc": "",
+            "col_unit_price": "1.37964259333653",
+            "col_qty_sf": "15433.39999999999964",
+            "col_amount": "21292.57600000000093",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000824229",
+            "col_item": "01.10.U562013-K",
+            "col_desc": "",
+            "col_unit_price": "1.52",
+            "col_qty_sf": "6134.89999999999964",
+            "col_amount": "9325.04800000000068",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000827464",
+            "col_item": "01.10.W782023",
+            "col_desc": "",
+            "col_unit_price": "1.37155531784109",
+            "col_qty_sf": "12526.70000000000073",
+            "col_amount": "17181.06200000000172",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000837343",
+            "col_item": "01.10.W783010",
+            "col_desc": "",
+            "col_unit_price": "1.50650119346164",
+            "col_qty_sf": "6619.39999999999964",
+            "col_amount": "9972.13400000000001",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000840610",
+            "col_item": "01.10.W782023",
+            "col_desc": "",
+            "col_unit_price": "1.37800054234837",
+            "col_qty_sf": "5531.5",
+            "col_amount": "7622.40999999999985",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.W783010",
+            "col_desc": "",
+            "col_unit_price": "1.51",
+            "col_qty_sf": "25340.40000000000146",
+            "col_amount": "38264.00400000000081",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528073",
+            "col_desc": "",
+            "col_unit_price": "1.24316095509093",
+            "col_qty_sf": "4849.80000000000018",
+            "col_amount": "6029.08200000000033",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000845799",
+            "col_item": "01.10.U528103",
+            "col_desc": "",
+            "col_unit_price": "1.26751953328822",
+            "col_qty_sf": "29705.70000000000073",
+            "col_amount": "37652.55500000000029",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000846054",
+            "col_item": "01.10.U528103",
+            "col_desc": "",
+            "col_unit_price": "1.27",
+            "col_qty_sf": "2097.59999999999991",
+            "col_amount": "2663.95200000000023",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "9000852084",
+            "col_item": "01.10.U562013-K",
+            "col_desc": "",
+            "col_unit_price": "1.48718224736852",
+            "col_qty_sf": "5443.69999999999982",
+            "col_amount": "8095.77400000000034",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        },
+        {
+            "col_po": "TOTAL:",
+            "col_item": "21 PALLETS",
+            "col_desc": "",
+            "col_unit_price": "0",
+            "col_qty_sf": "138334.70000000001164",
+            "col_amount": "191220.6929999999993",
+            "col_pallet_count": 0,
+            "col_net": "0",
+            "col_gross": "0",
+            "col_cbm": "0"
+        }
+    ],
+    "final_DAF_compounded_result": {
+        "1": {
+            "col_po": "",
+            "col_item": "",
+            "col_desc": "",
+            "col_qty_sf": "0",
+            "col_amount": "0"
+        },
+        "2": {
+            "col_po": "9000761021/9000804107\n9000822669/9000824229\n9000827464/9000837343\n9000840610/9000845799\n9000846054/9000852084\nTOTAL:",
+            "col_item": "01.10.U528073/01.10.U528103\n01.10.U562013-K/01.10.U756061\n01.10.W782011/01.10.W782023\n01.10.W782033/01.10.W783010\n21 PALLETS",
+            "col_desc": "LEATHER",
+            "col_qty_sf": "276669.40000000001467",
+            "col_amount": "382441.38600000000404"
+        }
+    }
+}

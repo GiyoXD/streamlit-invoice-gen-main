@@ -13,7 +13,7 @@ import json
 import sys
 import argparse
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple, Dict, Any
 from datetime import datetime
 
 from .template_analyzer import TemplateAnalyzer, TemplateAnalysisResult
@@ -162,10 +162,24 @@ class AutoBundleGenerator:
         config_dir = output_base / f"{analysis.customer_code}_config"
         config_file = config_dir / f"{analysis.customer_code}_config.json"
         
-        self.logger.info(f"\n[Step 3] Saving config to: {config_file}")
-        
         # Create directory
         config_dir.mkdir(parents=True, exist_ok=True)
+
+        # Step 3: Generate Clean Template
+        if not dry_run:
+            template_path_res, layout_metadata = self._generate_clean_template(template_path, analysis, config_dir)
+            
+            # SAVE SEPARATE TEMPLATE CONFIG
+            # User request: "create a seperate, this new config is template config"
+            template_config_file = config_dir / f"{analysis.customer_code}_template_config.json"
+            
+            self.logger.info(f"   Saving Template Config: {template_config_file.name}")
+            with open(template_config_file, 'w', encoding='utf-8') as f:
+                json.dump({"template_layout": layout_metadata}, f, indent=2, ensure_ascii=False)
+                
+            # Note: We do NOT inject it into the main bundle config anymore.
+        
+        self.logger.info(f"\n[Step 4] Saving config to: {config_file}")
         
         # Write config
         with open(config_file, 'w', encoding='utf-8') as f:
@@ -176,6 +190,43 @@ class AutoBundleGenerator:
         self.logger.info(f"   File: {config_file.name}")
         
         return config_file
+
+    def _generate_clean_template(self, template_path: Path, analysis: TemplateAnalysisResult, 
+                                 output_dir: Path) -> Tuple[Path, Dict[str, Any]]:
+        """
+        Generate a clean template from the raw input file.
+        
+        Args:
+            template_path: Path to raw Excel file
+            analysis: Analysis result
+            output_dir: Directory to save clean template
+            
+        Returns:
+            Tuple of (Path to saved clean template, layout_metadata)
+        """
+        import openpyxl
+        from .template_cleaner import TemplateCleaner
+        
+        self.logger.info(f"\n[Step 3] Generating Clean Template...")
+        
+        cleaner = TemplateCleaner()
+        
+        # Load raw workbook
+        wb = openpyxl.load_workbook(template_path)
+        
+        # Clean it (updated to return tuple)
+        cleaned_wb, layout_metadata = cleaner.clean_template(wb, analysis)
+        
+        # Save it
+        template_file = output_dir / f"{analysis.customer_code}_template.xlsx"
+        try:
+            cleaned_wb.save(template_file)
+            self.logger.info(f"   Cleaned Template: {template_file.name}")
+        except Exception as e:
+            self.logger.error(f"   Failed to save cleaned template (likely image stream issue): {e}")
+            self.logger.info("   Proceeding to save JSON config anyway.")
+            
+        return template_file, layout_metadata
     
     def _print_analysis_summary(self, analysis: TemplateAnalysisResult):
         """Print summary of template analysis."""
