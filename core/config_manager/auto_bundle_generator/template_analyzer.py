@@ -156,6 +156,11 @@ class TemplateAnalyzer:
             # Analyze columns
             columns = self._analyze_columns(worksheet, header_row, header_cells)
             self.logger.info(f"    Found {len(columns)} columns")
+            # DETAILED DEBUG LOGGING
+            self.logger.info(f"    --- Column Analysis for {sheet_name} ---")
+            for col in columns:
+                self.logger.info(f"      [Col {col.col_index}] ID={col.id} Header='{col.header}' Width={col.width:.1f}")
+            self.logger.info(f"    ----------------------------------------")
             
             # Determine data source type
             data_source = self._determine_data_source(sheet_name, columns)
@@ -220,6 +225,10 @@ class TemplateAnalyzer:
                 best_score = len(matches)
                 best_row = row
                 best_matches = matches
+            
+            # Debug log for potential header rows
+            if len(matches) > 0:
+                self.logger.debug(f"    Row {row}: {len(matches)} matches -> {[m[1] for m in matches]}")
         
         # Need at least 3 header matches to be confident
         if best_score >= 3:

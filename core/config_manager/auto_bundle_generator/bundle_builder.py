@@ -18,15 +18,17 @@ logger = logging.getLogger(__name__)
 class BundleBuilder:
     """Builds bundle config from template analysis."""
     
-    # Default field mappings for data_flow
+    # Default field mappings for data_flow (IDENTITY MAPPING - Keys match Column IDs)
+    # MINIMALIST: No source_key/value, no redundant column mapping.
+    # We rely on data_preparer's smart lookup and auto-mapping.
     FIELD_MAPPINGS = {
         # Aggregation sheets (Invoice, Contract)
         "aggregation": {
-            "col_po": {"source_key": 0},
-            "col_item": {"source_key": 1},
-            "col_unit_price": {"source_key": 2},
-            "col_desc": {"source_key": 3, "fallback_on_none": "LEATHER", "fallback_on_DAF": "LEATHER"},
-            "col_qty_sf": {"source_value": "sqft_sum"},
+            "col_po": {},
+            "col_item": {},
+            "col_unit_price": {},
+            "col_desc": {"fallback_on_none": "LEATHER", "fallback_on_DAF": "LEATHER"},
+            "col_qty_sf": {},
             "col_amount": {"formula": "{col_qty_sf} * {col_unit_price}"},
         },
         # Processed tables (Packing list)
@@ -286,39 +288,39 @@ class BundleBuilder:
         for col in sheet.columns:
             all_columns.extend(col.children)
         
+        self.logger.info(f"  Mapping data flow for sheet '{sheet.name}' ({len(sheet.columns)} cols)...")
+
         for col in all_columns:
+            # IDENTITY MAPPING implies field_name == col.id
+            field_name = col.id
+            
             if col.id in default_mappings:
-                mapping = {"column": col.id}
-                mapping.update(default_mappings[col.id])
+                # Start with empty mapping or whatever is in default
+                mapping = default_mappings[col.id].copy()
                 
-                # Determine the field name from column ID
-                field_name = self._col_id_to_field_name(col.id)
+                # ONLY add "column" if it's different from the field key (which it isn't here)
+                # But typically we want explicit linking if names differ. 
+                # Since names represent the same thing, we can OMIT 'column' key for minimalism 
+                # if data_preparer handles key-based lookup (which it does).
+                
                 mappings[field_name] = mapping
+                self.logger.info(f"    [Explicit] Mapped {col.id} -> {field_name} (Minimal)")
+
             elif col.id not in ["col_static", "col_qty_header", "col_no"]:
                 # Create basic mapping for unknown columns
-                field_name = self._col_id_to_field_name(col.id)
-                mappings[field_name] = {"column": col.id}
+                # Minimalist: Just empty dict implies "use column matching this key"
+                mappings[field_name] = {} 
+                self.logger.info(f"    [Auto]     Mapped {col.id} -> {field_name} (Minimal)")
+            else:
+                 self.logger.debug(f"    [Skipped]  {col.id} (Structural/Static)")
         
         return {"mappings": mappings}
     
     def _col_id_to_field_name(self, col_id: str) -> str:
         """Convert column ID to field name."""
-        # Map column IDs to field names
-        mapping = {
-            "col_po": "po",
-            "col_item": "item",
-            "col_desc": "description",
-            "col_qty_pcs": "pcs",
-            "col_qty_sf": "sqft",
-            "col_unit_price": "unit_price",
-            "col_amount": "amount",
-            "col_net": "net",
-            "col_gross": "gross",
-            "col_cbm": "cbm",
-            "col_no": "no",
-            "col_pallet": "pallet_count"
-        }
-        return mapping.get(col_id, col_id.replace("col_", ""))
+        # IDENTITY MAPPING: Return the column ID directly.
+        # This ensures that the generated config uses the same keys as the data parser output.
+        return col_id
     
     def _build_content(self, sheet: SheetAnalysis) -> Dict[str, Any]:
         """Build content section for a sheet."""

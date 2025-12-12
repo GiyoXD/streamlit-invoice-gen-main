@@ -46,6 +46,21 @@ def global_exception_handler(exc_type, exc_value, exc_traceback):
 
 sys.excepthook = global_exception_handler
 
+# --- Constants for Blueprints ---
+try:
+    PROJ_ROOT = Path(__file__).resolve().parents[2]
+    # Check if we are in a flattened structure or standard structure
+    if not (PROJ_ROOT / "database").exists():
+         # Fallback for weird execution environments
+         PROJ_ROOT = Path(__file__).resolve().parent.parent.parent
+
+    DEFAULT_TEMPLATE_DIR = PROJ_ROOT / "database" / "blueprints" / "template"
+    DEFAULT_CONFIG_DIR = PROJ_ROOT / "database" / "blueprints" / "config" / "bundled"
+except:
+    # Fallback to local if project root resolution fails completely
+    DEFAULT_TEMPLATE_DIR = Path("./database/blueprints/template")
+    DEFAULT_CONFIG_DIR = Path("./database/blueprints/config/bundled")
+
 
 # --- Helper Functions ---
 def derive_paths(input_data_path: str, template_dir: str, config_dir: str) -> Optional[Dict[str, Path]]:
@@ -130,8 +145,8 @@ def load_data(path: Path) -> Dict[str, Any]:
 def run_invoice_generation(
     input_data_path: Path,
     output_path: Path,
-    template_dir: Path,
-    config_dir: Path,
+    template_dir: Optional[Path] = None,
+    config_dir: Optional[Path] = None,
     daf_mode: bool = False,
     custom_mode: bool = False,
     explicit_config_path: Optional[Path] = None,
@@ -145,6 +160,15 @@ def run_invoice_generation(
     # Ensure paths are Path objects
     input_data_path = Path(input_data_path).resolve()
     output_path = Path(output_path).resolve()
+
+    # Use defaults if not provided
+    if template_dir is None:
+        template_dir = DEFAULT_TEMPLATE_DIR
+        logger.info(f"Using default blueprint template directory: {template_dir}")
+    if config_dir is None:
+        config_dir = DEFAULT_CONFIG_DIR
+        logger.info(f"Using default blueprint config directory: {config_dir}")
+
     template_dir = Path(template_dir).resolve()
     config_dir = Path(config_dir).resolve()
 
@@ -336,8 +360,8 @@ def main():
     parser = argparse.ArgumentParser(description="Generate Invoice CLI")
     parser.add_argument("input_data_file", help="Path to input data file")
     parser.add_argument("-o", "--output", default="result.xlsx", help="Output path")
-    parser.add_argument("-t", "--templatedir", default="./TEMPLATE", help="Template dir")
-    parser.add_argument("-c", "--configdir", default="./configs", help="Config dir")
+    parser.add_argument("-t", "--templatedir", default=None, help="Template dir (defaults to database/blueprints/template)")
+    parser.add_argument("-c", "--configdir", default=None, help="Config dir (defaults to database/blueprints/config/bundled)")
     parser.add_argument("--config", help="Explicit path to config file")
     parser.add_argument("--template", help="Explicit path to template file")
     parser.add_argument("--DAF", action="store_true", help="DAF mode")
@@ -354,8 +378,8 @@ def main():
         run_invoice_generation(
             input_data_path=Path(args.input_data_file),
             output_path=Path(args.output),
-            template_dir=Path(args.templatedir),
-            config_dir=Path(args.configdir),
+            template_dir=Path(args.templatedir) if args.templatedir else None,
+            config_dir=Path(args.configdir) if args.configdir else None,
             daf_mode=args.DAF,
             custom_mode=args.custom,
             explicit_config_path=Path(args.config) if args.config else None,

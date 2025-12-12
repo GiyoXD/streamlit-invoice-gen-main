@@ -71,3 +71,9 @@ recycle/
 !tests/invoice_gen/src/data/test_data_preparer.py
 
 !tests/**/test_*.py
+
+# Allow test database files
+!tests/database/**/*.xlsx
+!tests/database/**/*.json
+!database/assets/**/*.xlsx
+!database/assets/**/*.json

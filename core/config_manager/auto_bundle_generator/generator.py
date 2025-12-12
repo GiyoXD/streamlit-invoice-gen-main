@@ -50,11 +50,13 @@ class AutoBundleGenerator:
         if output_base_dir:
             self.output_base_dir = Path(output_base_dir)
         else:
-            # Find the config_bundled directory relative to this file
+            # Find the database/blueprints/config/bundled directory relative to this file
             current_dir = Path(__file__).parent
-            # Go up to src/config_manager, then to invoice_generator/src/config_bundled
-            project_root = current_dir.parent.parent
-            self.output_base_dir = project_root / "invoice_generator" / "src" / "config_bundled"
+            # Go up to core/config_manager/auto_bundle_generator -> core/config_manager -> core -> PROJECT_ROOT
+            project_root = current_dir.parent.parent.parent
+            
+            # Set default to database/blueprints/config/bundled
+            self.output_base_dir = project_root / "database" / "blueprints" / "config" / "bundled"
         
         self.logger = logging.getLogger(self.__class__.__name__)
     
