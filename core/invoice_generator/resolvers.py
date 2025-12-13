@@ -84,8 +84,11 @@ class InvoiceAssetResolver:
         # We try strict match first, then prefix match
         candidates = [file_stem]
         
-        # Add prefix candidate (e.g. JF25058 -> JF) if distinct
-        prefix = re.sub(r'[\d_]+$', '', file_stem)
+        # Add prefix candidate (e.g. JF25058 -> JF, CT25048E -> CT)
+        # Capture leading naming code (ignoring numbers and subsequent characters)
+        match = re.match(r'^([a-zA-Z]+)', file_stem)
+        prefix = match.group(1) if match else None
+        
         if prefix and prefix != file_stem:
             candidates.append(prefix)
 
@@ -109,14 +112,14 @@ class InvoiceAssetResolver:
                 return self._get_assets_from_folder(potential_dir, candidate)
 
             # Iterative check for partial matches (more expensive but more flexible)
-            # Find any folder containing the candidate string? No, that's too loose.
-            # Find any folder ENDING in _config seems standard.
-            # Let's stick to explicit names or "contains stem" for now.
+            # Find any folder STARTING with the candidate (more precise than 'in')
             
-            # User example: Stem="JF25058", Folder="CT&INV&PL JF25058 FCA_config"
-            # The stem is INSIDE the folder name.
+            # User example: Stem="JF25058", Folder="CT&INV&PL JF25058 FCA_config" -> This case works if candidate is 'CT'?
+            # Wait, if Stem is JF25058, candidate is JF. Folder "CT&INV..." does NOT start with JF.
+            # But the user example "CT25048E" -> "CT" -> Folder "CT_config". THIS works.
+            
             for folder in self.config_dir.iterdir():
-                if folder.is_dir() and candidate in folder.name and folder.name.endswith("_config"):
+                if folder.is_dir() and folder.name.startswith(candidate) and folder.name.endswith("_config"):
                      assets = self._get_assets_from_folder(folder, candidate)
                      if assets:
                          return assets

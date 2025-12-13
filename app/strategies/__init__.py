@@ -5,11 +5,13 @@ from .second_layer_strategy import SecondLayerLeatherStrategy
 from .components.excel_processor import ExcelProcessor
 from .components.calculator import Calculator
 
-# Strategy registry
-STRATEGIES = {
-    "high_quality": HighQualityLeatherStrategy(),
-    "second_layer": SecondLayerLeatherStrategy(),
-}
+# Strategy registry factory
+def get_strategies():
+    """Return a dictionary of fresh strategy instances."""
+    return {
+        "high_quality": HighQualityLeatherStrategy(),
+        "second_layer": SecondLayerLeatherStrategy(),
+    }
 
 # Re-export utility functions that were in the original invoice_strategies.py
 # These will be moved to utils/ in future phases

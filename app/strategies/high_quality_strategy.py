@@ -29,7 +29,7 @@ class HighQualityLeatherStrategy(InvoiceGenerationStrategy):
         self.calculator = Calculator()
 
     def get_required_fields(self) -> List[str]:
-        return ['po', 'item', 'pcs', 'sqft', 'pallet_count', 'unit', 'amount', 'net', 'gross', 'cbm', 'production_order_no']
+        return ['col_po', 'col_item', 'col_qty_pcs', 'col_qty_sf', 'col_pallet_count', 'col_unit_price', 'col_amount', 'col_net', 'col_gross', 'col_cbm', 'col_production_order_no']
 
     def validate_excel_data(self, excel_path: Path) -> Tuple[bool, List[str]]:
         """Validate Excel data structure for high-quality leather"""
@@ -104,10 +104,10 @@ class HighQualityLeatherStrategy(InvoiceGenerationStrategy):
 
                 # Apply user overrides (Using col_ prefix for UI consistency, but mapped to invoice_info)
                 if overrides.get('col_inv_no'):
-                    data['invoice_info']['inv_no'] = overrides['col_inv_no'].strip()
+                    data['invoice_info']['col_inv_no'] = overrides['col_inv_no'].strip()
                     was_modified = True
                 if overrides.get('col_inv_ref'):
-                    data['invoice_info']['inv_ref'] = overrides['col_inv_ref'].strip()
+                    data['invoice_info']['col_inv_ref'] = overrides['col_inv_ref'].strip()
                     was_modified = True
                 if overrides.get('col_inv_date'):
                     # Convert date object to string format DD/MM/YYYY
@@ -115,7 +115,7 @@ class HighQualityLeatherStrategy(InvoiceGenerationStrategy):
                         date_str = overrides['col_inv_date'].strftime("%d/%m/%Y")
                     else:
                         date_str = str(overrides['col_inv_date'])
-                    data['invoice_info']['inv_date'] = date_str
+                    data['invoice_info']['col_inv_date'] = date_str
                     was_modified = True
                 if overrides.get('containers'):
                      # Container is often table-specific, but if it applies to all, we can put it here too
@@ -174,20 +174,25 @@ class HighQualityLeatherStrategy(InvoiceGenerationStrategy):
         identifier = kwargs.get('identifier', json_path.stem)
 
         # Get and resolve paths to ensure they work correctly
-        template_dir = kwargs.get('template_dir', './TEMPLATE')
-        config_dir = kwargs.get('config_dir', './config')
+        # Default to None to let Orchestrator/Generator use its internal defaults (database/blueprints/...)
+        template_dir = kwargs.get('template_dir')
+        config_dir = kwargs.get('config_dir')
         
-        # Convert to absolute paths if they aren't already
-        if isinstance(template_dir, str):
-            template_dir = Path(template_dir)
-        if isinstance(config_dir, str):
-            config_dir = Path(config_dir)
+        # Convert to absolute paths if provided and they aren't already
+        if template_dir:
+            if isinstance(template_dir, str):
+                template_dir = Path(template_dir)
+            if not template_dir.is_absolute():
+                template_dir = template_dir.resolve()
+        
+        if config_dir:
+            if isinstance(config_dir, str):
+                config_dir = Path(config_dir)
+            if not config_dir.is_absolute():
+                config_dir = config_dir.resolve()
             
-        # Make sure they're absolute paths
-        if not template_dir.is_absolute():
-            template_dir = template_dir.resolve()
-        if not config_dir.is_absolute():
-            config_dir = config_dir.resolve()
+            
+        # Make sure they're absolute paths (Handled above now)
 
         # Retrieve in-memory overrides if available
         input_data_dict = None

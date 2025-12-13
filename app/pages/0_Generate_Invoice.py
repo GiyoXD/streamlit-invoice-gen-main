@@ -14,10 +14,46 @@ from app.components.auth_ui import setup_page_auth
 # Import our strategy system
 # Import our strategy system
 from strategies import (
-    STRATEGIES,
+    get_strategies,
     apply_print_settings_to_files,
     create_download_zip,
 )
+
+
+# --- Helper Functions ---
+def get_available_configs():
+    """
+    Scans for available configuration bundles in both:
+    1. database/config/bundled (New location)
+    2. database/blueprints/config/bundled (Legacy location)
+    
+    Returns a dict mapping "Display Name" -> Path object
+    """
+    configs = {}
+    
+    try:
+        # Define paths
+        root = Path(__file__).resolve().parents[2]
+        paths_to_scan = [
+            root / "database" / "config" / "bundled",
+            root / "database" / "blueprints" / "config" / "bundled"
+        ]
+        
+        for path in paths_to_scan:
+            if not path.exists():
+                continue
+                
+            for item in path.iterdir():
+                if item.is_dir() and item.name.endswith("_config"):
+                    display_name = item.name 
+                    configs[display_name] = item
+                elif item.is_file() and item.suffix == ".json" and "bundle_config" in item.name:
+                    configs[item.name] = item.parent # Point to parent dir for Strategy processing logic
+                    
+    except Exception as e:
+        print(f"Error scanning configs: {e}")
+        
+    return configs
 
 # --- Enhanced Authentication Setup ---
 user_info = setup_page_auth(
@@ -40,8 +76,8 @@ try:
     # Align with database structure
     JSON_OUTPUT_DIR = DATABASE_DIR / "invoice" / "invoices_to_process"
     TEMP_UPLOAD_DIR = DATABASE_DIR / "temp_uploads"
-    TEMPLATE_DIR = DATABASE_DIR / "template"
-    CONFIG_DIR = DATABASE_DIR / "config" / "bundled"
+    TEMPLATE_DIR = DATABASE_DIR / "blueprints" / "template"
+    CONFIG_DIR = DATABASE_DIR / "blueprints" / "config" / "bundled"
     
     DATA_DIRECTORY = DATABASE_DIR / "invoice"
     DATABASE_FILE = DATA_DIRECTORY / 'master_invoice_data.db'
@@ -228,8 +264,34 @@ def render_upload_step(strategy):
     if uploaded_file:
         st.session_state.uploaded_file = uploaded_file
 
+        # --- Company/Config Selection ---
+        available_configs = get_available_configs()
+        config_names = list(available_configs.keys())
+        config_names.sort()
+        
+        # Try to auto-guess based on filename
+        default_index = 0
+        file_prefix_match = re.match(r'^([a-zA-Z]+)', uploaded_file.name)
+        if file_prefix_match:
+            prefix = file_prefix_match.group(1)
+            # Look for config starting with this prefix
+            for i, name in enumerate(config_names):
+                if name.startswith(prefix):
+                    default_index = i
+                    break
+        
+        selected_config_name = st.selectbox(
+            "Select Company Configuration",
+            options=config_names,
+            index=default_index,
+            help="Select the configuration that matches the company for this invoice. The system tries to guess based on the filename."
+        )
+        
+        selected_config_path = available_configs.get(selected_config_name)
+
         # Process button
         if st.button("Validate & Process File", use_container_width=True, type="primary"):
+            st.session_state.selected_config_path = selected_config_path  # Store specifically for Strategy
             temp_file_path = None
             try:
                 # Save uploaded file
@@ -436,7 +498,8 @@ def render_process_file_step(strategy):
                     inv_date=inv_date_str,
                     unit_price=unit_price,
                     data_parser_dir=DATA_PARSER_DIR,
-                    invoice_gen_dir=INVOICE_GEN_DIR
+                    invoice_gen_dir=INVOICE_GEN_DIR,
+                    config_dir=st.session_state.get('selected_config_path')
                 )
 
                 # Step 2: Update JSON with invoice details and calculate totals
@@ -461,7 +524,8 @@ def render_process_file_step(strategy):
                     temp_file_path,
                     JSON_OUTPUT_DIR,
                     data_parser_dir=DATA_PARSER_DIR,
-                    invoice_gen_dir=INVOICE_GEN_DIR
+                    invoice_gen_dir=INVOICE_GEN_DIR,
+                    config_dir=st.session_state.get('selected_config_path')
                 )
 
             # Validate JSON
@@ -787,6 +851,9 @@ def render_generate_step(strategy):
 # --- Main Workflow ---
 st.header("Invoice Generation Workflow")
 
+# Load strategies for this run
+strategies = get_strategies()
+
 # Step 1: Strategy Selection
 if st.session_state.workflow_step == 'select_strategy':
     st.subheader("1. Select Invoice Type")
@@ -795,13 +862,13 @@ if st.session_state.workflow_step == 'select_strategy':
 
     with col1:
         if st.button("🏭 High-Quality Leather", use_container_width=True, type="primary"):
-            st.session_state.selected_strategy = STRATEGIES['high_quality']
+            st.session_state.selected_strategy = 'high_quality'
             st.session_state.workflow_step = 'upload'
             st.rerun()
 
     with col2:
         if st.button("📦 2nd Layer Leather", use_container_width=True, type="primary"):
-            st.session_state.selected_strategy = STRATEGIES['second_layer']
+            st.session_state.selected_strategy = 'second_layer'
             st.session_state.workflow_step = 'upload'
             st.rerun()
 
@@ -811,33 +878,60 @@ if st.session_state.workflow_step == 'select_strategy':
 
 # Step 2: File Upload
 elif st.session_state.workflow_step == 'upload':
-    strategy = st.session_state.selected_strategy
+    # Handle both old object-based state and new key-based state
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+    else:
+        # Fallback/Migration: Reset if we find an object
+        reset_workflow()
+        st.rerun()
+        
     render_upload_step(strategy)
 
 # Step 3: Excel Validation
 elif st.session_state.workflow_step == 'validate_excel':
-    strategy = st.session_state.selected_strategy
-    render_validate_excel_step(strategy)
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+        render_validate_excel_step(strategy)
+    else:
+        reset_workflow()
+        st.rerun()
 
 # Step 4: Input Collection (for 2nd Layer Leather)
 elif st.session_state.workflow_step == 'collect_inputs':
-    strategy = st.session_state.selected_strategy
-    render_collect_inputs_step(strategy)
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+        render_collect_inputs_step(strategy)
+    else:
+        reset_workflow()
+        st.rerun()
 
 # Step 5: File Processing
 elif st.session_state.workflow_step == 'process_file':
-    strategy = st.session_state.selected_strategy
-    render_process_file_step(strategy)
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+        render_process_file_step(strategy)
+    else:
+        reset_workflow()
+        st.rerun()
 
 # Step 6: Manual Overrides
 elif st.session_state.workflow_step == 'overrides':
-    strategy = st.session_state.selected_strategy
-    render_overrides_step(strategy)
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+        render_overrides_step(strategy)
+    else:
+        reset_workflow()
+        st.rerun()
 
 # Step 7: Generation
 elif st.session_state.workflow_step == 'generate':
-    strategy = st.session_state.selected_strategy
-    render_generate_step(strategy)
+    if isinstance(st.session_state.selected_strategy, str):
+        strategy = strategies[st.session_state.selected_strategy]
+        render_generate_step(strategy)
+    else:
+        reset_workflow()
+        st.rerun()
 
 # --- Footer ---
 st.markdown("---")

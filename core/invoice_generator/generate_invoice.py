@@ -32,6 +32,7 @@ from core.invoice_generator.processors.single_table_processor import SingleTable
 from core.invoice_generator.processors.multi_table_processor import MultiTableProcessor
 from core.invoice_generator.processors.placeholder_processor import PlaceholderProcessor
 from core.invoice_generator.utils.monitor import GenerationMonitor
+from core.invoice_generator.resolvers import InvoiceAssetResolver
 
 logger = logging.getLogger(__name__)
 
@@ -198,25 +199,37 @@ def run_invoice_generation(
         logger.info("=== Starting Invoice Generation (Library Call) ===")
         logger.debug(f"Input: {input_data_path}, Output: {output_path}")
 
-        # 1. Derive Paths
-        paths = derive_paths(str(input_data_path), str(template_dir), str(config_dir))
+        # 1. Derive Paths (Using Resolver)
+        resolver = InvoiceAssetResolver(base_config_dir=config_dir, base_template_dir=template_dir)
+        assets = resolver.resolve_assets_for_input_file(str(input_data_path))
         
-        if not paths and (explicit_config_path or explicit_template_path):
-            paths = {'data': input_data_path}
-
-        if not paths:
-            raise FileNotFoundError(f"Could not derive template/config paths for {input_data_path.name}")
-
-        # Override derived paths if explicit paths are provided
+        # Determine actual paths to use
+        paths = {}
+        
+        # Priority: Explicit -> Resolved -> Error
         if explicit_config_path:
-            paths['config'] = str(explicit_config_path.resolve())
+            paths['config'] = explicit_config_path.resolve()
             logger.info(f"Using explicit config path: {paths['config']}")
-        if explicit_template_path:
-            paths['template'] = str(explicit_template_path.resolve())
-            logger.info(f"Using explicit template path: {paths['template']}")
+        elif assets:
+            paths['config'] = assets.config_path
             
+        if explicit_template_path:
+            paths['template'] = explicit_template_path.resolve()
+            logger.info(f"Using explicit template path: {paths['template']}")
+        elif assets:
+            paths['template'] = assets.template_path
+
+        paths['data'] = input_data_path
+
+        # Validate we exist
         if 'config' not in paths or 'template' not in paths:
-             raise FileNotFoundError(f"Missing config or template path. Paths: {paths}")
+             # Try fallback to legacy just in case resolver completely failed or weird explicit combo
+             # But resolver handles fallback.
+             if not assets and not (explicit_config_path or explicit_template_path):
+                 raise FileNotFoundError(f"Could not derive template/config paths for {input_data_path.name}")
+             else:
+                 if 'config' not in paths: raise FileNotFoundError("Missing config path")
+                 if 'template' not in paths: raise FileNotFoundError("Missing template path")
 
         # 2. Load Configuration
         try:

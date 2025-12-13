@@ -28,9 +28,9 @@ try:
     PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
     CONFIG_GEN_DIR = PROJECT_ROOT / "core" / "config_manager"
     TEMP_DIR = PROJECT_ROOT / "database" / "temp_uploads"
-    CONFIG_OUTPUT_DIR = PROJECT_ROOT / "database" / "config" / "bundled"
-    TEMPLATE_OUTPUT_DIR = PROJECT_ROOT / "database" / "template"
-    MAPPING_CONFIG_PATH = PROJECT_ROOT / "database" / "config" / "mapper" / "mapping_config.json"
+    CONFIG_OUTPUT_DIR = PROJECT_ROOT / "database" / "blueprints" / "config" / "bundled"
+    TEMPLATE_OUTPUT_DIR = PROJECT_ROOT / "database" / "blueprints" / "template"
+    MAPPING_CONFIG_PATH = PROJECT_ROOT / "database" / "blueprints" / "config" / "mapper" / "mapping_config.json"
     
     # Create necessary directories
     TEMP_DIR.mkdir(parents=True, exist_ok=True)

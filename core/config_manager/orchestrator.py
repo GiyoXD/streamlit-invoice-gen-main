@@ -3,8 +3,12 @@ import sys
 from pathlib import Path
 from typing import Dict, Any
 
-from .auto_bundle_generator.generator import AutoBundleGenerator
-from .core.workspace import WorkspaceManager
+try:
+    from auto_bundle_generator.generator import AutoBundleGenerator
+    from core.workspace import WorkspaceManager
+except ImportError:
+    from .auto_bundle_generator.generator import AutoBundleGenerator
+    from .core.workspace import WorkspaceManager
 
 logger = logging.getLogger(__name__)
 
