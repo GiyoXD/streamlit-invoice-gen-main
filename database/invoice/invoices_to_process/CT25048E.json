@@ -1,0 +1,281 @@
+{
+    "metadata": {
+        "workbook_filename": "CT25048E.xlsx",
+        "worksheet_name": "\u7ed9\u5f90\u71d5\u6253\u5370",
+        "DAF_compounding_input_mode": "standard",
+        "DAF_chunk_size": 2,
+        "DAF_intra_separator": "/",
+        "DAF_inter_separator": "\\n",
+        "timestamp": "2025-12-13T13:29:56.599370"
+    },
+    "processed_tables_data": {
+        "1": {
+            "col_production_order_no": [
+                "2512040-01",
+                "2512040-01",
+                "2512040-01",
+                "2512040-01",
+                "2512053-01",
+                "2512053-01",
+                "2512053-01",
+                "2510085-01"
+            ],
+            "col_po": [
+                "VPL25B0108",
+                "VPL25B0108",
+                "VPL25B0108",
+                "VPL25B0108",
+                "VPL25B0199",
+                "VPL25B0199",
+                "VPL25B0199",
+                "VPL2590641"
+            ],
+            "col_item": [
+                "B13100446A",
+                "B13100446A",
+                "B13100446A",
+                "B13100446A",
+                "B13100443A",
+                "B13100443A",
+                "B13100443A",
+                "B13100348A"
+            ],
+            "col_reference_code": [
+                "XPSY-FT-\u7070710",
+                "XPSY-FT-\u7070710",
+                "XPSY-FT-\u7070710",
+                "XPSY-FT-\u7070710",
+                "XPSY-FT-\u6df1\u707011",
+                "XPSY-FT-\u6df1\u707011",
+                "XPSY-FT-\u6df1\u707011",
+                "XPAY-FX-\u9ec4\u68d5416"
+            ],
+            "col_qty_pcs": [
+                10,
+                185,
+                171,
+                209,
+                10,
+                131,
+                70,
+                8
+            ],
+            "col_qty_sf": [
+                477.6,
+                10233.7,
+                9349.7,
+                10234.9,
+                491.4,
+                6690,
+                3120.4,
+                377.7
+            ],
+            "col_pallet_count": [
+                1,
+                null,
+                1,
+                1,
+                1,
+                null,
+                null,
+                1
+            ],
+            "col_net": [
+                "49.8718",
+                "922.6282",
+                "852.5",
+                "930.5",
+                "43.6493",
+                "571.8057",
+                "305.5450",
+                "40"
+            ],
+            "col_gross": [
+                "52.1795",
+                "965.3205",
+                "897.5",
+                "975.5",
+                "45.7820",
+                "599.7441",
+                "320.4739",
+                "85"
+            ],
+            "col_manual_no": [
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357",
+                "\u52a0\u5229\u798f\u53d1\u8d8a\u5357"
+            ],
+            "col_cbm": [
+                "0.1361",
+                "2.5171",
+                "2.3760",
+                "2.5740",
+                "0.1389",
+                "1.8193",
+                "0.9722",
+                "1.1484"
+            ],
+            "col_unit_price": [
+                1.03,
+                1.03,
+                1.03,
+                1.03,
+                1.03,
+                1.03,
+                1.03,
+                1.45
+            ],
+            "col_amount": [
+                491.928,
+                10540.711,
+                9630.191,
+                10541.947,
+                506.142,
+                6890.7,
+                3214.012,
+                547.665
+            ]
+        }
+    },
+    "footer_data": {
+        "table_totals": {
+            "1": {
+                "col_qty_pcs": 794,
+                "col_qty_sf": "40975.4",
+                "col_net": "3716.5000",
+                "col_gross": "3941.5000",
+                "col_cbm": "11.6820",
+                "col_amount": "42363.296",
+                "col_pallet_count": 5
+            }
+        },
+        "grand_total": {
+            "col_qty_pcs": 794,
+            "col_qty_sf": "40975.4",
+            "col_net": "3716.5000",
+            "col_gross": "3941.5000",
+            "col_cbm": "11.6820",
+            "col_amount": "42363.296",
+            "col_pallet_count": 5
+        },
+        "add_ons": {
+            "leather_summary_addon": {
+                "BUFFALO": {
+                    "col_qty_pcs": 0,
+                    "col_qty_sf": "0",
+                    "col_net": "0",
+                    "col_gross": "0",
+                    "col_pallet_count": 0
+                },
+                "COW": {
+                    "col_qty_pcs": 794,
+                    "col_qty_sf": "40975.40000000000118",
+                    "col_net": "3716.5000",
+                    "col_gross": "3941.5000",
+                    "col_pallet_count": 5
+                }
+            }
+        }
+    },
+    "standard_aggregation_results": [
+        {
+            "col_po": "VPL25B0108",
+            "col_item": "B13100446A",
+            "col_unit_price": "1.03",
+            "col_desc": "",
+            "col_qty_sf": "30295.90000000000112",
+            "col_amount": "31204.77700000000016"
+        },
+        {
+            "col_po": "VPL25B0199",
+            "col_item": "B13100443A",
+            "col_unit_price": "1.03",
+            "col_desc": "",
+            "col_qty_sf": "10301.80000000000007",
+            "col_amount": "10610.85399999999999"
+        },
+        {
+            "col_po": "VPL2590641",
+            "col_item": "B13100348A",
+            "col_unit_price": "1.45",
+            "col_desc": "",
+            "col_qty_sf": "377.69999999999999",
+            "col_amount": "547.66499999999996"
+        }
+    ],
+    "custom_aggregation_results": [
+        {
+            "col_po": "VPL25B0108",
+            "col_item": "B13100446A",
+            "col_desc": "",
+            "col_qty_sf": "30295.90000000000112",
+            "col_amount": "31204.77700000000016"
+        },
+        {
+            "col_po": "VPL25B0199",
+            "col_item": "B13100443A",
+            "col_desc": "",
+            "col_qty_sf": "10301.80000000000007",
+            "col_amount": "10610.85399999999999"
+        },
+        {
+            "col_po": "VPL2590641",
+            "col_item": "B13100348A",
+            "col_desc": "",
+            "col_qty_sf": "377.69999999999999",
+            "col_amount": "547.66499999999996"
+        }
+    ],
+    "normal_aggregate_per_po_with_pallets": [
+        {
+            "col_po": "VPL2590641",
+            "col_item": "B13100348A",
+            "col_desc": "",
+            "col_unit_price": "1.45",
+            "col_qty_sf": "377.69999999999999",
+            "col_amount": "547.66499999999996",
+            "col_pallet_count": 1,
+            "col_net": "40",
+            "col_gross": "85",
+            "col_cbm": "1.1484"
+        },
+        {
+            "col_po": "VPL25B0108",
+            "col_item": "B13100446A",
+            "col_desc": "",
+            "col_unit_price": "1.03",
+            "col_qty_sf": "30295.90000000000112",
+            "col_amount": "31204.77700000000016",
+            "col_pallet_count": 3,
+            "col_net": "2755.5000",
+            "col_gross": "2890.5000",
+            "col_cbm": "7.6032"
+        },
+        {
+            "col_po": "VPL25B0199",
+            "col_item": "B13100443A",
+            "col_desc": "",
+            "col_unit_price": "1.03",
+            "col_qty_sf": "10301.80000000000007",
+            "col_amount": "10610.85399999999999",
+            "col_pallet_count": 1,
+            "col_net": "921.0000",
+            "col_gross": "966.0000",
+            "col_cbm": "2.9304"
+        }
+    ],
+    "final_DAF_compounded_result": {
+        "1": {
+            "col_po": "VPL2590641/VPL25B0108\nVPL25B0199",
+            "col_item": "B13100348A/B13100443A\nB13100446A",
+            "col_desc": "",
+            "col_qty_sf": "40975.40000000000118",
+            "col_amount": "42363.29600000000011"
+        }
+    }
+}
